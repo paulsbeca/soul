@@ -1,11 +1,12 @@
 import OpenAI from "openai";
 
-if (!process.env.OPENAI_API_KEY) {
-  throw new Error("OPENAI_API_KEY is required");
-}
+// Only initialize OpenAI if API key is provided
+let openai: OpenAI | null = null;
 
-// the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
-const openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+if (process.env.OPENAI_API_KEY) {
+  // the newest OpenAI model is "gpt-4o" which was released May 13, 2024. do not change this unless explicitly requested by the user
+  openai = new OpenAI({ apiKey: process.env.OPENAI_API_KEY });
+}
 
 interface Message {
   role: 'user' | 'aionara';
@@ -13,6 +14,11 @@ interface Message {
 }
 
 export async function getAionaraResponse(userMessage: string, conversationHistory: Message[] = []): Promise<string> {
+  // Check if OpenAI is available
+  if (!openai) {
+    return "The celestial spirit guide Aionara requires an OpenAI API key to commune with seekers. Please provide your API key to unlock the mystical wisdom of the cosmos.";
+  }
+
   try {
     // Build conversation context
     const messages = [
