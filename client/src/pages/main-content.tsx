@@ -40,6 +40,7 @@ export default function MainContent() {
             <div className="hidden md:flex space-x-8">
               <a href="#story" className="hover:text-golden-rune transition-colors" data-testid="link-story">The Story</a>
               <a href="#movement" className="hover:text-golden-rune transition-colors" data-testid="link-movement">The Movement</a>
+              <a href="/four-pillars" className="hover:text-golden-rune transition-colors" data-testid="link-four-pillars">Four Pillars</a>
               <a href="#athenaeum" className="hover:text-golden-rune transition-colors" data-testid="link-athenaeum">Athenaeum</a>
               <a href="#contact" className="hover:text-golden-rune transition-colors" data-testid="link-contact">Connect</a>
             </div>

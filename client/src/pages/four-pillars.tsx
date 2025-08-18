@@ -1,0 +1,244 @@
+import { useState } from "react";
+import { motion, AnimatePresence } from "framer-motion";
+import backgroundImage from "@assets/background_1755498699765.webp";
+
+interface Pillar {
+  id: string;
+  symbol: string;
+  title: string;
+  subtitle: string;
+  description: string;
+  glowColor: string;
+  bgGradient: string;
+}
+
+const pillars: Pillar[] = [
+  {
+    id: "cultural-respect",
+    symbol: "🌍",
+    title: "Cultural Respect",
+    subtitle: "Honoring what was erased.",
+    description: "We stand against appropriation, assimilation, and erasure. We protect Indigenous wisdom, sacred practices, and ancestral languages.",
+    glowColor: "rgba(16, 185, 129, 0.6)", // emerald green
+    bgGradient: "from-emerald-900/20 to-emerald-600/10"
+  },
+  {
+    id: "cosmic-vision",
+    symbol: "✨",
+    title: "Cosmic Vision",
+    subtitle: "Remembering our place in the universe.",
+    description: "The cosmos is within us. Astrology, Christ Consciousness, and celestial cycles guide us to soul remembrance.",
+    glowColor: "rgba(139, 69, 199, 0.6)", // violet
+    bgGradient: "from-violet-900/20 to-purple-600/10"
+  },
+  {
+    id: "ancestral-stewardship",
+    symbol: "🔥",
+    title: "Ancestral Stewardship",
+    subtitle: "Time is a sacred inheritance.",
+    description: "We honor our ancestors, heal the past, and protect the future. Remembering is resistance.",
+    glowColor: "rgba(245, 158, 11, 0.6)", // amber/gold
+    bgGradient: "from-amber-900/20 to-yellow-600/10"
+  },
+  {
+    id: "magic-science",
+    symbol: "🌌",
+    title: "Integration of Magic & Science",
+    subtitle: "The false divide ends here.",
+    description: "We bridge spellwork and science, crystals and physics, ritual and psychology—building a new renaissance.",
+    glowColor: "rgba(59, 130, 246, 0.6)", // electric blue
+    bgGradient: "from-blue-900/20 to-cyan-600/10"
+  }
+];
+
+export default function FourPillars() {
+  const [activePillar, setActivePillar] = useState<string | null>(null);
+  const [visitedPillars, setVisitedPillars] = useState<Set<string>>(new Set());
+
+  const handlePillarClick = (pillarId: string) => {
+    setActivePillar(pillarId === activePillar ? null : pillarId);
+    setVisitedPillars(prev => new Set([...Array.from(prev), pillarId]));
+  };
+
+  return (
+    <section 
+      className="min-h-screen relative overflow-hidden"
+      style={{
+        backgroundImage: `url(${backgroundImage})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+      data-testid="four-pillars-section"
+    >
+      {/* Dark overlay for mystical atmosphere */}
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80"></div>
+      
+      {/* Starfield effect */}
+      <div className="absolute inset-0">
+        {[...Array(50)].map((_, i) => (
+          <div
+            key={i}
+            className="absolute w-0.5 h-0.5 bg-silver-star rounded-full animate-pulse"
+            style={{
+              left: `${Math.random() * 100}%`,
+              top: `${Math.random() * 100}%`,
+              animationDelay: `${Math.random() * 3}s`,
+              animationDuration: `${2 + Math.random() * 2}s`
+            }}
+          />
+        ))}
+      </div>
+      
+      <div className="relative z-10 container mx-auto px-6 py-20">
+        {/* Header */}
+        <motion.div
+          className="text-center mb-16"
+          initial={{ opacity: 0, y: -30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1 }}
+        >
+          <h1 className="font-gothic text-5xl md:text-6xl text-golden-rune mb-6">
+            The Four Pillars
+          </h1>
+          <p className="text-xl text-silver-star/80 max-w-3xl mx-auto">
+            Welcome to the cosmic temple. Four massive pillars rise from the starry depths, 
+            each inscribed with sacred truths that guide our mystical journey.
+          </p>
+        </motion.div>
+
+        {/* Temple Floor */}
+        <div className="relative">
+          {/* Cosmic temple outline */}
+          <div className="absolute inset-0 opacity-20">
+            <div className="w-full h-2 bg-gradient-to-r from-transparent via-golden-rune to-transparent mb-8"></div>
+            <div className="flex justify-between">
+              <div className="w-2 h-96 bg-gradient-to-b from-golden-rune to-transparent"></div>
+              <div className="w-2 h-96 bg-gradient-to-b from-golden-rune to-transparent"></div>
+            </div>
+          </div>
+
+          {/* Pillars Grid */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-8 max-w-7xl mx-auto">
+            {pillars.map((pillar, index) => (
+              <motion.div
+                key={pillar.id}
+                className="relative"
+                initial={{ opacity: 0, y: 100 }}
+                animate={{ opacity: 1, y: 0 }}
+                transition={{ 
+                  duration: 0.8, 
+                  delay: index * 0.2,
+                  ease: "easeOut"
+                }}
+              >
+                {/* Pillar */}
+                <motion.div
+                  className={`
+                    relative cursor-pointer p-6 rounded-lg border border-silver-star/20
+                    bg-gradient-to-b ${pillar.bgGradient} backdrop-blur-sm
+                    transition-all duration-500 hover:border-silver-star/40
+                    ${activePillar === pillar.id ? 'scale-105' : ''}
+                    ${visitedPillars.has(pillar.id) ? 'border-golden-rune/30' : ''}
+                  `}
+                  onClick={() => handlePillarClick(pillar.id)}
+                  whileHover={{ 
+                    y: -10,
+                    boxShadow: `0 20px 40px ${pillar.glowColor}`
+                  }}
+                  whileTap={{ scale: 0.98 }}
+                  data-testid={`pillar-${pillar.id}`}
+                >
+                  {/* Glow effect */}
+                  {activePillar === pillar.id && (
+                    <motion.div
+                      className="absolute inset-0 rounded-lg"
+                      style={{
+                        boxShadow: `inset 0 0 30px ${pillar.glowColor}, 0 0 50px ${pillar.glowColor}`
+                      }}
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                    />
+                  )}
+                  
+                  {/* Symbol */}
+                  <div className="text-6xl mb-4 text-center">
+                    {pillar.symbol}
+                  </div>
+                  
+                  {/* Title */}
+                  <h3 className="font-gothic text-2xl text-golden-rune mb-2 text-center">
+                    {pillar.title}
+                  </h3>
+                  
+                  {/* Subtitle */}
+                  <p className="text-silver-star/80 text-center font-medium">
+                    {pillar.subtitle}
+                  </p>
+                  
+                  {/* Click indicator */}
+                  <div className="text-center mt-4">
+                    <span className="text-silver-star/60 text-sm">
+                      {activePillar === pillar.id ? "Tap to close" : "Tap to reveal"}
+                    </span>
+                  </div>
+                </motion.div>
+
+                {/* Description Overlay */}
+                <AnimatePresence>
+                  {activePillar === pillar.id && (
+                    <motion.div
+                      className="absolute inset-0 z-20 bg-gradient-to-b from-black/95 to-black/90 rounded-lg p-6 flex items-center justify-center"
+                      initial={{ opacity: 0 }}
+                      animate={{ opacity: 1 }}
+                      exit={{ opacity: 0 }}
+                      transition={{ duration: 0.3 }}
+                      data-testid={`pillar-description-${pillar.id}`}
+                    >
+                      <div className="text-center">
+                        <div className="text-4xl mb-4">{pillar.symbol}</div>
+                        <h4 className="font-gothic text-xl text-golden-rune mb-4">
+                          {pillar.title}
+                        </h4>
+                        <p className="text-silver-star leading-relaxed">
+                          {pillar.description}
+                        </p>
+                      </div>
+                    </motion.div>
+                  )}
+                </AnimatePresence>
+              </motion.div>
+            ))}
+          </div>
+        </div>
+
+        {/* Call to Action */}
+        <motion.div
+          className="text-center mt-20"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 1 }}
+        >
+          <h2 className="font-gothic text-3xl text-golden-rune mb-6">
+            These are our foundations.
+          </h2>
+          <p className="text-xl text-silver-star/80 mb-8">
+            Are you ready to remember?
+          </p>
+          <motion.button
+            className="mystical-border bg-gradient-to-r from-shadow-purple to-deep-purple hover:from-deep-purple hover:to-shadow-purple px-8 py-3 rounded-lg font-gothic text-lg font-medium transition-all duration-500"
+            whileHover={{ 
+              scale: 1.05,
+              boxShadow: "0 0 30px hsl(43, 74%, 49%, 0.3)"
+            }}
+            whileTap={{ scale: 0.95 }}
+            data-testid="button-remember-cta"
+          >
+            <span className="text-golden-rune">Begin Your Journey</span>
+          </motion.button>
+        </motion.div>
+      </div>
+    </section>
+  );
+}

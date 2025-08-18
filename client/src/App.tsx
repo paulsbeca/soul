@@ -11,6 +11,7 @@ import GrimoireDetail from "@/pages/grimoire-detail";
 import CreateEntry from "@/pages/create-entry";
 import EntryDetail from "@/pages/entry-detail";
 import AstroCalendar from "@/pages/astro-calendar";
+import FourPillars from "@/pages/four-pillars";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -24,6 +25,7 @@ function Router() {
       <Route path="/grimoires/:id/entries/create" component={CreateEntry} />
       <Route path="/grimoires/:id/entries/:entryId" component={EntryDetail} />
       <Route path="/astro-calendar" component={AstroCalendar} />
+      <Route path="/four-pillars" component={FourPillars} />
       <Route component={NotFound} />
     </Switch>
   );
