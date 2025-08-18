@@ -74,7 +74,7 @@ export default function FourPillars() {
       data-testid="four-pillars-section"
     >
       {/* Dark overlay for mystical atmosphere */}
-      <div className="absolute inset-0 bg-black/80"></div>
+      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80"></div>
       
       {/* Navigation */}
       <nav className="relative z-50 p-6">
@@ -87,7 +87,6 @@ export default function FourPillars() {
           Return to Sacred Remembering
         </a>
       </nav>
-      <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80"></div>
       
       {/* Starfield effect */}
       <div className="absolute inset-0">
