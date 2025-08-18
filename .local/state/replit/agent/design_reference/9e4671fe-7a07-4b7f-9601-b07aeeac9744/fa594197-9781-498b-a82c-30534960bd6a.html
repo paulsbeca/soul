@@ -1,0 +1,571 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Jakintza Ruha - Where Wisdom Becomes Magic</title>
+    <script src="https://cdn.tailwindcss.com"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@400;500;600;700&family=Inter:wght@300;400;500;600&family=Crimson+Text:ital,wght@0,400;0,600;1,400&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    
+    <script>
+        tailwind.config = {
+            theme: {
+                extend: {
+                    fontFamily: {
+                        'playfair': ['Playfair Display', 'serif'],
+                        'inter': ['Inter', 'sans-serif'],
+                        'crimson': ['Crimson Text', 'serif'],
+                    },
+                    colors: {
+                        cosmic: {
+                            900: '#0B0B1A',
+                            800: '#1A1A2E',
+                            700: '#16213E',
+                        },
+                        mystic: {
+                            purple: '#4A148C',
+                            'purple-light': '#7B1FA2',
+                            blue: '#1A237E',
+                            'blue-light': '#3949AB',
+                            gold: '#FFB300',
+                            'gold-light': '#FFC107',
+                        },
+                        ethereal: '#F8F8FF',
+                    },
+                    animation: {
+                        'breathe': 'breathe 4s ease-in-out infinite',
+                        'float': 'float 6s ease-in-out infinite',
+                        'twinkle': 'twinkle 3s linear infinite',
+                        'fade-in-up': 'fadeInUp 1s ease-out',
+                        'glow-pulse': 'glowPulse 2s ease-in-out infinite',
+                    },
+                    keyframes: {
+                        breathe: {
+                            '0%, 100%': { transform: 'scale(1)', opacity: '0.8' },
+                            '50%': { transform: 'scale(1.05)', opacity: '1' },
+                        },
+                        float: {
+                            '0%, 100%': { transform: 'translateY(0px)' },
+                            '50%': { transform: 'translateY(-10px)' },
+                        },
+                        twinkle: {
+                            '0%, 100%': { opacity: '0.3' },
+                            '50%': { opacity: '1' },
+                        },
+                        fadeInUp: {
+                            '0%': { opacity: '0', transform: 'translateY(30px)' },
+                            '100%': { opacity: '1', transform: 'translateY(0)' },
+                        },
+                        glowPulse: {
+                            '0%, 100%': { boxShadow: '0 0 20px rgba(255, 179, 0, 0.5)' },
+                            '50%': { boxShadow: '0 0 40px rgba(255, 179, 0, 0.8)' },
+                        },
+                    },
+                }
+            }
+        };
+    </script>
+
+    <style>
+        .starfield {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+        }
+        
+        .star {
+            position: absolute;
+            width: 2px;
+            height: 2px;
+            background: white;
+            border-radius: 50%;
+            animation: twinkle 3s linear infinite;
+        }
+
+        .cosmic-gradient {
+            background: linear-gradient(135deg, #0B0B1A 0%, #1A1A2E 25%, #4A148C 50%, #1A237E 75%, #0B0B1A 100%);
+            background-size: 400% 400%;
+            animation: gradientShift 15s ease infinite;
+        }
+
+        @keyframes gradientShift {
+            0% { background-position: 0% 50%; }
+            50% { background-position: 100% 50%; }
+            100% { background-position: 0% 50%; }
+        }
+
+        .text-shadow-glow {
+            text-shadow: 0 0 20px rgba(255, 179, 0, 0.6);
+        }
+
+        .breathing-text {
+            animation: breathe 4s ease-in-out infinite;
+        }
+
+        .magic-border {
+            background: linear-gradient(45deg, #FFB300, #7B1FA2, #3949AB, #FFB300);
+            background-size: 400% 400%;
+            animation: gradientShift 3s ease infinite;
+        }
+    </style>
+</head>
+<body class="font-inter text-ethereal overflow-x-hidden">
+    <!-- Starfield Background -->
+    <div class="starfield" id="starfield"></div>
+    
+    <!-- Landing Page - Breathing Taglines -->
+    <section id="landing-page" class="min-h-screen cosmic-gradient flex items-center justify-center relative">
+        <div class="text-center px-6 max-w-4xl mx-auto">
+            <!-- Tagline 1 -->
+            <div id="tagline-1" class="tagline opacity-0 mb-8">
+                <h1 class="font-playfair text-5xl md:text-7xl font-bold breathing-text text-shadow-glow">
+                    Where Wisdom Becomes Magic.
+                </h1>
+            </div>
+            
+            <!-- Tagline 2 -->
+            <div id="tagline-2" class="tagline opacity-0 mb-8">
+                <h1 class="font-playfair text-5xl md:text-7xl font-bold breathing-text text-shadow-glow">
+                    Remember what your soul already knows.
+                </h1>
+            </div>
+            
+            <!-- Tagline 3 -->
+            <div id="tagline-3" class="tagline opacity-0 mb-8">
+                <h1 class="font-playfair text-5xl md:text-7xl font-bold breathing-text text-shadow-glow">
+                    Reclaim the power within your blood.
+                </h1>
+            </div>
+            
+            <!-- CTA Button -->
+            <div id="cta-button" class="opacity-0 mt-16">
+                <button onclick="showMainContent()" class="magic-border p-1 rounded-full hover:scale-105 transition-transform duration-300 animate-glow-pulse">
+                    <div class="bg-cosmic-900 px-12 py-6 rounded-full">
+                        <span class="font-playfair text-2xl md:text-3xl font-semibold text-mystic-gold">
+                            Are you ready to remember?
+                        </span>
+                    </div>
+                </button>
+            </div>
+        </div>
+    </section>
+
+    <!-- Main Content -->
+    <div id="main-content" class="hidden">
+        <!-- Navigation -->
+        <nav class="fixed top-0 w-full bg-cosmic-900/90 backdrop-blur-sm z-50 border-b border-mystic-purple/20">
+            <div class="max-w-7xl mx-auto px-6 py-4">
+                <div class="flex justify-between items-center">
+                    <div class="font-playfair text-2xl font-bold text-mystic-gold">
+                        Jakintza Ruha
+                    </div>
+                    <div class="hidden md:flex space-x-8">
+                        <a href="#story" class="hover:text-mystic-gold transition-colors">Story</a>
+                        <a href="#movement" class="hover:text-mystic-gold transition-colors">The Movement</a>
+                        <a href="#practice" class="hover:text-mystic-gold transition-colors">Practice</a>
+                        <a href="#athenaeum" class="hover:text-mystic-gold transition-colors">The Athenaeum</a>
+                        <a href="#newsletter" class="hover:text-mystic-gold transition-colors">Connect</a>
+                    </div>
+                    <div class="md:hidden">
+                        <i class="fas fa-bars text-2xl"></i>
+                    </div>
+                </div>
+            </div>
+        </nav>
+
+        <!-- Hero Section -->
+        <section class="min-h-screen cosmic-gradient flex items-center justify-center pt-24">
+            <div class="max-w-4xl mx-auto text-center px-6">
+                <!-- Ancient mystical symbols and spiritual awakening in nature -->
+                <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=800&h=600" alt="Ancient mystical symbols" class="w-32 h-32 mx-auto mb-8 rounded-full animate-float opacity-80" />
+                
+                <h2 class="font-playfair text-4xl md:text-6xl font-bold mb-8 text-shadow-glow animate-fade-in-up">
+                    Welcome to Jakintza Ruha
+                </h2>
+                <p class="text-xl md:text-2xl text-gray-300 mb-8 font-crimson italic animate-fade-in-up">
+                    Where ancient wisdom meets modern awakening
+                </p>
+                
+                <div class="grid md:grid-cols-2 gap-8 mt-16">
+                    <div class="bg-cosmic-800/50 p-8 rounded-2xl backdrop-blur-sm border border-mystic-purple/20">
+                        <h3 class="font-playfair text-2xl font-semibold mb-4 text-mystic-gold">Jakintza</h3>
+                        <p class="text-gray-300 font-crimson">
+                            From the ancient Basque language, meaning <em>"wisdom"</em> — the deep knowing that flows through bloodlines and beyond books.
+                        </p>
+                    </div>
+                    <div class="bg-cosmic-800/50 p-8 rounded-2xl backdrop-blur-sm border border-mystic-blue/20">
+                        <h3 class="font-playfair text-2xl font-semibold mb-4 text-mystic-gold">Ruha</h3>
+                        <p class="text-gray-300 font-crimson">
+                            Spirit. Breath. Life force. The sacred essence that was nearly stolen but can never truly be extinguished.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Story Section -->
+        <section id="story" class="py-24 bg-cosmic-900">
+            <div class="max-w-4xl mx-auto px-6">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-center mb-16 text-shadow-glow">
+                    My Story
+                </h2>
+                
+                <div class="space-y-12">
+                    <!-- Spiritual awakening in mystical forest setting -->
+                    <img src="https://images.unsplash.com/photo-1518837695005-2083093ee35b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=1200&h=400" alt="Mystical forest with spiritual energy" class="w-full h-64 object-cover rounded-2xl shadow-2xl mb-12" />
+                    
+                    <div class="prose prose-lg max-w-none text-gray-300 font-crimson space-y-8">
+                        <p class="text-xl leading-relaxed">
+                            I was born into Catholicism — baptized, blessed, and handed a Bible before I ever had the language to say no. I was raised to kneel, to obey, to fear. But even as a child, something ancient stirred in me — something wild and unscripted.
+                        </p>
+                        
+                        <p class="text-lg leading-relaxed">
+                            At fourteen, I bought my first oracle deck and hid it under my bed like it was contraband and sacred all at once. I printed spells off a dusty old website like they were scripture for girls like me — girls who heard whispers in the wind and knew the moon was more than a rock in the sky.
+                        </p>
+                        
+                        <blockquote class="bg-mystic-purple/20 p-8 rounded-2xl border-l-4 border-mystic-gold my-12">
+                            <p class="font-playfair text-2xl italic text-mystic-gold">
+                                "They called me the 'witchy girl' in school. I wore that like armor."
+                            </p>
+                        </blockquote>
+                        
+                        <p class="text-lg leading-relaxed">
+                            But then I fell in love. And love, when you don't know yourself yet, can be a dangerous thing. My ex-husband was raised in the strict arms of the Black Christian South — by a mother who saw anything outside the Bible as demonic. He looked at my altar like it was a battlefield.
+                        </p>
+                        
+                        <p class="text-lg leading-relaxed">
+                            So I threw it all away. Every tarot deck. Every page of spells. Every piece of the girl I was becoming.
+                        </p>
+                        
+                        <p class="text-lg leading-relaxed">
+                            From 19 to 23, I was deep in church — not just Sunday services, but full-on revival hours, twice a week. And me, trying to smother the fire inside of me with gospel and good-girl guilt.
+                        </p>
+                        
+                        <div class="bg-cosmic-800/50 p-8 rounded-2xl my-12">
+                            <p class="font-playfair text-2xl text-center text-mystic-gold mb-4">
+                                "Their God was too small for my spirit."
+                            </p>
+                            <p class="text-center text-lg">
+                                I didn't want salvation — I wanted sovereignty.
+                            </p>
+                        </div>
+                        
+                        <p class="text-lg leading-relaxed">
+                            And that's when I started remembering. Piece by piece, breath by breath — I reclaimed her. The witchy girl. The one who danced under the stars and called it prayer. The one who whispered to fire and felt her ancestors whisper back.
+                        </p>
+                        
+                        <p class="text-xl leading-relaxed font-semibold text-mystic-gold">
+                            And that is when Jakintza Ruha was born.
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Movement Section -->
+        <section id="movement" class="py-24 cosmic-gradient">
+            <div class="max-w-6xl mx-auto px-6">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-center mb-16 text-shadow-glow">
+                    The Movement
+                </h2>
+                
+                <div class="text-center mb-16">
+                    <p class="text-2xl font-crimson italic text-mystic-gold mb-8">
+                        This is a remembering. A reclaiming of what was always ours.
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-3 gap-8 mb-16">
+                    <div class="bg-cosmic-800/50 p-8 rounded-2xl backdrop-blur-sm border border-mystic-purple/20 text-center">
+                        <i class="fas fa-fist-raised text-4xl text-mystic-gold mb-4"></i>
+                        <h3 class="font-playfair text-2xl font-semibold mb-4">Resist Cultural Erasure</h3>
+                        <p class="text-gray-300">Standing against cultural appropriation, forced assimilation, and the systematic erasure of indigenous wisdom traditions.</p>
+                    </div>
+                    
+                    <div class="bg-cosmic-800/50 p-8 rounded-2xl backdrop-blur-sm border border-mystic-blue/20 text-center">
+                        <i class="fas fa-crown text-4xl text-mystic-gold mb-4"></i>
+                        <h3 class="font-playfair text-2xl font-semibold mb-4">Reclaim Our Power</h3>
+                        <p class="text-gray-300">Returning to the magic that flows through our bloodlines, honoring the wisdom our ancestors carried in their bones.</p>
+                    </div>
+                    
+                    <div class="bg-cosmic-800/50 p-8 rounded-2xl backdrop-blur-sm border border-mystic-purple/20 text-center">
+                        <i class="fas fa-fire text-4xl text-mystic-gold mb-4"></i>
+                        <h3 class="font-playfair text-2xl font-semibold mb-4">End the Persecution</h3>
+                        <p class="text-gray-300">No more burning at stakes. No more hiding in shadows. Magic is not evil — it is our birthright.</p>
+                    </div>
+                </div>
+                
+                <div class="bg-cosmic-900/70 p-12 rounded-3xl backdrop-blur-sm border border-mystic-gold/20">
+                    <blockquote class="font-playfair text-2xl md:text-3xl text-center italic text-mystic-gold leading-relaxed">
+                        "Jakintza Ruha is for the ones who never stopped hearing the hum of the earth beneath their feet. It is for the children who will grow up never having to choose between truth and tradition, because they will build their own."
+                    </blockquote>
+                </div>
+            </div>
+        </section>
+
+        <!-- Practice Section -->
+        <section id="practice" class="py-24 bg-cosmic-900">
+            <div class="max-w-6xl mx-auto px-6">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold text-center mb-16 text-shadow-glow">
+                    The Sacred Practice
+                </h2>
+                
+                <div class="text-center mb-16">
+                    <p class="text-xl text-gray-300 max-w-3xl mx-auto font-crimson">
+                        Spell work, witchcraft, and rituals walk hand in hand with ascension and Christ consciousness. 
+                        There is no separation between the mystical and the divine — only different languages for the same sacred truth.
+                    </p>
+                </div>
+                
+                <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
+                    <div class="bg-mystic-purple/20 p-8 rounded-2xl border border-mystic-purple/30 text-center hover:bg-mystic-purple/30 transition-colors">
+                        <!-- Crystals and healing stones in natural setting -->
+                        <img src="https://pixabay.com/get/g91f774b5f376a962ecd840917220db0b09118a589f9a81e24859abbd71a5d7959c0d40597d879658f47da532cfa34e80647de37dbe5faebb6641492d4f88a44b_1280.jpg" alt="Healing crystals" class="w-full h-32 object-cover rounded-xl mb-6" />
+                        <h3 class="font-playfair text-xl font-semibold mb-4 text-mystic-gold">Crystals & Stones</h3>
+                        <p class="text-gray-300 text-sm">The earth's medicine, carrying frequencies of healing and wisdom in their crystalline structure.</p>
+                    </div>
+                    
+                    <div class="bg-mystic-blue/20 p-8 rounded-2xl border border-mystic-blue/30 text-center hover:bg-mystic-blue/30 transition-colors">
+                        <!-- Herbs and botanicals for spiritual practice -->
+                        <img src="https://pixabay.com/get/g68b0b937b7ea5c2965a0beae5898190622857364b3f1baae97c76c075fceef4e260295d00e11611e36bfdcb8ac8dd71f4d039a215126b96740bb28ecdf119c56_1280.jpg" alt="Spiritual herbs" class="w-full h-32 object-cover rounded-xl mb-6" />
+                        <h3 class="font-playfair text-xl font-semibold mb-4 text-mystic-gold">Herbs & Plants</h3>
+                        <p class="text-gray-300 text-sm">Plant allies that have walked alongside humanity for millennia, offering healing and spiritual communion.</p>
+                    </div>
+                    
+                    <div class="bg-mystic-purple/20 p-8 rounded-2xl border border-mystic-purple/30 text-center hover:bg-mystic-purple/30 transition-colors">
+                        <!-- Astrological chart and celestial symbols -->
+                        <img src="https://images.unsplash.com/photo-1506905925346-21bda4d32df4?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&h=200" alt="Celestial astrology" class="w-full h-32 object-cover rounded-xl mb-6" />
+                        <h3 class="font-playfair text-xl font-semibold mb-4 text-mystic-gold">Astrology</h3>
+                        <p class="text-gray-300 text-sm">Reading the cosmic story written in the stars, understanding our place in the greater celestial dance.</p>
+                    </div>
+                    
+                    <div class="bg-mystic-blue/20 p-8 rounded-2xl border border-mystic-blue/30 text-center hover:bg-mystic-blue/30 transition-colors">
+                        <!-- Ritual tools and sacred ceremony -->
+                        <img src="https://images.unsplash.com/photo-1571019613454-1cb2f99b2d8b?ixlib=rb-4.0.3&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=300&h=200" alt="Sacred ritual tools" class="w-full h-32 object-cover rounded-xl mb-6" />
+                        <h3 class="font-playfair text-xl font-semibold mb-4 text-mystic-gold">Ritual & Ceremony</h3>
+                        <p class="text-gray-300 text-sm">Sacred acts that bridge the seen and unseen worlds, creating space for transformation and communion.</p>
+                    </div>
+                </div>
+                
+                <div class="mt-16 text-center">
+                    <a href="#" class="inline-block bg-gradient-to-r from-mystic-purple to-mystic-blue px-8 py-4 rounded-full font-semibold hover:scale-105 transition-transform duration-300">
+                        Create Your Digital Grimoire
+                    </a>
+                </div>
+            </div>
+        </section>
+
+        <!-- The Athenaeum Section -->
+        <section id="athenaeum" class="py-24 cosmic-gradient">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-8 text-shadow-glow">
+                    The Athenaeum
+                </h2>
+                <p class="text-2xl text-mystic-gold font-crimson italic mb-8">Coming Soon</p>
+                <p class="text-xl text-gray-300 mb-12 max-w-2xl mx-auto font-crimson">
+                    A sacred library of wisdom, where ancient knowledge meets modern understanding. 
+                    A place for deep learning, community connection, and spiritual growth.
+                </p>
+                
+                <div class="bg-cosmic-800/50 p-12 rounded-3xl backdrop-blur-sm border border-mystic-gold/20 mb-12">
+                    <h3 class="font-playfair text-2xl font-semibold mb-6 text-mystic-gold">Living Calendar</h3>
+                    <p class="text-gray-300 mb-8 font-crimson">
+                        Track lunar phases, sabbats, and cosmic alignments with our integrated astrological calendar.
+                    </p>
+                    <a href="https://replit.com/@avipratt32816/AstroCal?s=app" target="_blank" class="inline-block bg-mystic-gold text-cosmic-900 px-8 py-3 rounded-full font-semibold hover:bg-mystic-gold-light transition-colors">
+                        Explore AstroCal
+                    </a>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8 mt-16">
+                    <div class="bg-cosmic-800/30 p-8 rounded-2xl border border-mystic-purple/20">
+                        <i class="fas fa-book-open text-3xl text-mystic-gold mb-4"></i>
+                        <h4 class="font-playfair text-xl font-semibold mb-3">Digital Grimoire</h4>
+                        <p class="text-gray-300 text-sm">Your personal Book of Shadows in the digital realm</p>
+                    </div>
+                    <div class="bg-cosmic-800/30 p-8 rounded-2xl border border-mystic-blue/20">
+                        <i class="fas fa-mirror text-3xl text-mystic-gold mb-4"></i>
+                        <h4 class="font-playfair text-xl font-semibold mb-3">Book of Mirrors</h4>
+                        <p class="text-gray-300 text-sm">Reflection and shadow work for deep transformation</p>
+                    </div>
+                    <div class="bg-cosmic-800/30 p-8 rounded-2xl border border-mystic-purple/20">
+                        <i class="fas fa-star text-3xl text-mystic-gold mb-4"></i>
+                        <h4 class="font-playfair text-xl font-semibold mb-3">Book of Stars</h4>
+                        <p class="text-gray-300 text-sm">Celestial wisdom and astrological insights</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Newsletter Section -->
+        <section id="newsletter" class="py-24 bg-cosmic-900">
+            <div class="max-w-4xl mx-auto px-6 text-center">
+                <h2 class="font-playfair text-4xl md:text-5xl font-bold mb-8 text-shadow-glow">
+                    Join the Circle
+                </h2>
+                <p class="text-xl text-gray-300 mb-12 font-crimson">
+                    Receive wisdom, rituals, and updates from the Jakintza Ruha community. 
+                    No spam, only sacred offerings delivered when the moon calls for it.
+                </p>
+                
+                <div class="bg-cosmic-800/50 p-12 rounded-3xl backdrop-blur-sm border border-mystic-gold/20 max-w-2xl mx-auto">
+                    <form class="space-y-6" onsubmit="handleNewsletter(event)">
+                        <div>
+                            <input type="text" placeholder="Your Name" required 
+                                   class="w-full p-4 rounded-xl bg-cosmic-700 border border-mystic-purple/30 text-ethereal placeholder-gray-400 focus:outline-none focus:border-mystic-gold transition-colors">
+                        </div>
+                        <div>
+                            <input type="email" placeholder="Your Email" required 
+                                   class="w-full p-4 rounded-xl bg-cosmic-700 border border-mystic-purple/30 text-ethereal placeholder-gray-400 focus:outline-none focus:border-mystic-gold transition-colors">
+                        </div>
+                        <button type="submit" class="w-full magic-border p-1 rounded-xl hover:scale-105 transition-transform duration-300">
+                            <div class="bg-cosmic-800 py-4 rounded-xl">
+                                <span class="font-playfair text-xl font-semibold text-mystic-gold">
+                                    Begin the Journey
+                                </span>
+                            </div>
+                        </button>
+                    </form>
+                    
+                    <p class="text-sm text-gray-400 mt-6">
+                        Emails will be sent to: <span class="text-mystic-gold">beca@jakintzaruha.com</span>
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Footer -->
+        <footer class="py-16 cosmic-gradient border-t border-mystic-purple/20">
+            <div class="max-w-6xl mx-auto px-6">
+                <div class="text-center mb-12">
+                    <h3 class="font-playfair text-3xl font-bold text-mystic-gold mb-4">Jakintza Ruha</h3>
+                    <p class="text-gray-300 font-crimson italic">Where Wisdom Becomes Magic</p>
+                </div>
+                
+                <div class="grid md:grid-cols-3 gap-8 mb-12">
+                    <div class="text-center">
+                        <h4 class="font-playfair text-xl font-semibold mb-4 text-mystic-gold">Connect</h4>
+                        <div class="space-y-2">
+                            <p><a href="mailto:beca@jakintzaruha.com" class="hover:text-mystic-gold transition-colors">beca@jakintzaruha.com</a></p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="font-playfair text-xl font-semibold mb-4 text-mystic-gold">Resources</h4>
+                        <div class="space-y-2">
+                            <p><a href="#" class="hover:text-mystic-gold transition-colors">Digital Grimoire</a></p>
+                            <p><a href="https://replit.com/@avipratt32816/AstroCal?s=app" target="_blank" class="hover:text-mystic-gold transition-colors">Living Calendar</a></p>
+                        </div>
+                    </div>
+                    <div class="text-center">
+                        <h4 class="font-playfair text-xl font-semibold mb-4 text-mystic-gold">The Movement</h4>
+                        <div class="space-y-2">
+                            <p>Reclaim</p>
+                            <p>Remember</p>
+                            <p>Resist</p>
+                        </div>
+                    </div>
+                </div>
+                
+                <div class="text-center text-gray-400 text-sm">
+                    <p>&copy; 2024 Jakintza Ruha. This is my legacy. My rebellion. My remembering.</p>
+                </div>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        // Create starfield effect
+        (function createStarfield() {
+            const starfield = document.getElementById('starfield');
+            const numStars = 100;
+            
+            for (let i = 0; i < numStars; i++) {
+                const star = document.createElement('div');
+                star.className = 'star';
+                star.style.left = Math.random() * 100 + '%';
+                star.style.top = Math.random() * 100 + '%';
+                star.style.animationDelay = Math.random() * 3 + 's';
+                starfield.appendChild(star);
+            }
+        })();
+
+        // Landing page breathing taglines animation
+        (function initLandingAnimation() {
+            const taglines = document.querySelectorAll('.tagline');
+            const ctaButton = document.getElementById('cta-button');
+            let currentTagline = 0;
+            
+            function showNextTagline() {
+                if (currentTagline < taglines.length) {
+                    taglines[currentTagline].style.opacity = '1';
+                    taglines[currentTagline].style.animation = 'fadeInUp 1s ease-out, breathe 4s ease-in-out infinite 1s';
+                    currentTagline++;
+                    setTimeout(showNextTagline, 6000); // Show next tagline after 6 seconds
+                } else {
+                    // Show CTA button after all taglines
+                    setTimeout(() => {
+                        ctaButton.style.opacity = '1';
+                        ctaButton.style.animation = 'fadeInUp 1s ease-out';
+                    }, 2000);
+                }
+            }
+            
+            // Start the animation after a short delay
+            setTimeout(showNextTagline, 1000);
+        })();
+
+        // Show main content
+        function showMainContent() {
+            document.getElementById('landing-page').style.display = 'none';
+            document.getElementById('main-content').classList.remove('hidden');
+            document.getElementById('main-content').style.animation = 'fadeInUp 1s ease-out';
+        }
+
+        // Newsletter form handler
+        function handleNewsletter(event) {
+            event.preventDefault();
+            // TODO: Implement newsletter subscription logic
+            alert('Thank you for joining our circle! You will receive wisdom when the moon calls for it.');
+        }
+
+        // Smooth scrolling for navigation links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+
+        // Add scroll animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.style.animation = 'fadeInUp 1s ease-out';
+                }
+            });
+        }, observerOptions);
+
+        // Observe all sections for animation
+        document.querySelectorAll('section').forEach(section => {
+            observer.observe(section);
+        });
+    </script>
+</body>
+</html>

@@ -2,9 +2,18 @@
 
 ## Overview
 
-This is a full-stack web application for Jakintza Ruha, a mystical learning platform focused on spiritual education and wisdom sharing. The project features a modern React frontend with a cosmic/mystical theme, built on top of an Express.js backend with PostgreSQL database integration using Drizzle ORM.
+This is a full-stack web application for Jakintza Ruha, a mystical learning platform focused on spiritual education and wisdom sharing. The project features a modern React frontend with a darker celestial gothic academia theme, built on top of an Express.js backend with PostgreSQL database integration using Drizzle ORM.
 
-The application includes a landing page with animated mystical elements, a main content section showcasing the platform's story and mission, and a newsletter subscription system. The design emphasizes a dark, cosmic aesthetic with golden accents and smooth animations to create an immersive spiritual learning experience.
+The application includes a stunning landing page with the official Jakintza Ruha logo, mystical breathing taglines, and a cosmic background image. The main content section showcases Beca's personal testimony, the platform's sacred mission, and information about The Athenaeum. The design emphasizes a very dark cosmic aesthetic with void black and midnight purple tones, golden accents, and subtle mystical elements to create an immersive spiritual learning experience.
+
+## Recent Changes (August 2025)
+
+- **Logo Integration**: Replaced all logo placeholders with the official Jakintza Ruha logo featuring sacred geometry and mystical symbols
+- **Darker Theme**: Enhanced the cosmic background with much darker tones (void black, midnight purple) for a more celestial gothic academia feel
+- **Simplified Animations**: Removed jumpy animations and replaced with smooth, static elements for better user experience
+- **Transparency Improvements**: Made overlay more transparent (60-75%) to showcase the beautiful cosmic background image
+- **Content Layout**: Removed duplicate taglines and large animated elements for cleaner presentation
+- **Newsletter Integration**: Connected newsletter signup to beca@jakintzaruha.com for direct communication
 
 ## User Preferences
 
