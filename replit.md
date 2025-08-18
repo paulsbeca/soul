@@ -21,6 +21,7 @@ The application includes a stunning landing page with the official Jakintza Ruha
 - **Fixed Navigation Links**: Resolved clickability issues for "Explore Calendar" (AstroCal integration) and "Enter Sacred Space" (grimoire access) links
 - **AstroCal Integration**: Integrated full AstroCal functionality directly into the platform with cosmic calendar, lunar guidance, and celestial insights
 - **Four Pillars Temple**: Added immersive cosmic temple experience showcasing the platform's four foundational values with interactive mystical elements
+- **Aionara AI Spirit Guide**: Integrated OpenAI-powered celestial spirit guide with mystical chat interface and cosmic wisdom responses
 
 ## User Preferences
 

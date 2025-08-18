@@ -2,6 +2,7 @@ import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertNewsletterSchema, insertGrimoireSchema, insertGrimoireEntrySchema } from "@shared/schema";
+import { getAionaraResponse } from "./openai";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -201,6 +202,27 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json({ message: "Entry deleted successfully" });
     } catch (error) {
       res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Aionara AI chat endpoint
+  app.post("/api/aionara/chat", async (req, res) => {
+    try {
+      const { message, conversationHistory } = req.body;
+      
+      if (!message || typeof message !== 'string') {
+        return res.status(400).json({ 
+          message: "Message is required" 
+        });
+      }
+
+      const response = await getAionaraResponse(message, conversationHistory || []);
+      res.json({ response });
+    } catch (error) {
+      console.error("Aionara chat error:", error);
+      res.status(500).json({ 
+        message: "The celestial connection is momentarily disrupted. Please try again." 
+      });
     }
   });
 
