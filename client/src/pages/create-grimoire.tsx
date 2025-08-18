@@ -73,10 +73,7 @@ export default function CreateGrimoire() {
 
   const createMutation = useMutation({
     mutationFn: async (data: InsertGrimoire) => {
-      const response = await apiRequest("/api/grimoires", {
-        method: "POST",
-        body: JSON.stringify(data),
-      });
+      const response = await apiRequest("POST", "/api/grimoires", data);
       return response.json();
     },
     onSuccess: (result: any) => {

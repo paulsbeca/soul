@@ -300,13 +300,13 @@ export default function MainContent() {
               <p className="text-ethereal-white/90 mb-6">
                 Create your digital Book of Shadows, Book of Mirrors, or Book of Stars.
               </p>
-              <button 
-                onClick={() => window.location.href = '/grimoires'}
-                className="bg-gradient-to-r from-shadow-purple to-deep-purple px-6 py-3 rounded-lg hover:scale-105 transition-transform"
+              <a 
+                href="/grimoires"
+                className="inline-block bg-gradient-to-r from-shadow-purple to-deep-purple px-6 py-3 rounded-lg hover:scale-105 transition-transform"
                 data-testid="button-grimoire"
               >
                 Enter Sacred Space
-              </button>
+              </a>
             </motion.div>
           </div>
           
