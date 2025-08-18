@@ -31,76 +31,21 @@ export default function Landing() {
       <div className="overlay-dark absolute inset-0"></div>
       <div className="starfield absolute inset-0"></div>
       
-      {/* Floating mystical particles */}
+      {/* Static mystical particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
-        <motion.div
-          className="absolute top-1/4 left-1/4 w-2 h-2 bg-golden-rune rounded-full"
-          animate={{
-            opacity: [0.4, 1, 0.4],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 2,
-            repeat: 9999,
-            ease: "easeInOut",
-          }}
-        />
-        <motion.div
-          className="absolute top-3/4 right-1/3 w-1 h-1 bg-silver-star rounded-full"
-          animate={{
-            opacity: [0.4, 1, 0.4],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 2,
-            repeat: 9999,
-            ease: "easeInOut",
-            delay: 1,
-          }}
-        />
-        <motion.div
-          className="absolute top-1/2 left-3/4 w-1.5 h-1.5 bg-golden-rune rounded-full"
-          animate={{
-            opacity: [0.4, 1, 0.4],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 2,
-            repeat: 9999,
-            ease: "easeInOut",
-            delay: 2,
-          }}
-        />
-        <motion.div
-          className="absolute top-1/6 right-1/4 w-1 h-1 bg-silver-star rounded-full"
-          animate={{
-            opacity: [0.4, 1, 0.4],
-            scale: [1, 1.1, 1],
-          }}
-          transition={{
-            duration: 2,
-            repeat: 9999,
-            ease: "easeInOut",
-            delay: 3,
-          }}
-        />
+        <div className="absolute top-1/4 left-1/4 w-2 h-2 bg-golden-rune rounded-full opacity-70" />
+        <div className="absolute top-3/4 right-1/3 w-1 h-1 bg-silver-star rounded-full opacity-60" />
+        <div className="absolute top-1/2 left-3/4 w-1.5 h-1.5 bg-golden-rune rounded-full opacity-80" />
+        <div className="absolute top-1/6 right-1/4 w-1 h-1 bg-silver-star rounded-full opacity-50" />
+        <div className="absolute top-2/3 left-1/6 w-1 h-1 bg-golden-rune rounded-full opacity-60" />
+        <div className="absolute top-1/3 right-2/3 w-0.5 h-0.5 bg-silver-star rounded-full opacity-70" />
       </div>
       
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
         {/* Mystical Logo/Symbol */}
-        <motion.div
-          className="mb-12"
-          animate={{
-            y: [0, -10, 0],
-          }}
-          transition={{
-            duration: 6,
-            repeat: 9999,
-            ease: "easeInOut",
-          }}
-        >
+        <div className="mb-12">
           <MysticalSymbol />
-        </motion.div>
+        </div>
         
         {/* Main Title */}
         <motion.h1
