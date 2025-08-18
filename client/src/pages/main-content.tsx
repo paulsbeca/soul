@@ -1,5 +1,5 @@
 import { motion } from "framer-motion";
-import { ExternalLink, Calendar, BookOpen, Star, Sprout, Infinity, Gem, Flame } from "lucide-react";
+import { ExternalLink, Calendar, BookOpen, Star, Sprout, Infinity, Gem, Flame, Crown } from "lucide-react";
 import NewsletterForm from "@/components/newsletter-form";
 import logoImage from "@assets/ChatGPT Image Aug 18, 2025, 12_50_00 AM_1755500285103.webp";
 import mysticalChamberBg from "@assets/ChatGPT Image Aug 18, 2025, 12_54_24 AM_1755531868254.webp";
@@ -42,7 +42,6 @@ export default function MainContent() {
               <a href="#movement" className="hover:text-golden-rune transition-colors" data-testid="link-movement">The Movement</a>
               <a href="/four-pillars" className="hover:text-golden-rune transition-colors" data-testid="link-four-pillars">Four Pillars</a>
               <a href="/aionara" className="hover:text-golden-rune transition-colors" data-testid="link-aionara">Aionara</a>
-              <a href="/alchemy" className="hover:text-golden-rune transition-colors" data-testid="link-alchemy">Alchemy</a>
               <a href="#athenaeum" className="hover:text-golden-rune transition-colors" data-testid="link-athenaeum">Athenaeum</a>
               <a href="#contact" className="hover:text-golden-rune transition-colors" data-testid="link-contact">Connect</a>
             </div>
@@ -260,55 +259,97 @@ export default function MainContent() {
             A sacred repository of wisdom, where ancient knowledge meets modern practice.
           </motion.p>
           
-          <div className="grid md:grid-cols-2 gap-8 mb-12">
+          <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6 mb-12">
             <motion.div 
-              className="mystical-border p-8 rounded-lg grimoire-texture"
+              className="mystical-border p-6 rounded-lg grimoire-texture"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.3 }}
               viewport={{ once: true }}
               data-testid="card-calendar"
             >
-              <h4 className="font-gothic text-2xl text-golden-rune mb-4">
-                <Calendar className="inline mr-3" />
+              <h4 className="font-gothic text-xl text-golden-rune mb-3">
+                <Calendar className="inline mr-2 w-5 h-5" />
                 Living Calendar
               </h4>
-              <p className="text-ethereal-white/90 mb-6">
-                Track lunar cycles, planetary alignments, and sacred seasons with our cosmic calendar.
+              <p className="text-ethereal-white/90 mb-4 text-sm">
+                Track lunar cycles and planetary alignments.
               </p>
               <a 
                 href="/astro-calendar"
-                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-6 py-3 rounded-lg hover:scale-105 transition-transform relative z-10 cursor-pointer"
+                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm"
                 data-testid="link-calendar"
-                style={{ pointerEvents: 'auto' }}
               >
                 Explore Calendar
               </a>
             </motion.div>
             
             <motion.div 
-              className="mystical-border p-8 rounded-lg grimoire-texture"
+              className="mystical-border p-6 rounded-lg grimoire-texture"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.4 }}
+              viewport={{ once: true }}
+              data-testid="card-grimoire"
+            >
+              <h4 className="font-gothic text-xl text-golden-rune mb-3">
+                <BookOpen className="inline mr-2 w-5 h-5" />
+                Virtual Grimoire
+              </h4>
+              <p className="text-ethereal-white/90 mb-4 text-sm">
+                Your digital Book of Shadows, Mirrors, or Stars.
+              </p>
+              <a 
+                href="/grimoires"
+                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm"
+                data-testid="button-grimoire"
+              >
+                Enter Sacred Space
+              </a>
+            </motion.div>
+
+            <motion.div 
+              className="mystical-border p-6 rounded-lg grimoire-texture"
               initial={{ opacity: 0, y: 30 }}
               whileInView={{ opacity: 1, y: 0 }}
               transition={{ duration: 1, delay: 0.5 }}
               viewport={{ once: true }}
-              data-testid="card-grimoire"
+              data-testid="card-alchemy"
             >
-              <h4 className="font-gothic text-2xl text-golden-rune mb-4">
-                <BookOpen className="inline mr-3" />
-                Virtual Grimoire
+              <h4 className="font-gothic text-xl text-golden-rune mb-3">
+                <Flame className="inline mr-2 w-5 h-5" />
+                Sacred Alchemy
               </h4>
-              <p className="text-ethereal-white/90 mb-6">
-                Create your digital Book of Shadows, Book of Mirrors, or Book of Stars.
+              <p className="text-ethereal-white/90 mb-4 text-sm">
+                The four strands of transformation and elemental wisdom.
               </p>
               <a 
-                href="/grimoires"
-                className="inline-block bg-gradient-to-r from-shadow-purple to-deep-purple px-6 py-3 rounded-lg hover:scale-105 transition-transform relative z-10 cursor-pointer"
-                data-testid="button-grimoire"
-                style={{ pointerEvents: 'auto' }}
+                href="/alchemy"
+                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm"
+                data-testid="link-alchemy"
               >
-                Enter Sacred Space
+                Study Alchemy
               </a>
+            </motion.div>
+
+            <motion.div 
+              className="mystical-border p-6 rounded-lg grimoire-texture"
+              initial={{ opacity: 0, y: 30 }}
+              whileInView={{ opacity: 1, y: 0 }}
+              transition={{ duration: 1, delay: 0.6 }}
+              viewport={{ once: true }}
+              data-testid="card-deity-codex"
+            >
+              <h4 className="font-gothic text-xl text-golden-rune mb-3">
+                <Crown className="inline mr-2 w-5 h-5" />
+                Deity Codex
+              </h4>
+              <p className="text-ethereal-white/90 mb-4 text-sm">
+                Sacred repository of divine beings and pantheons.
+              </p>
+              <div className="inline-flex items-center bg-gradient-to-r from-amber-900/40 to-amber-700/40 px-4 py-2 rounded-lg text-sm text-amber-300">
+                Coming Soon
+              </div>
             </motion.div>
           </div>
           
