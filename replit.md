@@ -18,6 +18,7 @@ The application includes a stunning landing page with the official Jakintza Ruha
 - **Mystical Chamber Background**: Added beautiful mystical chamber background for all non-main pages while preserving the original cosmic landing page background
 - **Virtual Grimoire System**: Complete implementation with three sacred paths (Shadows, Mirrors, Stars), creation interface, and backend API
 - **Fixed Navigation Links**: Resolved clickability issues for "Explore Calendar" (AstroCal integration) and "Enter Sacred Space" (grimoire access) links
+- **AstroCal Integration**: Integrated full AstroCal functionality directly into the platform with cosmic calendar, lunar guidance, and celestial insights
 
 ## User Preferences
 

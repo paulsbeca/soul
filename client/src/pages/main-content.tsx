@@ -274,15 +274,12 @@ export default function MainContent() {
                 Track lunar cycles, planetary alignments, and sacred seasons with our cosmic calendar.
               </p>
               <a 
-                href="https://replit.com/@avipratt32816/AstroCal?s=app" 
-                target="_blank" 
-                rel="noopener noreferrer"
+                href="/astro-calendar"
                 className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-6 py-3 rounded-lg hover:scale-105 transition-transform relative z-10 cursor-pointer"
                 data-testid="link-calendar"
                 style={{ pointerEvents: 'auto' }}
               >
                 Explore Calendar
-                <ExternalLink className="ml-2 w-4 h-4" />
               </a>
             </motion.div>
             
