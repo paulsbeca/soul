@@ -83,7 +83,7 @@ export default function MainContent() {
               <h3 className="font-gothic text-3xl md:text-4xl font-semibold text-golden-rune" data-testid="meaning-title">
                 The Sacred Names
               </h3>
-              <div className="space-y-6">
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="mystical-border p-6 rounded-lg grimoire-texture" data-testid="card-jakintza">
                   <h4 className="font-gothic text-2xl text-silver-star mb-3">Jakintza</h4>
                   <p className="text-ethereal-white/80">"Wisdom" in Basque — the ancient knowing that flows through bloodlines and whispers in the wind.</p>
