@@ -86,11 +86,11 @@ export default function MainContent() {
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
                 <div className="mystical-border p-6 rounded-lg grimoire-texture" data-testid="card-jakintza">
                   <h4 className="font-gothic text-2xl text-silver-star mb-3">Jakintza</h4>
-                  <p className="text-ethereal-white/80">"Wisdom" in Basque — the ancient knowing that flows through bloodlines and whispers in the wind.</p>
+                  <p className="text-ethereal-white/80">"Wisdom" in Basque — the ancient knowing that flows through bloodlines and whispers in the wind. This sacred word carries the weight of ancestral memory, the deep understanding that transcends books and institutions. It is the wisdom of the earth, the stars, and the sacred feminine that has been passed down through generations of wise women and keepers of the old ways.</p>
                 </div>
                 <div className="mystical-border p-6 rounded-lg grimoire-texture" data-testid="card-ruha">
                   <h4 className="font-gothic text-2xl text-silver-star mb-3">Ruha</h4>
-                  <p className="text-ethereal-white/80">"Spirit" or "breath" — the sacred life force that was nearly stolen, now reclaimed and shared.</p>
+                  <p className="text-ethereal-white/80">"Spirit" or "breath" — the sacred life force that was nearly stolen, now reclaimed and shared. This is the divine essence that animates all living things, the cosmic breath that connects us to the universe. It represents the spiritual sovereignty that no institution can claim, the wild magic that lives within every seeker who dares to remember their true nature.</p>
                 </div>
               </div>
             </motion.div>
