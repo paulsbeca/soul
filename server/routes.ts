@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertNewsletterSchema } from "@shared/schema";
+import { insertNewsletterSchema, insertGrimoireSchema, insertGrimoireEntrySchema } from "@shared/schema";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -47,6 +47,113 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.status(500).json({ 
         message: "Internal server error" 
       });
+    }
+  });
+
+  // Grimoire routes
+  // Get all grimoires
+  app.get("/api/grimoires", async (req, res) => {
+    try {
+      const grimoires = await storage.getAllGrimoires();
+      res.json(grimoires);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Get specific grimoire
+  app.get("/api/grimoires/:id", async (req, res) => {
+    try {
+      const grimoire = await storage.getGrimoire(req.params.id);
+      if (!grimoire) {
+        return res.status(404).json({ message: "Grimoire not found" });
+      }
+      res.json(grimoire);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Create grimoire
+  app.post("/api/grimoires", async (req, res) => {
+    try {
+      const validatedData = insertGrimoireSchema.parse(req.body);
+      const grimoire = await storage.createGrimoire(validatedData);
+      res.status(201).json(grimoire);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ 
+          message: "Invalid grimoire data",
+          errors: error.errors 
+        });
+      } else {
+        res.status(500).json({ message: "Internal server error" });
+      }
+    }
+  });
+
+  // Update grimoire
+  app.patch("/api/grimoires/:id", async (req, res) => {
+    try {
+      const validatedData = insertGrimoireSchema.partial().parse(req.body);
+      const grimoire = await storage.updateGrimoire(req.params.id, validatedData);
+      if (!grimoire) {
+        return res.status(404).json({ message: "Grimoire not found" });
+      }
+      res.json(grimoire);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ 
+          message: "Invalid grimoire data",
+          errors: error.errors 
+        });
+      } else {
+        res.status(500).json({ message: "Internal server error" });
+      }
+    }
+  });
+
+  // Delete grimoire
+  app.delete("/api/grimoires/:id", async (req, res) => {
+    try {
+      const success = await storage.deleteGrimoire(req.params.id);
+      if (!success) {
+        return res.status(404).json({ message: "Grimoire not found" });
+      }
+      res.json({ message: "Grimoire deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Get grimoire entries
+  app.get("/api/grimoires/:id/entries", async (req, res) => {
+    try {
+      const entries = await storage.getGrimoireEntries(req.params.id);
+      res.json(entries);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Create grimoire entry
+  app.post("/api/grimoires/:id/entries", async (req, res) => {
+    try {
+      const validatedData = insertGrimoireEntrySchema.parse({
+        ...req.body,
+        grimoireId: req.params.id
+      });
+      const entry = await storage.createGrimoireEntry(validatedData);
+      res.status(201).json(entry);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ 
+          message: "Invalid entry data",
+          errors: error.errors 
+        });
+      } else {
+        res.status(500).json({ message: "Internal server error" });
+      }
     }
   });
 

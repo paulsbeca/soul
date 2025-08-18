@@ -5,6 +5,8 @@ import { Toaster } from "@/components/ui/toaster";
 import { TooltipProvider } from "@/components/ui/tooltip";
 import Landing from "@/pages/landing";
 import MainContent from "@/pages/main-content";
+import Grimoires from "@/pages/grimoires";
+import CreateGrimoire from "@/pages/create-grimoire";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -12,6 +14,8 @@ function Router() {
     <Switch>
       <Route path="/" component={Landing} />
       <Route path="/remember" component={MainContent} />
+      <Route path="/grimoires" component={Grimoires} />
+      <Route path="/grimoires/create" component={CreateGrimoire} />
       <Route component={NotFound} />
     </Switch>
   );

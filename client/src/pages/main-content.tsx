@@ -301,10 +301,11 @@ export default function MainContent() {
                 Create your digital Book of Shadows, Book of Mirrors, or Book of Stars.
               </p>
               <button 
+                onClick={() => window.location.href = '/grimoires'}
                 className="bg-gradient-to-r from-shadow-purple to-deep-purple px-6 py-3 rounded-lg hover:scale-105 transition-transform"
                 data-testid="button-grimoire"
               >
-                Coming Soon
+                Enter Sacred Space
               </button>
             </motion.div>
           </div>
