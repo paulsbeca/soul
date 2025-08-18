@@ -47,17 +47,6 @@ export default function Landing() {
           <MysticalSymbol />
         </div>
         
-        {/* Main Title - Logo already displayed above, so we can add a subtitle */}
-        <motion.h1
-          className="font-gothic text-2xl md:text-3xl font-medium mb-16 tracking-wide text-silver-star/90"
-          initial={{ opacity: 0, y: 30 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 1, ease: "easeOut" }}
-          data-testid="main-title"
-        >
-          Where Wisdom Becomes Magic
-        </motion.h1>
-        
         {/* Breathing Taglines */}
         <BreathingTaglines onComplete={handleTaglinesComplete} />
         
