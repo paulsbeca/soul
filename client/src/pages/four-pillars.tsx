@@ -1,10 +1,11 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import backgroundImage from "@assets/background_1755498699765.webp";
+import { CulturalRespectIcon, CosmicVisionIcon, AncestralStewardshipIcon, MagicScienceIcon } from "@/components/pillar-icons";
 
 interface Pillar {
   id: string;
-  symbol: string;
+  icon: React.ComponentType<{ className?: string }>;
   title: string;
   subtitle: string;
   description: string;
@@ -15,7 +16,7 @@ interface Pillar {
 const pillars: Pillar[] = [
   {
     id: "cultural-respect",
-    symbol: "🌍",
+    icon: CulturalRespectIcon,
     title: "Cultural Respect",
     subtitle: "Honoring what was erased.",
     description: "We stand against appropriation, assimilation, and erasure. We protect Indigenous wisdom, sacred practices, and ancestral languages.",
@@ -24,7 +25,7 @@ const pillars: Pillar[] = [
   },
   {
     id: "cosmic-vision",
-    symbol: "✨",
+    icon: CosmicVisionIcon,
     title: "Cosmic Vision",
     subtitle: "Remembering our place in the universe.",
     description: "The cosmos is within us. Astrology, Christ Consciousness, and celestial cycles guide us to soul remembrance.",
@@ -33,7 +34,7 @@ const pillars: Pillar[] = [
   },
   {
     id: "ancestral-stewardship",
-    symbol: "🔥",
+    icon: AncestralStewardshipIcon,
     title: "Ancestral Stewardship",
     subtitle: "Time is a sacred inheritance.",
     description: "We honor our ancestors, heal the past, and protect the future. Remembering is resistance.",
@@ -42,7 +43,7 @@ const pillars: Pillar[] = [
   },
   {
     id: "magic-science",
-    symbol: "🌌",
+    icon: MagicScienceIcon,
     title: "Integration of Magic & Science",
     subtitle: "The false divide ends here.",
     description: "We bridge spellwork and science, crystals and physics, ritual and psychology—building a new renaissance.",
@@ -162,9 +163,9 @@ export default function FourPillars() {
                     />
                   )}
                   
-                  {/* Symbol */}
-                  <div className="text-6xl mb-4 text-center">
-                    {pillar.symbol}
+                  {/* Icon */}
+                  <div className="flex justify-center mb-4">
+                    <pillar.icon className="w-16 h-16 text-golden-rune" />
                   </div>
                   
                   {/* Title */}
@@ -197,7 +198,9 @@ export default function FourPillars() {
                       data-testid={`pillar-description-${pillar.id}`}
                     >
                       <div className="text-center">
-                        <div className="text-4xl mb-4">{pillar.symbol}</div>
+                        <div className="flex justify-center mb-4">
+                          <pillar.icon className="w-12 h-12 text-golden-rune" />
+                        </div>
                         <h4 className="font-gothic text-xl text-golden-rune mb-4">
                           {pillar.title}
                         </h4>
