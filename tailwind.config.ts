@@ -69,6 +69,8 @@ export default {
         'silver-star': 'var(--silver-star)',
         'golden-rune': 'var(--golden-rune)',
         'ethereal-white': 'var(--ethereal-white)',
+        'void-black': 'var(--void-black)',
+        'midnight-purple': 'var(--midnight-purple)',
       },
       fontFamily: {
         sans: ["var(--font-body)"],

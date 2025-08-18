@@ -93,6 +93,7 @@ export default function MainContent() {
                     duration: 2,
                     repeat: Infinity,
                     ease: "easeInOut",
+                    repeatType: "loop"
                   }}
                 >
                   <Star className="text-golden-rune w-24 h-24" />

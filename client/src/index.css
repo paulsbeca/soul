@@ -5,48 +5,50 @@
 @tailwind utilities;
 
 :root {
-  --background: hsl(210, 71%, 8%);
+  --background: hsl(223, 84%, 4%);
   --foreground: hsl(201, 24%, 95%);
-  --card: hsl(220, 27%, 12%);
+  --card: hsl(249, 39%, 8%);
   --card-foreground: hsl(201, 24%, 95%);
-  --popover: hsl(220, 27%, 12%);
+  --popover: hsl(249, 39%, 8%);
   --popover-foreground: hsl(201, 24%, 95%);
   --primary: hsl(43, 74%, 49%);
-  --primary-foreground: hsl(210, 71%, 8%);
-  --secondary: hsl(210, 71%, 8%);
+  --primary-foreground: hsl(223, 84%, 4%);
+  --secondary: hsl(223, 84%, 4%);
   --secondary-foreground: hsl(201, 24%, 95%);
-  --muted: hsl(217, 33%, 17%);
+  --muted: hsl(259, 46%, 12%);
   --muted-foreground: hsl(201, 24%, 85%);
-  --accent: hsl(217, 33%, 17%);
+  --accent: hsl(259, 46%, 12%);
   --accent-foreground: hsl(201, 24%, 95%);
   --destructive: hsl(0, 84%, 60%);
   --destructive-foreground: hsl(201, 24%, 95%);
   --border: hsl(43, 74%, 49%);
-  --input: hsl(217, 33%, 17%);
+  --input: hsl(259, 46%, 12%);
   --ring: hsl(43, 74%, 49%);
   --chart-1: hsl(43, 74%, 49%);
   --chart-2: hsl(201, 96%, 32%);
   --chart-3: hsl(273, 83%, 54%);
   --chart-4: hsl(147, 78%, 42%);
   --chart-5: hsl(341, 75%, 51%);
-  --sidebar: hsl(220, 27%, 12%);
+  --sidebar: hsl(249, 39%, 8%);
   --sidebar-foreground: hsl(201, 24%, 95%);
   --sidebar-primary: hsl(43, 74%, 49%);
-  --sidebar-primary-foreground: hsl(210, 71%, 8%);
-  --sidebar-accent: hsl(217, 33%, 17%);
+  --sidebar-primary-foreground: hsl(223, 84%, 4%);
+  --sidebar-accent: hsl(259, 46%, 12%);
   --sidebar-accent-foreground: hsl(201, 24%, 95%);
-  --sidebar-border: hsl(217, 33%, 17%);
+  --sidebar-border: hsl(259, 46%, 12%);
   --sidebar-ring: hsl(43, 74%, 49%);
   --font-gothic: 'Crimson Text', serif;
   --font-body: 'Inter', sans-serif;
-  --cosmic-dark: hsl(223, 84%, 10%);
-  --cosmic-blue: hsl(217, 32%, 17%);
-  --shadow-purple: hsl(259, 46%, 22%);
-  --deep-purple: hsl(259, 46%, 30%);
-  --celestial-black: hsl(249, 39%, 11%);
+  --cosmic-dark: hsl(223, 84%, 2%);
+  --cosmic-blue: hsl(217, 32%, 8%);
+  --shadow-purple: hsl(259, 46%, 15%);
+  --deep-purple: hsl(259, 46%, 22%);
+  --celestial-black: hsl(249, 39%, 6%);
   --silver-star: hsl(214, 32%, 81%);
   --golden-rune: hsl(43, 74%, 49%);
   --ethereal-white: hsl(210, 40%, 98%);
+  --void-black: hsl(240, 100%, 2%);
+  --midnight-purple: hsl(264, 89%, 6%);
   --radius: 1rem;
 }
 
@@ -93,7 +95,7 @@
   }
 
   .cosmic-background {
-    background: linear-gradient(135deg, var(--cosmic-dark) 0%, var(--cosmic-blue) 25%, var(--shadow-purple) 50%, var(--celestial-black) 100%);
+    background: linear-gradient(135deg, var(--void-black) 0%, var(--cosmic-dark) 20%, var(--midnight-purple) 40%, var(--shadow-purple) 70%, var(--celestial-black) 100%);
     position: relative;
     overflow: hidden;
   }
@@ -105,9 +107,10 @@
     left: 0;
     right: 0;
     bottom: 0;
-    background: radial-gradient(circle at 20% 30%, hsl(43, 74%, 49%, 0.1) 0%, transparent 50%),
-                radial-gradient(circle at 80% 70%, hsl(259, 46%, 30%, 0.2) 0%, transparent 50%),
-                radial-gradient(circle at 50% 50%, hsl(214, 32%, 81%, 0.05) 0%, transparent 70%);
+    background: radial-gradient(circle at 20% 30%, hsl(43, 74%, 49%, 0.08) 0%, transparent 50%),
+                radial-gradient(circle at 80% 70%, hsl(259, 46%, 15%, 0.3) 0%, transparent 50%),
+                radial-gradient(circle at 50% 50%, hsl(214, 32%, 81%, 0.03) 0%, transparent 70%),
+                radial-gradient(circle at 10% 80%, hsl(264, 89%, 6%, 0.4) 0%, transparent 40%);
     pointer-events: none;
   }
 
@@ -138,8 +141,24 @@
 
   .overlay-dark {
     background: linear-gradient(135deg, 
-        hsl(223, 84%, 10%, 0.85) 0%, 
-        hsl(259, 46%, 22%, 0.9) 50%, 
-        hsl(249, 39%, 11%, 0.95) 100%);
+        hsl(223, 84%, 2%, 0.92) 0%, 
+        hsl(264, 89%, 6%, 0.95) 30%,
+        hsl(259, 46%, 15%, 0.93) 60%,
+        hsl(249, 39%, 6%, 0.97) 100%);
+  }
+
+  .starfield {
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+      radial-gradient(2px 2px at 20px 30px, hsl(43, 74%, 49%, 0.6), transparent),
+      radial-gradient(2px 2px at 40px 70px, hsl(214, 32%, 81%, 0.4), transparent),
+      radial-gradient(1px 1px at 90px 40px, hsl(43, 74%, 49%, 0.3), transparent),
+      radial-gradient(1px 1px at 130px 80px, hsl(214, 32%, 81%, 0.2), transparent),
+      radial-gradient(2px 2px at 160px 30px, hsl(43, 74%, 49%, 0.5), transparent);
+    background-repeat: repeat;
+    background-size: 200px 100px;
+    animation: float 20s ease-in-out infinite;
   }
 }

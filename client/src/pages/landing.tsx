@@ -29,6 +29,7 @@ export default function Landing() {
       data-testid="landing-section"
     >
       <div className="overlay-dark absolute inset-0"></div>
+      <div className="starfield absolute inset-0"></div>
       
       {/* Floating mystical particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">
