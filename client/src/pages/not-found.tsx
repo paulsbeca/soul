@@ -1,5 +1,6 @@
 import { Card, CardContent } from "@/components/ui/card";
 import { AlertCircle } from "lucide-react";
+import { Link } from "wouter";
 import mysticalChamberBg from "@assets/ChatGPT Image Aug 18, 2025, 12_54_24 AM_1755531868254.webp";
 
 export default function NotFound() {
@@ -26,13 +27,13 @@ export default function NotFound() {
           </p>
           
           <div className="mt-6">
-            <a 
+            <Link 
               href="/" 
               className="bg-gradient-to-r from-shadow-purple to-deep-purple px-6 py-3 rounded-lg hover:scale-105 transition-transform text-ethereal-white"
               data-testid="button-return-home"
             >
               Return to the Sacred Circle
-            </a>
+            </Link>
           </div>
         </CardContent>
       </Card>

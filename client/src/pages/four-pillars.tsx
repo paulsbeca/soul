@@ -1,6 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
+import { Link } from "wouter";
 import backgroundImage from "@assets/background_1755498699765.webp";
 import { CulturalRespectIcon, CosmicVisionIcon, AncestralStewardshipIcon, MagicScienceIcon } from "@/components/pillar-icons";
 
@@ -78,14 +79,14 @@ export default function FourPillars() {
       
       {/* Navigation */}
       <nav className="relative z-50 p-6">
-        <a 
+        <Link 
           href="/remember"
           className="inline-flex items-center text-golden-rune hover:text-silver-star transition-colors group"
           data-testid="link-back-remember"
         >
           <ArrowLeft className="w-5 h-5 mr-2 group-hover:translate-x-[-2px] transition-transform" />
           Return to Sacred Remembering
-        </a>
+        </Link>
       </nav>
       
       {/* Starfield effect */}

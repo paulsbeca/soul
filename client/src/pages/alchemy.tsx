@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { Flame, Mountain, Waves, Wind, Sparkles, Heart, Users, Crown, ArrowLeft } from "lucide-react";
+import { Link } from "wouter";
 import backgroundImage from "@assets/background_1755498699765.webp";
 
 export default function Alchemy() {
@@ -101,14 +102,14 @@ export default function Alchemy() {
       
       {/* Navigation */}
       <nav className="absolute top-0 left-0 right-0 z-50 p-6">
-        <a 
+        <Link 
           href="/remember"
           className="inline-flex items-center text-golden-rune hover:text-silver-star transition-colors group"
           data-testid="link-back-remember"
         >
           <ArrowLeft className="w-5 h-5 mr-2 group-hover:translate-x-[-2px] transition-transform" />
           Return to Sacred Remembering
-        </a>
+        </Link>
       </nav>
       
       {/* Floating alchemical symbols */}

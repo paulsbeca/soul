@@ -1,5 +1,6 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Calendar, BookOpen, Star, Sprout, Infinity, Gem, Flame, Crown } from "lucide-react";
+import { Link } from "wouter";
 import NewsletterForm from "@/components/newsletter-form";
 import logoImage from "@assets/ChatGPT Image Aug 18, 2025, 12_50_00 AM_1755500285103.webp";
 import mysticalChamberBg from "@assets/ChatGPT Image Aug 18, 2025, 12_54_24 AM_1755531868254.webp";
@@ -40,8 +41,8 @@ export default function MainContent() {
             <div className="hidden md:flex space-x-8">
               <a href="#story" className="hover:text-golden-rune transition-colors" data-testid="link-story">The Story</a>
               <a href="#movement" className="hover:text-golden-rune transition-colors" data-testid="link-movement">The Movement</a>
-              <a href="/four-pillars" className="hover:text-golden-rune transition-colors" data-testid="link-four-pillars">Four Pillars</a>
-              <a href="/aionara" className="hover:text-golden-rune transition-colors" data-testid="link-aionara">Aionara</a>
+              <Link href="/four-pillars" className="hover:text-golden-rune transition-colors" data-testid="link-four-pillars">Four Pillars</Link>
+              <Link href="/aionara" className="hover:text-golden-rune transition-colors" data-testid="link-aionara">Aionara</Link>
               <a href="#athenaeum" className="hover:text-golden-rune transition-colors" data-testid="link-athenaeum">Athenaeum</a>
               <a href="#contact" className="hover:text-golden-rune transition-colors" data-testid="link-contact">Connect</a>
             </div>
@@ -275,13 +276,13 @@ export default function MainContent() {
               <p className="text-ethereal-white/90 mb-4 text-sm">
                 Track lunar cycles and planetary alignments.
               </p>
-              <a 
+              <Link 
                 href="/astro-calendar"
                 className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm"
                 data-testid="link-calendar"
               >
                 Explore Calendar
-              </a>
+              </Link>
             </motion.div>
             
             <motion.div 
@@ -299,13 +300,13 @@ export default function MainContent() {
               <p className="text-ethereal-white/90 mb-4 text-sm">
                 Your digital Book of Shadows, Mirrors, or Stars.
               </p>
-              <a 
+              <Link 
                 href="/grimoires"
                 className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm"
                 data-testid="button-grimoire"
               >
                 Enter Sacred Space
-              </a>
+              </Link>
             </motion.div>
 
             <motion.div 
@@ -323,13 +324,13 @@ export default function MainContent() {
               <p className="text-ethereal-white/90 mb-4 text-sm">
                 The four strands of transformation and elemental wisdom.
               </p>
-              <a 
+              <Link 
                 href="/alchemy"
                 className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm"
                 data-testid="link-alchemy"
               >
                 Study Alchemy
-              </a>
+              </Link>
             </motion.div>
 
             <motion.div 
