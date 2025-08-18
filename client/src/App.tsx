@@ -13,6 +13,7 @@ import EntryDetail from "@/pages/entry-detail";
 import AstroCalendar from "@/pages/astro-calendar";
 import FourPillars from "@/pages/four-pillars";
 import Aionara from "@/pages/aionara";
+import Alchemy from "@/pages/alchemy";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -28,6 +29,7 @@ function Router() {
       <Route path="/astro-calendar" component={AstroCalendar} />
       <Route path="/four-pillars" component={FourPillars} />
       <Route path="/aionara" component={Aionara} />
+      <Route path="/alchemy" component={Alchemy} />
       <Route component={NotFound} />
     </Switch>
   );
