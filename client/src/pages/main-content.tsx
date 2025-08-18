@@ -91,7 +91,7 @@ export default function MainContent() {
                   }}
                   transition={{
                     duration: 2,
-                    repeat: Infinity,
+                    repeat: 9999,
                     ease: "easeInOut",
                     repeatType: "loop"
                   }}

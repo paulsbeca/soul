@@ -15,7 +15,7 @@ export default function MysticalSymbol() {
         }}
         transition={{
           duration: 3,
-          repeat: Infinity,
+          repeat: 9999,
           ease: "easeInOut"
         }}
       />
@@ -27,7 +27,7 @@ export default function MysticalSymbol() {
           }}
           transition={{
             duration: 20,
-            repeat: Infinity,
+            repeat: 9999,
             ease: "linear"
           }}
         >

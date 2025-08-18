@@ -159,6 +159,6 @@
       radial-gradient(2px 2px at 160px 30px, hsl(43, 74%, 49%, 0.5), transparent);
     background-repeat: repeat;
     background-size: 200px 100px;
-    animation: float 20s ease-in-out infinite;
+    animation: float 20s ease-in-out 9999;
   }
 }

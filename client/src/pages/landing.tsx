@@ -41,7 +41,7 @@ export default function Landing() {
           }}
           transition={{
             duration: 2,
-            repeat: Infinity,
+            repeat: 9999,
             ease: "easeInOut",
           }}
         />
@@ -53,7 +53,7 @@ export default function Landing() {
           }}
           transition={{
             duration: 2,
-            repeat: Infinity,
+            repeat: 9999,
             ease: "easeInOut",
             delay: 1,
           }}
@@ -66,7 +66,7 @@ export default function Landing() {
           }}
           transition={{
             duration: 2,
-            repeat: Infinity,
+            repeat: 9999,
             ease: "easeInOut",
             delay: 2,
           }}
@@ -79,7 +79,7 @@ export default function Landing() {
           }}
           transition={{
             duration: 2,
-            repeat: Infinity,
+            repeat: 9999,
             ease: "easeInOut",
             delay: 3,
           }}
@@ -95,7 +95,7 @@ export default function Landing() {
           }}
           transition={{
             duration: 6,
-            repeat: Infinity,
+            repeat: 9999,
             ease: "easeInOut",
           }}
         >
