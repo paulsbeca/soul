@@ -7,6 +7,9 @@ import Landing from "@/pages/landing";
 import MainContent from "@/pages/main-content";
 import Grimoires from "@/pages/grimoires";
 import CreateGrimoire from "@/pages/create-grimoire";
+import GrimoireDetail from "@/pages/grimoire-detail";
+import CreateEntry from "@/pages/create-entry";
+import EntryDetail from "@/pages/entry-detail";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -16,6 +19,9 @@ function Router() {
       <Route path="/remember" component={MainContent} />
       <Route path="/grimoires" component={Grimoires} />
       <Route path="/grimoires/create" component={CreateGrimoire} />
+      <Route path="/grimoires/:id" component={GrimoireDetail} />
+      <Route path="/grimoires/:id/entries/create" component={CreateEntry} />
+      <Route path="/grimoires/:id/entries/:entryId" component={EntryDetail} />
       <Route component={NotFound} />
     </Switch>
   );

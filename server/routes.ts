@@ -157,6 +157,53 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Get specific grimoire entry
+  app.get("/api/grimoire-entries/:id", async (req, res) => {
+    try {
+      const entry = await storage.getGrimoireEntry(req.params.id);
+      if (!entry) {
+        return res.status(404).json({ message: "Entry not found" });
+      }
+      res.json(entry);
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
+  // Update grimoire entry
+  app.patch("/api/grimoire-entries/:id", async (req, res) => {
+    try {
+      const validatedData = insertGrimoireEntrySchema.partial().parse(req.body);
+      const entry = await storage.updateGrimoireEntry(req.params.id, validatedData);
+      if (!entry) {
+        return res.status(404).json({ message: "Entry not found" });
+      }
+      res.json(entry);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ 
+          message: "Invalid entry data",
+          errors: error.errors 
+        });
+      } else {
+        res.status(500).json({ message: "Internal server error" });
+      }
+    }
+  });
+
+  // Delete grimoire entry
+  app.delete("/api/grimoire-entries/:id", async (req, res) => {
+    try {
+      const success = await storage.deleteGrimoireEntry(req.params.id);
+      if (!success) {
+        return res.status(404).json({ message: "Entry not found" });
+      }
+      res.json({ message: "Entry deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Internal server error" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
