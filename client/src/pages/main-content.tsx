@@ -2,6 +2,7 @@ import { motion } from "framer-motion";
 import { ExternalLink, Calendar, BookOpen, Star, Sprout, Infinity, Gem, Flame } from "lucide-react";
 import NewsletterForm from "@/components/newsletter-form";
 import logoImage from "@assets/ChatGPT Image Aug 18, 2025, 12_50_00 AM_1755500285103.webp";
+import mysticalChamberBg from "@assets/ChatGPT Image Aug 18, 2025, 12_54_24 AM_1755531868254.webp";
 
 export default function MainContent() {
   const fadeInUp = {
@@ -11,9 +12,19 @@ export default function MainContent() {
   };
 
   return (
-    <section className="min-h-screen cosmic-background text-ethereal-white" data-testid="main-content-section">
+    <section 
+      className="min-h-screen text-ethereal-white" 
+      style={{
+        backgroundImage: `url(${mysticalChamberBg})`,
+        backgroundSize: 'cover',
+        backgroundPosition: 'center',
+        backgroundAttachment: 'fixed'
+      }}
+      data-testid="main-content-section"
+    >
+      <div className="absolute inset-0 bg-black/40"></div>
       {/* Navigation */}
-      <nav className="sticky top-0 z-50 grimoire-texture border-b border-golden-rune/30 backdrop-blur-sm">
+      <nav className="relative sticky top-0 z-50 grimoire-texture border-b border-golden-rune/30 backdrop-blur-sm">
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <motion.div 
@@ -37,7 +48,7 @@ export default function MainContent() {
       </nav>
 
       {/* Hero Section */}
-      <div className="relative py-20">
+      <div className="relative z-10 py-20">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.h2
             className="font-gothic text-4xl md:text-6xl font-semibold mb-8"
@@ -58,7 +69,7 @@ export default function MainContent() {
       </div>
 
       {/* The Meaning Section */}
-      <div id="meaning" className="py-16 relative">
+      <div id="meaning" className="py-16 relative z-10">
         <div className="max-w-6xl mx-auto px-6">
           <div className="grid md:grid-cols-2 gap-12 items-center">
             <motion.div 
@@ -87,7 +98,7 @@ export default function MainContent() {
       </div>
 
       {/* The Story Section */}
-      <div id="story" className="py-20 relative">
+      <div id="story" className="py-20 relative z-10">
         <div className="max-w-4xl mx-auto px-6">
           <motion.h3
             className="font-gothic text-4xl md:text-5xl font-semibold text-center mb-16 text-golden-rune"
@@ -149,7 +160,7 @@ export default function MainContent() {
       </div>
 
       {/* The Movement Section */}
-      <div id="movement" className="py-20 relative">
+<div id="movement" className="py-20 relative z-10">
         <div className="max-w-6xl mx-auto px-6">
           <motion.h3
             className="font-gothic text-4xl md:text-5xl font-semibold text-center mb-16 text-golden-rune"
@@ -223,7 +234,7 @@ export default function MainContent() {
       </div>
 
       {/* The Athenaeum Section */}
-      <div id="athenaeum" className="py-20 relative">
+      <div id="athenaeum" className="py-20 relative z-10">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <motion.h3
             className="font-gothic text-4xl md:text-5xl font-semibold mb-8 text-golden-rune"
@@ -318,7 +329,7 @@ export default function MainContent() {
       </div>
 
       {/* Newsletter Section */}
-      <div id="contact" className="py-20 relative">
+      <div id="contact" className="py-20 relative z-10">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <motion.h3
             className="font-gothic text-4xl md:text-5xl font-semibold mb-8 text-golden-rune"
@@ -353,7 +364,7 @@ export default function MainContent() {
       </div>
 
       {/* Footer */}
-      <footer className="border-t border-golden-rune/30 py-12 grimoire-texture">
+      <footer className="border-t border-golden-rune/30 py-12 grimoire-texture relative z-10">
         <div className="max-w-4xl mx-auto px-6 text-center">
           <div className="mb-8">
             <div className="font-gothic text-3xl font-semibold mb-4" data-testid="footer-title">
