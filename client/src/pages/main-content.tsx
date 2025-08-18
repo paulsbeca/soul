@@ -1,6 +1,7 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Calendar, BookOpen, Star, Sprout, Infinity, Gem, Flame } from "lucide-react";
 import NewsletterForm from "@/components/newsletter-form";
+import logoImage from "@assets/ChatGPT Image Aug 18, 2025, 12_50_00 AM_1755500285103.webp";
 
 export default function MainContent() {
   const fadeInUp = {
@@ -16,11 +17,14 @@ export default function MainContent() {
         <div className="max-w-7xl mx-auto px-6 py-4">
           <div className="flex items-center justify-between">
             <motion.div 
-              className="font-gothic text-2xl font-semibold"
+              className="flex items-center"
               {...fadeInUp}
             >
-              <span className="text-golden-rune">Jakintza</span>{" "}
-              <span className="text-silver-star">Ruha</span>
+              <img 
+                src={logoImage} 
+                alt="Jakintza Ruha Logo" 
+                className="h-10 w-auto object-contain drop-shadow-[0_0_15px_rgba(184,134,11,0.3)]"
+              />
             </motion.div>
             <div className="hidden md:flex space-x-8">
               <a href="#story" className="hover:text-golden-rune transition-colors" data-testid="link-story">The Story</a>

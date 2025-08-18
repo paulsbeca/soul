@@ -1,14 +1,13 @@
-import { motion } from "framer-motion";
-import { Moon } from "lucide-react";
+import logoImage from "@assets/ChatGPT Image Aug 18, 2025, 12_50_00 AM_1755500285103.webp";
 
 export default function MysticalSymbol() {
   return (
-    <div className="w-24 h-24 mx-auto relative" data-testid="mystical-symbol">
-      <div className="absolute inset-0 border-2 border-golden-rune rounded-full shadow-[0_0_30px_hsl(43,74%,49%,0.4)] animate-mystical-glow" />
-      <div className="absolute inset-2 border border-silver-star rounded-full" />
-      <div className="absolute inset-0 flex items-center justify-center">
-        <Moon className="text-golden-rune w-8 h-8" />
-      </div>
+    <div className="w-32 h-32 mx-auto relative" data-testid="mystical-symbol">
+      <img 
+        src={logoImage} 
+        alt="Jakintza Ruha Logo" 
+        className="w-full h-full object-contain drop-shadow-[0_0_20px_rgba(184,134,11,0.4)]"
+      />
     </div>
   );
 }
