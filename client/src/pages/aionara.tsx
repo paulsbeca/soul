@@ -1,6 +1,6 @@
 import { useState, useRef, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Send, Sparkles, Moon, Star } from "lucide-react";
+import { Send, Sparkles, Moon, Star, ArrowLeft } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { ScrollArea } from "@/components/ui/scroll-area";
@@ -107,6 +107,18 @@ export default function Aionara() {
     >
       {/* Dark mystical overlay */}
       <div className="absolute inset-0 bg-gradient-to-b from-black/80 via-black/70 to-black/90"></div>
+      
+      {/* Navigation */}
+      <nav className="absolute top-0 left-0 right-0 z-50 p-6">
+        <a 
+          href="/remember"
+          className="inline-flex items-center text-golden-rune hover:text-silver-star transition-colors group"
+          data-testid="link-back-remember"
+        >
+          <ArrowLeft className="w-5 h-5 mr-2 group-hover:translate-x-[-2px] transition-transform" />
+          Return to Sacred Remembering
+        </a>
+      </nav>
       
       {/* Floating cosmic particles */}
       <div className="absolute inset-0 overflow-hidden pointer-events-none">

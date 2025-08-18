@@ -1,5 +1,6 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
+import { ArrowLeft } from "lucide-react";
 import backgroundImage from "@assets/background_1755498699765.webp";
 import { CulturalRespectIcon, CosmicVisionIcon, AncestralStewardshipIcon, MagicScienceIcon } from "@/components/pillar-icons";
 
@@ -73,6 +74,19 @@ export default function FourPillars() {
       data-testid="four-pillars-section"
     >
       {/* Dark overlay for mystical atmosphere */}
+      <div className="absolute inset-0 bg-black/80"></div>
+      
+      {/* Navigation */}
+      <nav className="relative z-50 p-6">
+        <a 
+          href="/remember"
+          className="inline-flex items-center text-golden-rune hover:text-silver-star transition-colors group"
+          data-testid="link-back-remember"
+        >
+          <ArrowLeft className="w-5 h-5 mr-2 group-hover:translate-x-[-2px] transition-transform" />
+          Return to Sacred Remembering
+        </a>
+      </nav>
       <div className="absolute inset-0 bg-gradient-to-b from-black/70 via-black/60 to-black/80"></div>
       
       {/* Starfield effect */}
