@@ -16,6 +16,8 @@ The application includes a stunning landing page with the official Jakintza Ruha
 - **Newsletter Integration**: Connected newsletter signup to beca@jakintzaruha.com for direct communication
 - **Migration Complete**: Successfully migrated from Replit Agent to standard Replit environment with full compatibility
 - **Mystical Chamber Background**: Added beautiful mystical chamber background for all non-main pages while preserving the original cosmic landing page background
+- **Virtual Grimoire System**: Complete implementation with three sacred paths (Shadows, Mirrors, Stars), creation interface, and backend API
+- **Fixed Navigation Links**: Resolved clickability issues for "Explore Calendar" (AstroCal integration) and "Enter Sacred Space" (grimoire access) links
 
 ## User Preferences
 

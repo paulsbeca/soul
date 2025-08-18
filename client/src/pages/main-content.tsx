@@ -277,8 +277,9 @@ export default function MainContent() {
                 href="https://replit.com/@avipratt32816/AstroCal?s=app" 
                 target="_blank" 
                 rel="noopener noreferrer"
-                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-6 py-3 rounded-lg hover:scale-105 transition-transform"
+                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-6 py-3 rounded-lg hover:scale-105 transition-transform relative z-10 cursor-pointer"
                 data-testid="link-calendar"
+                style={{ pointerEvents: 'auto' }}
               >
                 Explore Calendar
                 <ExternalLink className="ml-2 w-4 h-4" />
@@ -302,8 +303,9 @@ export default function MainContent() {
               </p>
               <a 
                 href="/grimoires"
-                className="inline-block bg-gradient-to-r from-shadow-purple to-deep-purple px-6 py-3 rounded-lg hover:scale-105 transition-transform"
+                className="inline-block bg-gradient-to-r from-shadow-purple to-deep-purple px-6 py-3 rounded-lg hover:scale-105 transition-transform relative z-10 cursor-pointer"
                 data-testid="button-grimoire"
+                style={{ pointerEvents: 'auto' }}
               >
                 Enter Sacred Space
               </a>
