@@ -280,14 +280,14 @@ export default function SacredCalendar() {
           {/* Sacred Events Tabs */}
           <motion.div {...fadeInUp}>
             <Tabs value={activeTab} onValueChange={setActiveTab} className="w-full">
-              <TabsList className="grid w-full grid-cols-4 mb-8 bg-black/50 mystical-border">
+              <TabsList className="grid w-full grid-cols-5 mb-8 bg-black/50 mystical-border">
                 <TabsTrigger 
-                  value="overview" 
+                  value="upcoming" 
                   className="text-silver-star data-[state=active]:text-golden-rune data-[state=active]:bg-deep-purple/30"
-                  data-testid="tab-overview"
+                  data-testid="tab-upcoming"
                 >
-                  <Calendar className="mr-2 w-4 h-4" />
-                  Overview
+                  <Clock className="mr-2 w-4 h-4" />
+                  Upcoming
                 </TabsTrigger>
                 <TabsTrigger 
                   value="seasonal" 
@@ -306,18 +306,70 @@ export default function SacredCalendar() {
                   Lunar
                 </TabsTrigger>
                 <TabsTrigger 
-                  value="cosmic" 
+                  value="overview" 
                   className="text-silver-star data-[state=active]:text-golden-rune data-[state=active]:bg-deep-purple/30"
-                  data-testid="tab-cosmic"
+                  data-testid="tab-overview"
                 >
-                  <Star className="mr-2 w-4 h-4" />
-                  Cosmic
+                  <Calendar className="mr-2 w-4 h-4" />
+                  All Events
+                </TabsTrigger>
+                <TabsTrigger 
+                  value="yearly" 
+                  className="text-silver-star data-[state=active]:text-golden-rune data-[state=active]:bg-deep-purple/30"
+                  data-testid="tab-yearly"
+                >
+                  <Crown className="mr-2 w-4 h-4" />
+                  Year View
                 </TabsTrigger>
               </TabsList>
 
+              <TabsContent value="upcoming" className="space-y-6">
+                <div className="mb-6 text-center">
+                  <h3 className="text-2xl font-semibold text-golden-rune mb-2">
+                    Next Sacred Celebrations
+                  </h3>
+                  <p className="text-silver-star/80">
+                    Look ahead to prepare for upcoming rituals and traditions
+                  </p>
+                </div>
+                
+                {/* Next Major Events */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+                  {/* Show next few events based on current date */}
+                  {categorizedEvents.seasonal.slice(0, 3).map(renderEventCard)}
+                  {categorizedEvents.lunar.slice(0, 3).map(renderEventCard)}
+                </div>
+
+                {/* Monthly Calendar Preview */}
+                <div className="mt-12 mystical-border rounded-xl p-6 grimoire-texture">
+                  <h4 className="text-xl font-semibold text-golden-rune mb-4 flex items-center">
+                    <Calendar className="mr-3 w-5 h-5" />
+                    This Month's Sacred Dates
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+                    <div className="space-y-2">
+                      <div className="flex justify-between border-b border-silver-star/20 pb-1">
+                        <span className="text-silver-star">New Moon</span>
+                        <span className="text-golden-rune">Next cycle</span>
+                      </div>
+                      <div className="flex justify-between border-b border-silver-star/20 pb-1">
+                        <span className="text-silver-star">Full Moon</span>
+                        <span className="text-golden-rune">Mid-cycle</span>
+                      </div>
+                    </div>
+                    <div className="space-y-2">
+                      <div className="flex justify-between border-b border-silver-star/20 pb-1">
+                        <span className="text-silver-star">Next Seasonal Festival</span>
+                        <span className="text-golden-rune">Check events above</span>
+                      </div>
+                    </div>
+                  </div>
+                </div>
+              </TabsContent>
+
               <TabsContent value="overview" className="space-y-6">
                 <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {sacredEvents.slice(0, 9).map(renderEventCard)}
+                  {sacredEvents.map(renderEventCard)}
                 </div>
               </TabsContent>
 
@@ -333,9 +385,90 @@ export default function SacredCalendar() {
                 </div>
               </TabsContent>
 
-              <TabsContent value="cosmic" className="space-y-6">
-                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
-                  {categorizedEvents.cosmic.map(renderEventCard)}
+              <TabsContent value="yearly" className="space-y-8">
+                <div className="text-center mb-8">
+                  <h3 className="text-2xl font-semibold text-golden-rune mb-2">
+                    Sacred Living Year Overview
+                  </h3>
+                  <p className="text-silver-star/80">
+                    Your complete ritual almanac for spiritual celebration
+                  </p>
+                </div>
+
+                {/* Year at a Glance */}
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6 mb-8">
+                  <Card className="bg-gradient-to-br from-blue-900/30 to-indigo-800/30 mystical-border">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-golden-rune text-sm flex items-center">
+                        <Snowflake className="mr-2 w-4 h-4" />
+                        Winter
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-xs text-silver-star/90">
+                      <div>Dec 20-31: Yule</div>
+                      <div>Jan 29-Feb 15: Lunar New Year</div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gradient-to-br from-green-700/30 to-emerald-600/30 mystical-border">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-golden-rune text-sm flex items-center">
+                        <Leaf className="mr-2 w-4 h-4" />
+                        Spring
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-xs text-silver-star/90">
+                      <div>Mar 20-22: Ostara</div>
+                      <div>May 1: Beltane</div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gradient-to-br from-yellow-600/30 to-orange-500/30 mystical-border">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-golden-rune text-sm flex items-center">
+                        <Sun className="mr-2 w-4 h-4" />
+                        Summer
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-xs text-silver-star/90">
+                      <div>Jun 15-26: Solstice Fire</div>
+                    </CardContent>
+                  </Card>
+
+                  <Card className="bg-gradient-to-br from-orange-700/30 to-red-600/30 mystical-border">
+                    <CardHeader className="pb-2">
+                      <CardTitle className="text-golden-rune text-sm flex items-center">
+                        <Flame className="mr-2 w-4 h-4" />
+                        Autumn
+                      </CardTitle>
+                    </CardHeader>
+                    <CardContent className="text-xs text-silver-star/90">
+                      <div>Sep 22-24: Fall Equinox</div>
+                      <div>Oct 30-Nov 2: Veil Festival</div>
+                    </CardContent>
+                  </Card>
+                </div>
+
+                {/* Monthly Lunar Cycles */}
+                <div className="mystical-border rounded-xl p-6 grimoire-texture">
+                  <h4 className="text-xl font-semibold text-golden-rune mb-4 flex items-center">
+                    <Moon className="mr-3 w-5 h-5" />
+                    Monthly Lunar Practices
+                  </h4>
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                    <div>
+                      <h5 className="text-golden-rune font-semibold mb-2">New Moon Intentions</h5>
+                      <p className="text-silver-star/90 text-sm">
+                        Monthly ritual for setting intentions and new beginnings. Light candles, write intentions, place under moonlight.
+                      </p>
+                    </div>
+                    <div>
+                      <h5 className="text-golden-rune font-semibold mb-2">Full Moon Gratitude</h5>
+                      <p className="text-silver-star/90 text-sm">
+                        Monthly ritual for release and gratitude. Create moon water, charge crystals, practice gratitude.
+                      </p>
+                    </div>
+                  </div>
                 </div>
               </TabsContent>
             </Tabs>
