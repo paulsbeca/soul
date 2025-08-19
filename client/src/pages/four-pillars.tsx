@@ -1,7 +1,7 @@
 import { useState } from "react";
 import { motion, AnimatePresence } from "framer-motion";
 import { ArrowLeft } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import backgroundImage from "@assets/background_1755498699765.webp";
 import { CulturalRespectIcon, CosmicVisionIcon, AncestralStewardshipIcon, MagicScienceIcon } from "@/components/pillar-icons";
 
@@ -57,6 +57,7 @@ const pillars: Pillar[] = [
 export default function FourPillars() {
   const [activePillar, setActivePillar] = useState<string | null>(null);
   const [visitedPillars, setVisitedPillars] = useState<Set<string>>(new Set());
+  const [, setLocation] = useLocation();
 
   const handlePillarClick = (pillarId: string) => {
     setActivePillar(pillarId === activePillar ? null : pillarId);
@@ -244,7 +245,8 @@ export default function FourPillars() {
             Are you ready to remember?
           </p>
           <motion.button
-            className="mystical-border bg-gradient-to-r from-shadow-purple to-deep-purple hover:from-deep-purple hover:to-shadow-purple px-8 py-3 rounded-lg font-gothic text-lg font-medium transition-all duration-500"
+            onClick={() => setLocation('/remember')}
+            className="mystical-border bg-gradient-to-r from-shadow-purple to-deep-purple hover:from-deep-purple hover:to-shadow-purple px-8 py-3 rounded-lg font-gothic text-lg font-medium transition-all duration-500 cursor-pointer"
             whileHover={{ 
               scale: 1.05,
               boxShadow: "0 0 30px hsl(43, 74%, 49%, 0.3)"
