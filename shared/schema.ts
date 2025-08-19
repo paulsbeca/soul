@@ -55,6 +55,37 @@ export const deities = pgTable("deities", {
   image: text("image"),
 });
 
+export const sacredEvents = pgTable("sacred_events", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  title: text("title").notNull(),
+  description: text("description"),
+  category: text("category").notNull(), // ritual, seasonal, lunar, planetary, cosmic
+  festivalType: text("festival_type"), // yule, ostara, beltane, solstice, etc.
+  startDate: text("start_date"),
+  endDate: text("end_date"),
+  isRecurring: text("is_recurring").default("true"),
+  recurrencePattern: text("recurrence_pattern"), // annual, lunar_cycle, etc.
+  ritualFlow: json("ritual_flow"), // structured ritual instructions
+  yearlyVariables: json("yearly_variables"), // dynamic elements that change per year
+  tags: json("tags").$type<string[]>(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
+export const yearlyConfigurations = pgTable("yearly_configurations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  year: text("year").notNull().unique(),
+  zodiacAnimal: text("zodiac_animal"),
+  zodiacElement: text("zodiac_element"),
+  intentionWord: text("intention_word"),
+  lunarNewYear: text("lunar_new_year"),
+  winterSolstice: text("winter_solstice"),
+  springEquinox: text("spring_equinox"), 
+  summerSolstice: text("summer_solstice"),
+  fallEquinox: text("fall_equinox"),
+  majorFullMoons: json("major_full_moons"), // dates and associated rituals
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -87,6 +118,16 @@ export const insertDeitySchema = createInsertSchema(deities).omit({
   id: true,
 });
 
+export const insertSacredEventSchema = createInsertSchema(sacredEvents).omit({
+  id: true,
+  createdAt: true,
+});
+
+export const insertYearlyConfigurationSchema = createInsertSchema(yearlyConfigurations).omit({
+  id: true,
+  createdAt: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertNewsletter = z.infer<typeof insertNewsletterSchema>;
@@ -97,3 +138,7 @@ export type InsertGrimoireEntry = z.infer<typeof insertGrimoireEntrySchema>;
 export type GrimoireEntry = typeof grimoireEntries.$inferSelect;
 export type InsertDeity = z.infer<typeof insertDeitySchema>;
 export type Deity = typeof deities.$inferSelect;
+export type InsertSacredEvent = z.infer<typeof insertSacredEventSchema>;
+export type SacredEvent = typeof sacredEvents.$inferSelect;
+export type InsertYearlyConfiguration = z.infer<typeof insertYearlyConfigurationSchema>;
+export type YearlyConfiguration = typeof yearlyConfigurations.$inferSelect;

@@ -20,9 +20,13 @@ interface AstroEvent {
   id: string;
   date: string;
   title: string;
-  category: 'planetary' | 'lunar' | 'ritual' | 'cosmic';
+  category: 'planetary' | 'lunar' | 'ritual' | 'cosmic' | 'seasonal';
   description: string;
   time?: string;
+  festivalType?: string;
+  ritualFlow?: any[];
+  yearlyVariables?: any;
+  tags?: string[];
 }
 
 const phaseNames: { [key: string]: string } = {
@@ -81,11 +85,23 @@ export default function AstroCalendar() {
     };
   };
 
-  // Mock astrological events
+  // Fetch Sacred Living Year events from backend
+  const { data: sacredEvents, isLoading: eventsLoading } = useQuery({
+    queryKey: ['/api/sacred-events'],
+  });
+
+  const { data: yearlyConfig } = useQuery({
+    queryKey: ['/api/yearly-config', year.toString()],
+  });
+
+  // Convert Sacred Living Year events to calendar format
   const getAstroEvents = (): AstroEvent[] => {
-    return [
+    const events: AstroEvent[] = [];
+    
+    // Add some current celestial events
+    events.push(
       {
-        id: '1',
+        id: 'lunar-1',
         date: new Date().toISOString().split('T')[0],
         title: 'Full Moon in Sagittarius',
         category: 'lunar',
@@ -93,22 +109,65 @@ export default function AstroCalendar() {
         time: '3:47 AM'
       },
       {
-        id: '2',
+        id: 'planetary-1', 
         date: new Date(Date.now() + 86400000).toISOString().split('T')[0],
         title: 'Venus conjunct Jupiter',
         category: 'planetary',
         description: 'Cosmic alignment bringing love, abundance, and spiritual expansion.',
         time: '7:22 PM'
-      },
-      {
-        id: '3',
-        date: new Date(Date.now() + 172800000).toISOString().split('T')[0],
-        title: 'Mercury retrograde begins',
-        category: 'planetary',
-        description: 'Time for reflection, reviewing, and reconnecting with inner wisdom.',
-        time: '11:15 AM'
       }
-    ];
+    );
+
+    // Add Sacred Living Year events if available
+    if (sacredEvents && Array.isArray(sacredEvents)) {
+      sacredEvents.forEach((event: any) => {
+        if (event.startDate) {
+          // Convert MM-DD format to current year date
+          let eventDate = event.startDate;
+          if (event.startDate.includes('-') && !event.startDate.includes(year.toString())) {
+            const [monthDay] = event.startDate.split(' ');
+            if (monthDay.includes('-') && monthDay.length <= 5) {
+              eventDate = `${year}-${monthDay}`;
+            }
+          }
+
+          events.push({
+            id: event.id,
+            date: eventDate,
+            title: event.title,
+            category: event.category as 'seasonal' | 'ritual' | 'lunar',
+            description: event.description || 'Sacred Living Year celebration',
+            festivalType: event.festivalType,
+            ritualFlow: event.ritualFlow,
+            yearlyVariables: event.yearlyVariables,
+            tags: event.tags
+          });
+
+          // Add end date event if multi-day
+          if (event.endDate && event.endDate !== event.startDate) {
+            let endEventDate = event.endDate;
+            if (event.endDate.includes('-') && !event.endDate.includes(year.toString())) {
+              const [monthDay] = event.endDate.split(' ');
+              if (monthDay.includes('-') && monthDay.length <= 5) {
+                endEventDate = `${year}-${monthDay}`;
+              }
+            }
+
+            events.push({
+              id: `${event.id}-end`,
+              date: endEventDate,
+              title: `${event.title} (Final Day)`,
+              category: event.category as 'seasonal' | 'ritual' | 'lunar',
+              description: `Final day of ${event.description}`,
+              festivalType: event.festivalType,
+              tags: event.tags
+            });
+          }
+        }
+      });
+    }
+
+    return events.sort((a, b) => new Date(a.date).getTime() - new Date(b.date).getTime());
   };
 
   const generateCalendarDays = () => {

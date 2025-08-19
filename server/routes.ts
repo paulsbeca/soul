@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertNewsletterSchema, insertGrimoireSchema, insertGrimoireEntrySchema, insertDeitySchema } from "@shared/schema";
+import { insertNewsletterSchema, insertGrimoireSchema, insertGrimoireEntrySchema, insertDeitySchema, insertSacredEventSchema, insertYearlyConfigurationSchema } from "@shared/schema";
 import { getAionaraResponse } from "./openai";
 import { notifyNewsletterSubscription } from "./email";
 import { z } from "zod";
@@ -269,6 +269,106 @@ export async function registerRoutes(app: Express): Promise<Server> {
       res.json(deities);
     } catch (error) {
       res.status(500).json({ message: "Failed to filter deities" });
+    }
+  });
+
+  // Sacred Living Year routes
+  app.get("/api/sacred-events", async (req, res) => {
+    try {
+      const { category, startDate, endDate } = req.query;
+      
+      let events;
+      if (category && typeof category === 'string') {
+        events = await storage.getSacredEventsByCategory(category);
+      } else if (startDate && endDate && typeof startDate === 'string' && typeof endDate === 'string') {
+        events = await storage.getSacredEventsByDateRange(startDate, endDate);
+      } else {
+        events = await storage.getAllSacredEvents();
+      }
+      
+      res.json(events);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch sacred events" });
+    }
+  });
+
+  app.get("/api/sacred-events/:id", async (req, res) => {
+    try {
+      const event = await storage.getSacredEvent(req.params.id);
+      if (!event) {
+        return res.status(404).json({ message: "Sacred event not found" });
+      }
+      res.json(event);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch sacred event" });
+    }
+  });
+
+  app.post("/api/sacred-events", async (req, res) => {
+    try {
+      const validatedData = insertSacredEventSchema.parse(req.body);
+      const event = await storage.createSacredEvent(validatedData);
+      res.status(201).json(event);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ 
+          message: "Invalid sacred event data",
+          errors: error.errors 
+        });
+      } else {
+        res.status(500).json({ message: "Failed to create sacred event" });
+      }
+    }
+  });
+
+  // Yearly Configuration routes
+  app.get("/api/yearly-config/:year", async (req, res) => {
+    try {
+      const config = await storage.getYearlyConfiguration(req.params.year);
+      if (!config) {
+        return res.status(404).json({ message: "Yearly configuration not found" });
+      }
+      res.json(config);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch yearly configuration" });
+    }
+  });
+
+  app.get("/api/yearly-config", async (req, res) => {
+    try {
+      const configs = await storage.getAllYearlyConfigurations();
+      res.json(configs);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch yearly configurations" });
+    }
+  });
+
+  app.post("/api/yearly-config", async (req, res) => {
+    try {
+      const validatedData = insertYearlyConfigurationSchema.parse(req.body);
+      const config = await storage.createYearlyConfiguration(validatedData);
+      res.status(201).json(config);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ 
+          message: "Invalid yearly configuration data",
+          errors: error.errors 
+        });
+      } else {
+        res.status(500).json({ message: "Failed to create yearly configuration" });
+      }
+    }
+  });
+
+  app.put("/api/yearly-config/:year", async (req, res) => {
+    try {
+      const config = await storage.updateYearlyConfiguration(req.params.year, req.body);
+      if (!config) {
+        return res.status(404).json({ message: "Yearly configuration not found" });
+      }
+      res.json(config);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to update yearly configuration" });
     }
   });
 
