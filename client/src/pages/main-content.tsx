@@ -290,7 +290,11 @@ export default function MainContent() {
                 Track lunar cycles and planetary alignments.
               </p>
               <button
-                onClick={() => setLocation("/astro-calendar")}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.location.href = "/astro-calendar";
+                }}
                 className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
                 data-testid="button-calendar"
               >
@@ -314,7 +318,11 @@ export default function MainContent() {
                 Your digital Book of Shadows, Mirrors, or Stars.
               </p>
               <button
-                onClick={() => setLocation("/grimoires")}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.location.href = "/grimoires";
+                }}
                 className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
                 data-testid="button-grimoire"
               >
@@ -338,7 +346,11 @@ export default function MainContent() {
                 The four strands of transformation and elemental wisdom.
               </p>
               <button
-                onClick={() => setLocation("/alchemy")}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.location.href = "/alchemy";
+                }}
                 className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
                 data-testid="button-alchemy"
               >
@@ -362,7 +374,11 @@ export default function MainContent() {
                 Sacred repository of divine beings and pantheons.
               </p>
               <button
-                onClick={() => setLocation("/deity-codex")}
+                onClick={(e) => {
+                  e.preventDefault();
+                  e.stopPropagation();
+                  window.location.href = "/deity-codex";
+                }}
                 className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
                 data-testid="button-deity-codex"
               >
