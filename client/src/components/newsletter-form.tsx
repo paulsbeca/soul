@@ -61,7 +61,7 @@ export default function NewsletterForm() {
           placeholder="Your sacred email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="flex-1 bg-cosmic-dark/50 border border-golden-rune/30 rounded-lg px-6 py-4 text-ethereal-white placeholder-silver-star/60 focus:border-golden-rune focus:outline-none transition-colors"
+          className="flex-1 bg-cosmic-dark/50 border border-golden-rune/30 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/60 focus:border-golden-rune focus:outline-none transition-colors focus-visible:ring-2 focus-visible:ring-golden-rune focus-visible:ring-offset-2 focus-visible:ring-offset-cosmic-dark"
           required
           data-testid="input-email"
         />

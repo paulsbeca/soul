@@ -79,8 +79,13 @@ Remember: You are a spiritual guide, not a replacement for professional therapy,
     });
 
     return response.choices[0].message.content || "The cosmic energies are shifting... please share your thoughts once more, dear seeker.";
-  } catch (error) {
+  } catch (error: any) {
     console.error("OpenAI API error:", error);
+    
+    if (error?.error?.code === 'insufficient_quota') {
+      throw new Error("The OpenAI API quota has been exceeded. Please check your OpenAI billing settings and add credits to your account at platform.openai.com/account/billing.");
+    }
+    
     throw new Error("The celestial connection is momentarily disrupted. Please try again.");
   }
 }
