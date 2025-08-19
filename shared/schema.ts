@@ -1,5 +1,5 @@
 import { sql } from "drizzle-orm";
-import { pgTable, text, varchar, timestamp } from "drizzle-orm/pg-core";
+import { pgTable, text, varchar, timestamp, json } from "drizzle-orm/pg-core";
 import { createInsertSchema } from "drizzle-zod";
 import { z } from "zod";
 
@@ -40,6 +40,21 @@ export const grimoireEntries = pgTable("grimoire_entries", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+export const deities = pgTable("deities", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  name: text("name").notNull(),
+  culture: text("culture").notNull(),
+  domains: json("domains").$type<string[]>().notNull(),
+  elements: json("elements").$type<string[]>().notNull(),
+  symbols: json("symbols").$type<string[]>().notNull(),
+  epithets: json("epithets").$type<string[]>().notNull(),
+  offerings: json("offerings").$type<string[]>().notNull(),
+  cautions: json("cautions").$type<string[]>().notNull(),
+  stories: json("stories").$type<string[]>().notNull(),
+  whyMatters: text("why_matters"),
+  image: text("image"),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -68,6 +83,10 @@ export const insertGrimoireEntrySchema = createInsertSchema(grimoireEntries).pic
   astrologicalSign: true,
 });
 
+export const insertDeitySchema = createInsertSchema(deities).omit({
+  id: true,
+});
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertNewsletter = z.infer<typeof insertNewsletterSchema>;
@@ -76,3 +95,5 @@ export type InsertGrimoire = z.infer<typeof insertGrimoireSchema>;
 export type Grimoire = typeof grimoires.$inferSelect;
 export type InsertGrimoireEntry = z.infer<typeof insertGrimoireEntrySchema>;
 export type GrimoireEntry = typeof grimoireEntries.$inferSelect;
+export type InsertDeity = z.infer<typeof insertDeitySchema>;
+export type Deity = typeof deities.$inferSelect;

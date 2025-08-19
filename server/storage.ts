@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Newsletter, type InsertNewsletter, type Grimoire, type InsertGrimoire, type GrimoireEntry, type InsertGrimoireEntry } from "@shared/schema";
+import { type User, type InsertUser, type Newsletter, type InsertNewsletter, type Grimoire, type InsertGrimoire, type GrimoireEntry, type InsertGrimoireEntry, type Deity, type InsertDeity } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -22,6 +22,16 @@ export interface IStorage {
   createGrimoireEntry(entry: InsertGrimoireEntry): Promise<GrimoireEntry>;
   updateGrimoireEntry(id: string, entry: Partial<InsertGrimoireEntry>): Promise<GrimoireEntry | undefined>;
   deleteGrimoireEntry(id: string): Promise<boolean>;
+
+  // Deity methods
+  getAllDeities(): Promise<Deity[]>;
+  getDeity(id: string): Promise<Deity | undefined>;
+  createDeity(deity: InsertDeity): Promise<Deity>;
+  updateDeity(id: string, deity: Partial<InsertDeity>): Promise<Deity | undefined>;
+  deleteDeity(id: string): Promise<boolean>;
+  searchDeities(query: string): Promise<Deity[]>;
+  filterDeities(filters: { culture?: string; domain?: string; element?: string; }): Promise<Deity[]>;
+  importDeities(deities: InsertDeity[]): Promise<Deity[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -29,12 +39,35 @@ export class MemStorage implements IStorage {
   private newsletters: Map<string, Newsletter>;
   private grimoires: Map<string, Grimoire>;
   private grimoireEntries: Map<string, GrimoireEntry>;
+  private deities: Map<string, Deity>;
 
   constructor() {
     this.users = new Map();
     this.newsletters = new Map();
     this.grimoires = new Map();
     this.grimoireEntries = new Map();
+    this.deities = new Map();
+    this.initializeDeities();
+  }
+
+  private async initializeDeities() {
+    // Load deity data from the imported JSON file
+    try {
+      const fs = await import('fs');
+      const path = await import('path');
+      const deityDataPath = path.join(process.cwd(), 'deity-data.json');
+      
+      if (fs.existsSync(deityDataPath)) {
+        const deityData = JSON.parse(fs.readFileSync(deityDataPath, 'utf-8'));
+        for (const deity of deityData) {
+          const id = deity.id || randomUUID();
+          this.deities.set(id, { ...deity, id });
+        }
+        console.log(`Loaded ${this.deities.size} deities from database`);
+      }
+    } catch (error) {
+      console.log('No deity data found, starting with empty deity collection');
+    }
   }
 
   async getUser(id: string): Promise<User | undefined> {
@@ -168,6 +201,91 @@ export class MemStorage implements IStorage {
 
   async deleteGrimoireEntry(id: string): Promise<boolean> {
     return this.grimoireEntries.delete(id);
+  }
+
+  // Deity methods implementation
+  async getAllDeities(): Promise<Deity[]> {
+    return Array.from(this.deities.values());
+  }
+
+  async getDeity(id: string): Promise<Deity | undefined> {
+    return this.deities.get(id);
+  }
+
+  async createDeity(insertDeity: InsertDeity): Promise<Deity> {
+    const id = randomUUID();
+    const deity: Deity = { 
+      ...insertDeity,
+      id
+    };
+    this.deities.set(id, deity);
+    return deity;
+  }
+
+  async updateDeity(id: string, updateData: Partial<InsertDeity>): Promise<Deity | undefined> {
+    const existingDeity = this.deities.get(id);
+    if (!existingDeity) return undefined;
+    
+    const updatedDeity: Deity = { 
+      ...existingDeity, 
+      ...updateData
+    };
+    this.deities.set(id, updatedDeity);
+    return updatedDeity;
+  }
+
+  async deleteDeity(id: string): Promise<boolean> {
+    if (!this.deities.has(id)) return false;
+    this.deities.delete(id);
+    return true;
+  }
+
+  async searchDeities(query: string): Promise<Deity[]> {
+    const q = query.toLowerCase().trim();
+    if (!q) return this.getAllDeities();
+
+    return Array.from(this.deities.values()).filter(deity => {
+      const searchText = [
+        deity.name,
+        deity.culture,
+        ...deity.domains,
+        ...deity.elements,
+        ...deity.symbols,
+        ...deity.epithets,
+        deity.whyMatters || "",
+        ...deity.stories,
+      ].join(" ").toLowerCase();
+      
+      return searchText.includes(q);
+    });
+  }
+
+  async filterDeities(filters: {
+    culture?: string;
+    domain?: string;
+    element?: string;
+  }): Promise<Deity[]> {
+    return Array.from(this.deities.values()).filter(deity => {
+      if (filters.culture && filters.culture !== "All" && deity.culture !== filters.culture) {
+        return false;
+      }
+      if (filters.domain && filters.domain !== "All" && !deity.domains.includes(filters.domain)) {
+        return false;
+      }
+      if (filters.element && filters.element !== "All" && !deity.elements.includes(filters.element)) {
+        return false;
+      }
+      return true;
+    });
+  }
+
+  async importDeities(deities: InsertDeity[]): Promise<Deity[]> {
+    const imported: Deity[] = [];
+    for (const deity of deities) {
+      const created = await this.createDeity(deity);
+      imported.push(created);
+    }
+    return imported;
   }
 }
 

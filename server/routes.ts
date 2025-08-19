@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage";
-import { insertNewsletterSchema, insertGrimoireSchema, insertGrimoireEntrySchema } from "@shared/schema";
+import { insertNewsletterSchema, insertGrimoireSchema, insertGrimoireEntrySchema, insertDeitySchema } from "@shared/schema";
 import { getAionaraResponse } from "./openai";
 import { z } from "zod";
 
