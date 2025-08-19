@@ -4,6 +4,7 @@ import { Link } from "wouter";
 import NewsletterForm from "@/components/newsletter-form";
 import logoImage from "@assets/ChatGPT Image Aug 18, 2025, 12_50_00 AM_1755500285103.webp";
 import mysticalChamberBg from "@assets/ChatGPT Image Aug 18, 2025, 12_54_24 AM_1755531868254.webp";
+import athenaeumBackground from "@assets/ChatGPT Image Aug 18, 2025, 06_11_32 PM_1755562381522.webp";
 
 export default function MainContent() {
   const fadeInUp = {
@@ -237,8 +238,18 @@ export default function MainContent() {
       </div>
 
       {/* The Athenaeum Section */}
-      <div id="athenaeum" className="py-20 relative z-10">
-        <div className="max-w-4xl mx-auto px-6 text-center">
+      <div 
+        id="athenaeum" 
+        className="py-20 relative z-10"
+        style={{
+          backgroundImage: `url(${athenaeumBackground})`,
+          backgroundSize: 'cover',
+          backgroundPosition: 'center',
+          backgroundAttachment: 'fixed'
+        }}
+      >
+        <div className="absolute inset-0 bg-black/50"></div>
+        <div className="max-w-4xl mx-auto px-6 text-center relative z-10">
           <motion.h3
             className="font-gothic text-4xl md:text-5xl font-semibold mb-8 text-golden-rune"
             initial={{ opacity: 0, y: 30 }}

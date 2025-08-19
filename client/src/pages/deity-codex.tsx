@@ -199,7 +199,7 @@ export default function DeityCodex() {
       <div className="relative z-10 py-20 px-6">
         <div className="max-w-6xl mx-auto">
           <motion.div className="text-center mb-12" {...fadeInUp}>
-            <Link href="/remember" className="inline-flex items-center text-golden-rune hover:text-silver-star mb-6">
+            <Link href="/" className="inline-flex items-center text-golden-rune hover:text-silver-star mb-6">
               <ArrowLeft className="mr-2 w-4 h-4" />
               Back to Athenaeum
             </Link>
