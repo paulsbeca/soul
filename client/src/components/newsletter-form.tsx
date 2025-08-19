@@ -75,7 +75,7 @@ export default function NewsletterForm() {
         </Button>
       </div>
       <p className="text-sm text-silver-star/70" data-testid="email-info">
-        Your energy will be sent to <span className="text-golden-rune">beca@jakintzaruha.com</span>
+        Your energy will be sent to <span className="text-golden-rune">info@jakintzaruha.com</span>
       </p>
     </motion.form>
   );

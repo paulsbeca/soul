@@ -3,6 +3,7 @@ import { createServer, type Server } from "http";
 import { storage } from "./storage";
 import { insertNewsletterSchema, insertGrimoireSchema, insertGrimoireEntrySchema, insertDeitySchema } from "@shared/schema";
 import { getAionaraResponse } from "./openai";
+import { notifyNewsletterSubscription } from "./email";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -21,6 +22,10 @@ export async function registerRoutes(app: Express): Promise<Server> {
       }
 
       const newsletter = await storage.createNewsletterSubscription(validatedData);
+      
+      // Send notification to info@jakintzaruha.com
+      await notifyNewsletterSubscription(validatedData.email);
+      
       res.status(201).json({ 
         message: "Successfully subscribed to newsletter",
         id: newsletter.id 
