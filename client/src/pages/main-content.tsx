@@ -291,12 +291,14 @@ export default function MainContent() {
               </p>
               <button
                 onClick={(e) => {
+                  console.log("Calendar button clicked!");
                   e.preventDefault();
                   e.stopPropagation();
                   window.location.href = "/astro-calendar";
                 }}
-                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
+                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer relative z-50"
                 data-testid="button-calendar"
+                style={{ pointerEvents: 'auto' }}
               >
                 Explore Calendar
               </button>
@@ -319,12 +321,14 @@ export default function MainContent() {
               </p>
               <button
                 onClick={(e) => {
+                  console.log("Grimoire button clicked!");
                   e.preventDefault();
                   e.stopPropagation();
                   window.location.href = "/grimoires";
                 }}
-                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
+                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer relative z-50"
                 data-testid="button-grimoire"
+                style={{ pointerEvents: 'auto' }}
               >
                 Enter Sacred Space
               </button>
@@ -347,12 +351,14 @@ export default function MainContent() {
               </p>
               <button
                 onClick={(e) => {
+                  console.log("Alchemy button clicked!");
                   e.preventDefault();
                   e.stopPropagation();
                   window.location.href = "/alchemy";
                 }}
-                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
+                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer relative z-50"
                 data-testid="button-alchemy"
+                style={{ pointerEvents: 'auto' }}
               >
                 Study Alchemy
               </button>
@@ -375,12 +381,14 @@ export default function MainContent() {
               </p>
               <button
                 onClick={(e) => {
+                  console.log("Deity Codex button clicked!");
                   e.preventDefault();
                   e.stopPropagation();
                   window.location.href = "/deity-codex";
                 }}
-                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
+                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer relative z-50"
                 data-testid="button-deity-codex"
+                style={{ pointerEvents: 'auto' }}
               >
                 Explore Codex
               </button>
