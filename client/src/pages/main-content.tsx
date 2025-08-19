@@ -289,7 +289,7 @@ export default function MainContent() {
               </p>
               <Link 
                 href="/astro-calendar"
-                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm"
+                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
                 data-testid="link-calendar"
               >
                 Explore Calendar
@@ -313,7 +313,7 @@ export default function MainContent() {
               </p>
               <Link 
                 href="/grimoires"
-                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm"
+                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
                 data-testid="button-grimoire"
               >
                 Enter Sacred Space
@@ -337,7 +337,7 @@ export default function MainContent() {
               </p>
               <Link 
                 href="/alchemy"
-                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm"
+                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
                 data-testid="link-alchemy"
               >
                 Study Alchemy
@@ -361,7 +361,7 @@ export default function MainContent() {
               </p>
               <Link 
                 href="/deity-codex"
-                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm"
+                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
                 data-testid="link-deity-codex"
               >
                 Explore Codex
