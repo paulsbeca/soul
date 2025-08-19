@@ -1,12 +1,14 @@
 import { motion } from "framer-motion";
 import { ExternalLink, Calendar, BookOpen, Star, Sprout, Infinity, Gem, Flame, Crown } from "lucide-react";
-import { Link } from "wouter";
+import { Link, useLocation } from "wouter";
 import NewsletterForm from "@/components/newsletter-form";
 import logoImage from "@assets/ChatGPT Image Aug 18, 2025, 12_50_00 AM_1755500285103.webp";
 import mysticalChamberBg from "@assets/ChatGPT Image Aug 18, 2025, 12_54_24 AM_1755531868254.webp";
 import athenaeumBackground from "@assets/ChatGPT Image Aug 18, 2025, 06_11_32 PM_1755562381522.webp";
 
 export default function MainContent() {
+  const [, setLocation] = useLocation();
+  
   const fadeInUp = {
     initial: { opacity: 0, y: 30 },
     animate: { opacity: 1, y: 0 },
@@ -287,13 +289,13 @@ export default function MainContent() {
               <p className="text-ethereal-white/90 mb-4 text-sm">
                 Track lunar cycles and planetary alignments.
               </p>
-              <Link 
-                href="/astro-calendar"
+              <button
+                onClick={() => setLocation("/astro-calendar")}
                 className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
-                data-testid="link-calendar"
+                data-testid="button-calendar"
               >
                 Explore Calendar
-              </Link>
+              </button>
             </motion.div>
             
             <motion.div 
@@ -311,13 +313,13 @@ export default function MainContent() {
               <p className="text-ethereal-white/90 mb-4 text-sm">
                 Your digital Book of Shadows, Mirrors, or Stars.
               </p>
-              <Link 
-                href="/grimoires"
+              <button
+                onClick={() => setLocation("/grimoires")}
                 className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
                 data-testid="button-grimoire"
               >
                 Enter Sacred Space
-              </Link>
+              </button>
             </motion.div>
 
             <motion.div 
@@ -335,13 +337,13 @@ export default function MainContent() {
               <p className="text-ethereal-white/90 mb-4 text-sm">
                 The four strands of transformation and elemental wisdom.
               </p>
-              <Link 
-                href="/alchemy"
+              <button
+                onClick={() => setLocation("/alchemy")}
                 className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
-                data-testid="link-alchemy"
+                data-testid="button-alchemy"
               >
                 Study Alchemy
-              </Link>
+              </button>
             </motion.div>
 
             <motion.div 
@@ -359,13 +361,13 @@ export default function MainContent() {
               <p className="text-ethereal-white/90 mb-4 text-sm">
                 Sacred repository of divine beings and pantheons.
               </p>
-              <Link 
-                href="/deity-codex"
+              <button
+                onClick={() => setLocation("/deity-codex")}
                 className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer"
-                data-testid="link-deity-codex"
+                data-testid="button-deity-codex"
               >
                 Explore Codex
-              </Link>
+              </button>
             </motion.div>
           </div>
           
