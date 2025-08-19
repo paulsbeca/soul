@@ -74,6 +74,22 @@ export default function Grimoires() {
             </p>
           </motion.div>
 
+          {/* Create New Grimoire Button */}
+          <motion.div 
+            className="text-center mb-12"
+            {...fadeInUp}
+          >
+            <Link href="/grimoires/create">
+              <Button
+                className="bg-gradient-to-r from-golden-rune to-cosmic-blue hover:from-golden-rune/90 hover:to-cosmic-blue/90 text-void-black font-semibold px-8 py-3"
+                data-testid="button-create-grimoire"
+              >
+                <Plus className="mr-2 w-5 h-5" />
+                Create New Grimoire
+              </Button>
+            </Link>
+          </motion.div>
+
           {/* Type Filter */}
           <motion.div 
             className="flex flex-wrap justify-center gap-4 mb-12"

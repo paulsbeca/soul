@@ -37,11 +37,14 @@ export default function DeityCodex() {
     enabled: true
   });
 
-  const filteredDeities = deities.filter((deity: Deity) =>
-    deity.name.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    deity.culture.toLowerCase().includes(searchQuery.toLowerCase()) ||
-    deity.domains.some(domain => domain.toLowerCase().includes(searchQuery.toLowerCase()))
-  );
+  const filteredDeities = deities.filter((deity: Deity) => {
+    const query = searchQuery.toLowerCase();
+    return deity.name.toLowerCase().includes(query) ||
+           deity.culture.toLowerCase().includes(query) ||
+           deity.domains.some(domain => domain.toLowerCase().includes(query)) ||
+           deity.elements.some(element => element.toLowerCase().includes(query)) ||
+           (deity.whyMatters && deity.whyMatters.toLowerCase().includes(query));
+  });
 
   if (selectedDeity) {
     return (

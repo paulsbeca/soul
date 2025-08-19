@@ -11,6 +11,7 @@ import GrimoireDetail from "@/pages/grimoire-detail";
 import CreateEntry from "@/pages/create-entry";
 import EntryDetail from "@/pages/entry-detail";
 import AstroCalendar from "@/pages/astro-calendar";
+import SacredCalendar from "@/pages/sacred-calendar";
 import FourPillars from "@/pages/four-pillars";
 import Aionara from "@/pages/aionara";
 import Alchemy from "@/pages/alchemy";
@@ -25,9 +26,10 @@ function Router() {
       <Route path="/grimoires" component={Grimoires} />
       <Route path="/grimoires/create" component={CreateGrimoire} />
       <Route path="/grimoires/:id" component={GrimoireDetail} />
-      <Route path="/grimoires/:id/entries/create" component={CreateEntry} />
+      <Route path="/grimoires/:grimoireId/create-entry" component={CreateEntry} />
       <Route path="/grimoires/:id/entries/:entryId" component={EntryDetail} />
       <Route path="/astro-calendar" component={AstroCalendar} />
+      <Route path="/sacred-calendar" component={SacredCalendar} />
       <Route path="/four-pillars" component={FourPillars} />
       <Route path="/aionara" component={Aionara} />
       <Route path="/alchemy" component={Alchemy} />

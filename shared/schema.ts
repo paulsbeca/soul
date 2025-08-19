@@ -128,6 +128,28 @@ export const insertYearlyConfigurationSchema = createInsertSchema(yearlyConfigur
   createdAt: true,
 });
 
+// Type exports
+export type User = typeof users.$inferSelect;
+export type InsertUser = z.infer<typeof insertUserSchema>;
+
+export type Newsletter = typeof newsletters.$inferSelect;
+export type InsertNewsletter = z.infer<typeof insertNewsletterSchema>;
+
+export type Grimoire = typeof grimoires.$inferSelect;
+export type InsertGrimoire = z.infer<typeof insertGrimoireSchema>;
+
+export type GrimoireEntry = typeof grimoireEntries.$inferSelect;
+export type InsertGrimoireEntry = z.infer<typeof insertGrimoireEntrySchema>;
+
+export type Deity = typeof deities.$inferSelect;
+export type InsertDeity = z.infer<typeof insertDeitySchema>;
+
+export type SacredEvent = typeof sacredEvents.$inferSelect;
+export type InsertSacredEvent = z.infer<typeof insertSacredEventSchema>;
+
+export type YearlyConfiguration = typeof yearlyConfigurations.$inferSelect;
+export type InsertYearlyConfiguration = z.infer<typeof insertYearlyConfigurationSchema>;
+
 export type InsertUser = z.infer<typeof insertUserSchema>;
 export type User = typeof users.$inferSelect;
 export type InsertNewsletter = z.infer<typeof insertNewsletterSchema>;
