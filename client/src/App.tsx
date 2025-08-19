@@ -14,6 +14,7 @@ import AstroCalendar from "@/pages/astro-calendar";
 import FourPillars from "@/pages/four-pillars";
 import Aionara from "@/pages/aionara";
 import Alchemy from "@/pages/alchemy";
+import DeityCodex from "@/pages/deity-codex";
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -30,6 +31,7 @@ function Router() {
       <Route path="/four-pillars" component={FourPillars} />
       <Route path="/aionara" component={Aionara} />
       <Route path="/alchemy" component={Alchemy} />
+      <Route path="/deity-codex" component={DeityCodex} />
       <Route component={NotFound} />
     </Switch>
   );

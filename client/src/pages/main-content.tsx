@@ -348,9 +348,13 @@ export default function MainContent() {
               <p className="text-ethereal-white/90 mb-4 text-sm">
                 Sacred repository of divine beings and pantheons.
               </p>
-              <div className="inline-flex items-center bg-gradient-to-r from-amber-900/40 to-amber-700/40 px-4 py-2 rounded-lg text-sm text-amber-300">
-                Coming Soon
-              </div>
+              <Link 
+                href="/deity-codex"
+                className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm"
+                data-testid="link-deity-codex"
+              >
+                Explore Codex
+              </Link>
             </motion.div>
           </div>
           

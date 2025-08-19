@@ -215,8 +215,18 @@ export class MemStorage implements IStorage {
   async createDeity(insertDeity: InsertDeity): Promise<Deity> {
     const id = randomUUID();
     const deity: Deity = { 
-      ...insertDeity,
-      id
+      id,
+      name: insertDeity.name,
+      culture: insertDeity.culture,
+      domains: insertDeity.domains,
+      elements: insertDeity.elements,
+      symbols: insertDeity.symbols,
+      epithets: insertDeity.epithets,
+      offerings: insertDeity.offerings,
+      cautions: insertDeity.cautions,
+      stories: insertDeity.stories,
+      whyMatters: insertDeity.whyMatters || null,
+      image: insertDeity.image || null
     };
     this.deities.set(id, deity);
     return deity;
@@ -227,8 +237,18 @@ export class MemStorage implements IStorage {
     if (!existingDeity) return undefined;
     
     const updatedDeity: Deity = { 
-      ...existingDeity, 
-      ...updateData
+      id: existingDeity.id,
+      name: updateData.name ?? existingDeity.name,
+      culture: updateData.culture ?? existingDeity.culture,
+      domains: updateData.domains ?? existingDeity.domains,
+      elements: updateData.elements ?? existingDeity.elements,
+      symbols: updateData.symbols ?? existingDeity.symbols,
+      epithets: updateData.epithets ?? existingDeity.epithets,
+      offerings: updateData.offerings ?? existingDeity.offerings,
+      cautions: updateData.cautions ?? existingDeity.cautions,
+      stories: updateData.stories ?? existingDeity.stories,
+      whyMatters: updateData.whyMatters ?? existingDeity.whyMatters,
+      image: updateData.image ?? existingDeity.image
     };
     this.deities.set(id, updatedDeity);
     return updatedDeity;

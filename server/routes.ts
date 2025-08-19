@@ -226,6 +226,47 @@ export async function registerRoutes(app: Express): Promise<Server> {
     }
   });
 
+  // Deity routes
+  app.get("/api/deities", async (req, res) => {
+    try {
+      const deities = await storage.getAllDeities();
+      res.json(deities);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch deities" });
+    }
+  });
+
+  app.get("/api/deities/:id", async (req, res) => {
+    try {
+      const deity = await storage.getDeity(req.params.id);
+      if (!deity) {
+        return res.status(404).json({ message: "Deity not found" });
+      }
+      res.json(deity);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch deity" });
+    }
+  });
+
+  app.get("/api/deities/search/:query", async (req, res) => {
+    try {
+      const deities = await storage.searchDeities(req.params.query);
+      res.json(deities);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to search deities" });
+    }
+  });
+
+  app.post("/api/deities/filter", async (req, res) => {
+    try {
+      const filters = req.body;
+      const deities = await storage.filterDeities(filters);
+      res.json(deities);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to filter deities" });
+    }
+  });
+
   const httpServer = createServer(app);
   return httpServer;
 }
