@@ -14,31 +14,31 @@ export default function Alchemy() {
     {
       name: "Earth",
       icon: Mountain,
-      description: "grounding, memory, and the bones of our ancestors",
+      description: "grounding, nourishment, memory, the bones of the ancestors beneath our feet",
       color: "emerald"
     },
     {
       name: "Water", 
       icon: Waves,
-      description: "cleansing, dreaming, and the deep tides of the subconscious",
+      description: "cleansing, tides of emotion, dreaming, the womb of possibility",
       color: "blue"
     },
     {
       name: "Air",
       icon: Wind,
-      description: "vision, language, and the breath of creation",
+      description: "speech, thought, imagination, the first breath of creation",
       color: "cyan"
     },
     {
       name: "Fire",
       icon: Flame,
-      description: "transformation, willpower, and the spark of revolt",
+      description: "transformation, revolt, the will that ignites new worlds",
       color: "red"
     },
     {
       name: "Aether",
       icon: Sparkles,
-      description: "spirit, ascension, and the unseen thread that unites all",
+      description: "spirit, ascension, the unseen fabric binding all into one",
       color: "violet"
     }
   ];
@@ -47,41 +47,43 @@ export default function Alchemy() {
     {
       title: "Inner Transmutation",
       icon: Heart,
-      description: "The first crucible is the self. Alchemy begins within, where we confront our shadows, name our wounds, and learn to transform them into medicine.",
+      description: "The first crucible is the self—the laboratory of flesh and memory. Here we meet our shadows and discover that the monsters under the bed are often our own forgotten selves waiting to be held.",
       practices: [
-        "Shadow Work & Healing – turning pain into strength",
-        "Integration – uniting body, mind, spirit, and ancestry", 
-        "Awakening – remembering the golden soul beneath the rust of trauma and assimilation"
+        "Shadow Work & Healing – pain is not waste, but raw ore that can be smelted into strength",
+        "Integration – weaving body, mind, spirit, and ancestral blood into one coherent self", 
+        "Awakening – the golden soul beneath rust, trauma, and lies shines through once we polish it with truth"
       ]
     },
     {
       title: "Elemental Alchemy",
       icon: Flame,
-      description: "The second crucible is the world around us. We return to the ancient pact with Earth, Water, Air, Fire, and Aether, not as symbols only, but as living allies.",
+      description: "The second crucible is the living world. Earth, Water, Air, Fire, Aether are not metaphors—they are kin. They are teachers who demand reciprocity, not domination.",
       practices: [
-        "Re-entering the covenant of balance with nature",
-        "Working with elemental forces as mirrors and teachers",
-        "Remembering that to live is to exchange breath with the cosmos"
+        "Earth teaches memory and endurance",
+        "Water teaches release and dreaming",
+        "Air teaches speech and imagination",
+        "Fire teaches will and transformation",
+        "Aether teaches spirit and the thread of unity"
       ]
     },
     {
       title: "Ancestral Gold",
       icon: Crown,
-      description: "The third crucible is our bloodline. Colonization, forced assimilation, and cultural erasure scattered our stories—but they did not destroy them.",
+      description: "The third crucible is bloodline. Colonization sought to sever our inheritance, to bury our languages, to shame our rituals. Yet the gold persists, hidden in songs, recipes, dreams, and names whispered in silence.",
       practices: [
-        "Remembering Lineage – honoring ancestors both named and unnamed",
-        "Recovering Forbidden Knowledge – from plant medicine to ritual cycles",
-        "Carrying Forward – transforming survival into legacy, resistance into inheritance"
+        "Remembering Lineage – our ancestors walk in our gestures, our voices, our grief",
+        "Recovering Forbidden Knowledge – from herbal medicine to moon cycles, we dig up what was called 'witchcraft' and restore it as sacred science",
+        "Carrying Forward – we turn survival into strength, resistance into radiant inheritance"
       ]
     },
     {
       title: "The Collective Elixir",
       icon: Users,
-      description: "The final crucible is the movement itself. The Elixir of Life is not an individual's immortality, but the living memory of a people who refuse to be erased.",
+      description: "The final crucible is us, together. The Elixir of Life is not the immortality of one—but the persistence of a people who refuse erasure.",
       practices: [
-        "Reclaim what was demonized – spellwork, ritual, magic, and mysticism",
-        "Condemn cultural appropriation and forced erasure",
-        "Weave the Cosmic and the Earthly – integrating science, spirituality, and culture"
+        "Reclaim the Demonized – spellwork, ritual, astrology, magic, mysticism—these are not evil, they are memory",
+        "Resist Appropriation – what was stolen and sold is reclaimed, and returned to the guardians of its bloodline",
+        "Weave Science and Spirit – quantum physics and prayer, astronomy and astrology, DNA and ancestral song—none of these are contradictions. They are threads in the same tapestry"
       ]
     }
   ];
@@ -152,13 +154,17 @@ export default function Alchemy() {
           </h2>
           <div className="max-w-4xl mx-auto space-y-6 text-lg text-ethereal-white/90 leading-relaxed">
             <p>
-              Alchemy is often remembered as the ancient pursuit of turning base metals into treasure. 
-              But in Jakintza Ruha, alchemy is the sacred science of transformation at every level of existence. 
-              It is the practice of remembering who we are, reclaiming what was stolen, and refining the raw matter of our lives into radiant spirit.
+              Alchemy has long been painted as the pursuit of the impossible: turning dull metal into gleaming treasure. 
+              But that was always a misdirection. The truest alchemists weren't chasing coins, they were mapping the road of the soul.
             </p>
-            <p className="text-golden-rune font-semibold">
-              True alchemy does not happen in a furnace of iron, but in the forge of the soul. 
-              Every heartbreak, every exile, every shadow becomes the prima materia—the base substance that we transmute into wisdom and power.
+            <p className="text-silver-star/90">
+              In Jakintza Ruha, alchemy is Remembrance—the art of transforming wounds into wisdom, exile into return, survival into sovereignty. 
+              It is a covenant with spirit, science, and ancestry.
+            </p>
+            <p className="text-golden-rune font-semibold text-xl">
+              True alchemy does not burn in iron furnaces—it happens in the furnace of the heart. 
+              Each betrayal, each assimilation, each fragment of memory hidden in bone is the prima materia, the base matter. 
+              We are the crucibles. We are the experiment. And when we awaken, we are the gold.
             </p>
           </div>
         </motion.div>
@@ -219,8 +225,9 @@ export default function Alchemy() {
             The Five Sacred Elements
           </h3>
           <p className="text-center text-ethereal-white/80 mb-12 max-w-3xl mx-auto">
-            Each element is a mirror and a teacher. Through these forces, we do not "master nature." 
-            We re-enter the covenant of balance, remembering that to live is to exchange breath with the cosmos.
+            Each element is not just a force—it is a mirror of the soul. 
+            To live is to breathe with them. To die is to return to them. 
+            To practice alchemy is to remember we were never separate.
           </p>
           
           <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-5 gap-6">
@@ -257,25 +264,30 @@ export default function Alchemy() {
           
           <div className="max-w-4xl mx-auto mystical-border p-8 rounded-lg grimoire-texture">
             <p className="text-lg text-ethereal-white/90 mb-6 leading-relaxed">
-              The alchemists once sought a single object of ultimate power—the Philosopher's Stone. 
-              In Jakintza Ruha, we name it for what it truly is: a state of being.
+              The old alchemists searched for a stone of power. But the Stone was never a rock. It was always a being.
             </p>
             
             <div className="space-y-4 text-golden-rune font-semibold text-lg">
               <p>The Philosopher's Stone is the Awakened Soul who remembers.</p>
-              <p>It is the child who knows their ancestors still sing through them.</p>
-              <p>It is the community who refuses assimilation and instead lives in sacred balance with the Earth and stars.</p>
+              <p>It is the child who knows their ancestors still sing in their blood.</p>
+              <p>It is the community who refuses assimilation and instead grows in sacred balance with Earth and cosmos.</p>
+              <p>It is the people who turn exile into homecoming, forgetting into remembering, silence into song.</p>
             </div>
             
             <p className="text-xl text-silver-star mt-8 font-gothic">
-              This is the gold we seek—not the metal, but the radiance of a people who remember what their souls already know.
+              This is the gold we seek: not coins, but radiance. Not treasure, but remembrance. Not empire, but liberation.
             </p>
           </div>
           
-          <div className="mt-12 space-y-3 text-golden-rune font-gothic text-xl">
-            <p>✨ Jakintza Ruha: Where Alchemy is Remembrance.</p>
-            <p>✨ Where Wisdom Becomes Magic.</p>
-            <p>✨ Where Blood, Bone, and Spirit are transmuted into freedom.</p>
+          <div className="mt-12 space-y-4 text-center">
+            <h4 className="font-gothic text-2xl text-golden-rune mb-6">
+              🜔 The Golden Invocations of Jakintza Ruha
+            </h4>
+            <div className="space-y-3 text-golden-rune font-gothic text-xl">
+              <p>✨ Jakintza Ruha: Where Alchemy is Remembrance.</p>
+              <p>✨ Jakintza Ruha: Where Wisdom Becomes Magic.</p>
+              <p>✨ Jakintza Ruha: Where Blood, Bone, and Spirit are transmuted into Freedom.</p>
+            </div>
           </div>
         </motion.div>
       </div>
