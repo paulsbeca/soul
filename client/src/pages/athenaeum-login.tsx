@@ -37,9 +37,9 @@ export default function AthenaeumLogin() {
         duration: 5000,
       });
       
-      // Redirect to Athenaeum
+      // Redirect to Admin Dashboard
       setTimeout(() => {
-        setLocation("/athenaeum");
+        setLocation("/admin");
       }, 1000);
     } else {
       toast({
