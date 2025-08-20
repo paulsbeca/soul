@@ -36,6 +36,45 @@ export default function Aionara() {
 
   useEffect(scrollToBottom, [messages]);
 
+  // Simple response system without OpenAI
+  const getLocalResponse = (userInput: string): string => {
+    const input = userInput.toLowerCase();
+    
+    if (input.includes('hello') || input.includes('hi') || input.includes('greetings')) {
+      return "Blessed greetings, dear seeker. The celestial energies welcome you to this sacred space. How may I guide you on your spiritual journey today?";
+    }
+    
+    if (input.includes('love') || input.includes('heart') || input.includes('relationship')) {
+      return "Ah, the matters of the heart... Love is the most powerful force in the universe, dear one. It is both the path and the destination. Trust in your heart's wisdom, for it knows the way to authentic connection and soul-deep healing.";
+    }
+    
+    if (input.includes('magic') || input.includes('spell') || input.includes('ritual')) {
+      return "Magic flows through all things, sacred seeker. The most powerful magic begins within - with intention, gratitude, and alignment with your highest self. Remember: you are the magic you seek.";
+    }
+    
+    if (input.includes('purpose') || input.includes('path') || input.includes('calling')) {
+      return "Your soul's purpose is written in the stars, yet it unfolds through your choices here on Earth. Listen deeply to what sets your spirit ablaze - therein lies your sacred calling. Trust the journey, even when the path seems unclear.";
+    }
+    
+    if (input.includes('fear') || input.includes('worried') || input.includes('anxious')) {
+      return "Fear is but a guardian at the threshold of growth, dear one. Breathe deeply and remember: you are infinitely more powerful than any fear that visits you. Step forward with courage - the universe supports your expansion.";
+    }
+    
+    if (input.includes('dreams') || input.includes('vision') || input.includes('future')) {
+      return "Dreams are whispers from your soul's deepest knowing. Pay attention to both sleeping visions and waking dreams - they carry important messages about your path forward. Your future is being woven with each conscious choice you make.";
+    }
+    
+    // Default responses
+    const defaults = [
+      "The cosmic winds carry your question to me, dear seeker. Know that within you lies all the wisdom you seek. Sometimes we must ask the right questions to unlock the answers already dwelling in our hearts.",
+      "I sense the sacred fire within you seeking expression. Trust in your inner knowing, for the answers you seek are already blooming in the garden of your soul.",
+      "The stars whisper that this is a time of profound transformation for you. Embrace the changes with an open heart, for they are aligning you with your highest purpose.",
+      "Your question resonates through the astral realms, dear one. Remember that every challenge is an invitation to discover your own divine strength. You are exactly where you need to be."
+    ];
+    
+    return defaults[Math.floor(Math.random() * defaults.length)];
+  };
+
   const sendMessage = async () => {
     if (!input.trim() || isLoading) return;
 
@@ -47,45 +86,22 @@ export default function Aionara() {
     };
 
     setMessages(prev => [...prev, userMessage]);
+    const currentInput = input.trim();
     setInput("");
     setIsLoading(true);
 
-    try {
-      const response = await fetch('/api/aionara/chat', {
-        method: 'POST',
-        headers: {
-          'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-          message: userMessage.content,
-          conversationHistory: messages.slice(-10) // Send last 10 messages for context
-        }),
-      });
-
-      if (!response.ok) {
-        throw new Error('Failed to get response from Aionara');
-      }
-
-      const data = await response.json();
-      
+    // Simulate thinking time
+    setTimeout(() => {
       const aionaraMessage: Message = {
         id: (Date.now() + 1).toString(),
         role: 'aionara',
-        content: data.response,
+        content: getLocalResponse(currentInput),
         timestamp: new Date()
       };
 
       setMessages(prev => [...prev, aionaraMessage]);
-    } catch (error) {
-      console.error('Error:', error);
-      toast({
-        title: "Connection Lost",
-        description: "The cosmic veil momentarily obscures our connection. Please try again.",
-        variant: "destructive",
-      });
-    } finally {
       setIsLoading(false);
-    }
+    }, 1000 + Math.random() * 1500); // Random delay between 1-2.5 seconds
   };
 
   const handleKeyPress = (e: React.KeyboardEvent) => {
