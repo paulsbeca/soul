@@ -43,8 +43,14 @@ export default function Landing() {
       
       <div className="relative z-10 text-center max-w-4xl mx-auto px-6">
         {/* Mystical Logo/Symbol */}
-        <div className="mb-12">
+        <div className="mb-12 relative">
           <MysticalSymbol />
+          {/* Hidden admin access area - invisible click zone near the logo */}
+          <div 
+            className="absolute -top-2 -right-2 w-8 h-8 cursor-pointer opacity-0 hover:opacity-10 hover:bg-golden-rune/20 rounded-full transition-opacity"
+            onClick={() => setLocation("/athenaeum/login")}
+            title=""
+          />
         </div>
         
         {/* Breathing Taglines */}
