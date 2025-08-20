@@ -49,11 +49,12 @@ export default function NewsletterForm() {
   return (
     <motion.form 
       onSubmit={handleSubmit}
-      className="mystical-border p-8 rounded-lg grimoire-texture space-y-6"
+      className="mystical-border p-8 rounded-lg grimoire-texture space-y-6 relative z-20"
       initial={{ opacity: 0, y: 20 }}
       animate={{ opacity: 1, y: 0 }}
       transition={{ duration: 0.8 }}
       data-testid="newsletter-form"
+      style={{ pointerEvents: 'auto' }}
     >
       <div className="flex flex-col md:flex-row gap-4">
         <Input
@@ -61,7 +62,8 @@ export default function NewsletterForm() {
           placeholder="Your sacred email address"
           value={email}
           onChange={(e) => setEmail(e.target.value)}
-          className="flex-1 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors focus:ring-2 focus:ring-golden-rune/20"
+          className="flex-1 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors focus:ring-2 focus:ring-golden-rune/20 relative z-30"
+          style={{ pointerEvents: 'auto' }}
           required
           data-testid="input-email"
         />

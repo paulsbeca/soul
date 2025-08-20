@@ -420,7 +420,7 @@ export default function MainContent() {
       </div>
 
       {/* Newsletter Section */}
-      <div id="contact" className="py-20 relative z-10">
+      <div id="contact" className="py-20 relative z-20">
         <div className="max-w-2xl mx-auto px-6 text-center">
           <motion.h3
             className="font-gothic text-4xl md:text-5xl font-semibold mb-8 text-golden-rune"
@@ -448,6 +448,8 @@ export default function MainContent() {
             whileInView={{ opacity: 1, y: 0 }}
             transition={{ duration: 1, delay: 0.4 }}
             viewport={{ once: true }}
+            className="relative z-30"
+            style={{ pointerEvents: 'auto' }}
           >
             <NewsletterForm />
           </motion.div>
