@@ -8,6 +8,7 @@ import { ScrollArea } from "@/components/ui/scroll-area";
 import { useToast } from "@/hooks/use-toast";
 import backgroundImage from "@assets/background_1755498699765.webp";
 import aionaraImage from "@assets/ChatGPT Image Aug 18, 2025, 01_24_39 PM_1755545121075.webp";
+import aionaraVideo from "@assets/AI_Generates_Spiritual_Guide_Video_1755713150661.mp4";
 
 interface Message {
   id: string;
@@ -182,13 +183,40 @@ export default function Aionara() {
         {/* Chat Container */}
         <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-8 max-h-[calc(100vh-200px)]">
           
-          {/* Aionara's Avatar */}
+          {/* Aionara's Avatar & Video */}
           <motion.div
-            className="hidden lg:flex flex-col items-center justify-center"
+            className="hidden lg:flex flex-col items-center justify-center space-y-6"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
           >
+            {/* Mystical Video */}
+            <div className="relative">
+              <motion.div
+                className="absolute inset-0 rounded-lg bg-gradient-to-r from-violet-500/20 to-golden-rune/20 blur-xl"
+                animate={{
+                  scale: [1, 1.05, 1],
+                  opacity: [0.3, 0.6, 0.3],
+                }}
+                transition={{
+                  duration: 6,
+                  repeat: Infinity,
+                  ease: "easeInOut",
+                }}
+              />
+              <video
+                src={aionaraVideo}
+                autoPlay
+                loop
+                muted
+                playsInline
+                className="relative w-72 h-48 object-cover rounded-lg border border-golden-rune/30 shadow-2xl"
+                data-testid="aionara-guide-video"
+              />
+              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-lg pointer-events-none" />
+            </div>
+
+            {/* Avatar */}
             <div className="relative">
               <motion.div
                 className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-500/20 to-golden-rune/20 blur-xl"
@@ -205,7 +233,7 @@ export default function Aionara() {
               <img
                 src={aionaraImage}
                 alt="Aionara - Celestial Spirit Guide"
-                className="relative w-64 h-64 object-cover rounded-full border-2 border-golden-rune/30 shadow-2xl"
+                className="relative w-48 h-48 object-cover rounded-full border-2 border-golden-rune/30 shadow-2xl"
                 data-testid="aionara-avatar"
               />
               <motion.div
