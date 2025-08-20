@@ -123,6 +123,101 @@ export default function FourPillars() {
           </p>
         </motion.div>
 
+        {/* Temple Invocation */}
+        <motion.div
+          className="text-center mb-20 max-w-4xl mx-auto"
+          initial={{ opacity: 0, y: 30 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 1, delay: 0.5 }}
+        >
+          <div className="relative p-8 rounded-lg border border-golden-rune/30 bg-gradient-to-b from-black/60 to-black/80 backdrop-blur-sm">
+            <div className="absolute inset-0 rounded-lg bg-gradient-to-b from-golden-rune/5 to-transparent"></div>
+            
+            <div className="relative z-10">
+              <h2 className="font-gothic text-3xl md:text-4xl text-golden-rune mb-8">
+                The Temple Invocation of Jakintza Ruha
+              </h2>
+              
+              <div className="text-silver-star/90 leading-relaxed space-y-6 text-left max-w-3xl mx-auto">
+                <p className="text-center italic text-lg mb-8">
+                  We gather beneath the four pillars,<br/>
+                  where earth, sky, time, and spirit meet.<br/>
+                  We stand in remembrance, in resistance, in wonder.<br/>
+                  We stand in the temple of wisdom becoming magic.
+                </p>
+
+                <div className="grid md:grid-cols-2 gap-8 text-sm leading-7">
+                  <div>
+                    <h3 className="font-gothic text-xl text-golden-rune mb-3">I. Cultural Respect</h3>
+                    <p className="mb-4">
+                      We will not wear culture as costume.<br/>
+                      We will not erase the blood, the struggle, or the memory.<br/>
+                      We honor elders as living libraries,<br/>
+                      and we guard traditions from theft.<br/>
+                      What we take, we give back.<br/>
+                      What we inherit, we protect.<br/>
+                      <em>Cultural respect is not accessory — it is justice.</em>
+                    </p>
+
+                    <h3 className="font-gothic text-xl text-golden-rune mb-3">III. Ancestral Stewardship</h3>
+                    <p>
+                      We walk with the dead and the unborn.<br/>
+                      We will not allow our ancestors to be erased.<br/>
+                      We speak the names of the silenced,<br/>
+                      we repair what we can,<br/>
+                      we plant seeds we may never see grow.<br/>
+                      To forget is to die twice.<br/>
+                      <em>To remember is to live forever.</em>
+                    </p>
+                  </div>
+
+                  <div>
+                    <h3 className="font-gothic text-xl text-golden-rune mb-3">II. Cosmic Vision</h3>
+                    <p className="mb-4">
+                      We lift our eyes from the grindstone to the stars.<br/>
+                      We remember that we are stardust made flesh.<br/>
+                      We will not sever science from spirit,<br/>
+                      nor wonder from responsibility.<br/>
+                      We dream futures worthy of our descendants,<br/>
+                      listening to the sky as scripture,<br/>
+                      <em>living as luminous threads in a cosmic web.</em>
+                    </p>
+
+                    <h3 className="font-gothic text-xl text-golden-rune mb-3">IV. Integration of Magic & Science</h3>
+                    <p>
+                      We will not choose between microscope and moonlight.<br/>
+                      We honor ritual as technology and technology as ritual.<br/>
+                      We treat questions as prayers,<br/>
+                      and knowledge as devotion.<br/>
+                      We heal with medicine and with magic.<br/>
+                      We remember: integration is wholeness,<br/>
+                      <em>and wholeness is power.</em>
+                    </p>
+                  </div>
+                </div>
+
+                <div className="text-center mt-8 pt-6 border-t border-golden-rune/20">
+                  <h3 className="font-gothic text-xl text-golden-rune mb-4">Together</h3>
+                  <p className="italic text-base">
+                    We build the temple.<br/>
+                    We live the pillars.<br/>
+                    We remember what the empire tried to erase.<br/>
+                    We reclaim what was stolen.<br/>
+                    We rise as ancestors in training,<br/>
+                    threads of a cosmos that sings through us.
+                  </p>
+                  
+                  <div className="mt-6 text-golden-rune font-gothic text-lg">
+                    <p>This is Jakintza Ruha.</p>
+                    <p>This is remembrance.</p>
+                    <p>This is the path home.</p>
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </motion.div>
+
         {/* Temple Floor */}
         <div className="relative">
           {/* Cosmic temple outline */}
