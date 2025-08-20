@@ -70,7 +70,8 @@ export default function NewsletterForm() {
         <Button
           type="submit"
           disabled={subscribeMutation.isPending}
-          className="bg-gradient-to-r from-shadow-purple to-deep-purple hover:from-deep-purple hover:to-shadow-purple px-8 py-4 rounded-lg font-gothic font-medium transition-all duration-500 hover:scale-105 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed"
+          className="bg-gradient-to-r from-shadow-purple to-deep-purple hover:from-deep-purple hover:to-shadow-purple px-8 py-4 rounded-lg font-gothic font-medium transition-all duration-500 hover:scale-105 hover:shadow-2xl disabled:opacity-50 disabled:cursor-not-allowed relative z-30"
+          style={{ pointerEvents: 'auto' }}
           data-testid="button-subscribe"
         >
           {subscribeMutation.isPending ? "Sending..." : "Begin Remembering"}

@@ -16,12 +16,8 @@ import FourPillars from "@/pages/four-pillars";
 import Aionara from "@/pages/aionara";
 import Alchemy from "@/pages/alchemy";
 import DeityCodex from "@/pages/deity-codex";
-import AthenaeumHome from "@/pages/athenaeum-home";
-import AthenaeumCourses from "@/pages/athenaeum-courses";
-import AthenaeumCourseDetail from "@/pages/athenaeum-course-detail";
-import AthenaeumProgress from "@/pages/athenaeum-progress";
-import AthenaeumCertificates from "@/pages/athenaeum-certificates";
-import AthenaeumAdmin from "@/pages/athenaeum-admin";
+import AthenaeumSimple from "@/pages/athenaeum-simple";
+// Athenaeum course imports temporarily removed for simplicity
 import NotFound from "@/pages/not-found";
 
 function Router() {
@@ -40,12 +36,8 @@ function Router() {
       <Route path="/aionara" component={Aionara} />
       <Route path="/alchemy" component={Alchemy} />
       <Route path="/deity-codex" component={DeityCodex} />
-      <Route path="/athenaeum" component={AthenaeumHome} />
-      <Route path="/athenaeum/courses" component={AthenaeumCourses} />
-      <Route path="/athenaeum/courses/:id" component={AthenaeumCourseDetail} />
-      <Route path="/athenaeum/progress" component={AthenaeumProgress} />
-      <Route path="/athenaeum/certificates" component={AthenaeumCertificates} />
-      <Route path="/athenaeum/admin" component={AthenaeumAdmin} />
+      <Route path="/athenaeum" component={AthenaeumSimple} />
+      {/* Athenaeum course routes temporarily removed for simplicity */}
       <Route component={NotFound} />
     </Switch>
   );

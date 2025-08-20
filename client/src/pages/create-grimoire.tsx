@@ -55,19 +55,17 @@ export default function CreateGrimoire() {
     resolver: zodResolver(createGrimoireSchema),
     defaultValues: {
       title: "",
-      type: "shadows",
+      type: "shadows" as const,
       description: "",
       coverImage: "",
-      isPublic: "false"
+      isPublic: "false" as const
     }
   });
 
   const createGrimoireMutation = useMutation({
     mutationFn: async (data: z.infer<typeof createGrimoireSchema>) => {
-      return apiRequest("/api/grimoires", {
-        method: "POST",
-        body: JSON.stringify({ ...data, coverImage: coverImageUrl })
-      });
+      const response = await apiRequest("POST", "/api/grimoires", { ...data, coverImage: coverImageUrl });
+      return response.json();
     },
     onSuccess: () => {
       toast({
@@ -109,7 +107,7 @@ export default function CreateGrimoire() {
     >
       <div className="absolute inset-0 bg-black/60"></div>
       
-      <div className="relative z-10 py-20">
+      <div className="relative z-10 py-20" style={{ pointerEvents: 'auto' }}>
         <div className="max-w-4xl mx-auto px-6">
           {/* Back Button */}
           <motion.div {...fadeInUp} className="mb-8">
@@ -141,7 +139,8 @@ export default function CreateGrimoire() {
           {/* Creation Form */}
           <motion.div
             {...fadeInUp}
-            className="mystical-border rounded-xl p-8 grimoire-texture"
+            className="mystical-border rounded-xl p-8 grimoire-texture relative z-20"
+            style={{ pointerEvents: 'auto' }}
           >
             <Form {...form}>
               <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
@@ -209,7 +208,8 @@ export default function CreateGrimoire() {
                         <Input 
                           {...field}
                           placeholder="Enter the name of your sacred grimoire..."
-                          className="bg-black/50 border-silver-star/30 text-ethereal-white placeholder:text-silver-star/60 focus:ring-golden-rune focus:border-golden-rune"
+                          className="bg-black/50 border-silver-star/30 text-ethereal-white placeholder:text-silver-star/60 focus:ring-golden-rune focus:border-golden-rune relative z-30"
+                          style={{ pointerEvents: 'auto' }}
                           data-testid="input-grimoire-title"
                         />
                       </FormControl>
@@ -230,9 +230,11 @@ export default function CreateGrimoire() {
                       <FormControl>
                         <Textarea 
                           {...field}
+                          value={field.value || ""}
                           placeholder="Describe the purpose and focus of this grimoire..."
                           rows={4}
-                          className="bg-black/50 border-silver-star/30 text-ethereal-white placeholder:text-silver-star/60 focus:ring-golden-rune focus:border-golden-rune resize-none"
+                          className="bg-black/50 border-silver-star/30 text-ethereal-white placeholder:text-silver-star/60 focus:ring-golden-rune focus:border-golden-rune resize-none relative z-30"
+                          style={{ pointerEvents: 'auto' }}
                           data-testid="textarea-grimoire-description"
                         />
                       </FormControl>
@@ -251,7 +253,8 @@ export default function CreateGrimoire() {
                       value={coverImageUrl}
                       onChange={(e) => setCoverImageUrl(e.target.value)}
                       placeholder="Enter image URL or upload..."
-                      className="bg-black/50 border-silver-star/30 text-ethereal-white placeholder:text-silver-star/60 focus:ring-golden-rune focus:border-golden-rune"
+                      className="bg-black/50 border-silver-star/30 text-ethereal-white placeholder:text-silver-star/60 focus:ring-golden-rune focus:border-golden-rune relative z-30"
+                      style={{ pointerEvents: 'auto' }}
                       data-testid="input-cover-image"
                     />
                     <Button 
@@ -285,7 +288,7 @@ export default function CreateGrimoire() {
                         Visibility
                       </FormLabel>
                       <FormControl>
-                        <Select value={field.value} onValueChange={field.onChange}>
+                        <Select value={field.value || "false"} onValueChange={field.onChange}>
                           <SelectTrigger 
                             className="bg-black/50 border-silver-star/30 text-ethereal-white focus:ring-golden-rune focus:border-golden-rune"
                             data-testid="select-visibility"
