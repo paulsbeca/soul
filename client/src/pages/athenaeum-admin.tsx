@@ -52,6 +52,18 @@ const createUserSchema = z.object({
   elementalPath: z.enum(["earth", "water", "air", "fire", "aether", "mixed"]),
 });
 
+const createEventSchema = z.object({
+  title: z.string().min(1, "Title is required"),
+  description: z.string().optional(),
+  category: z.enum(["ritual", "seasonal", "lunar", "planetary", "cosmic"]),
+  festivalType: z.string().optional(),
+  startDate: z.string().min(1, "Start date is required"),
+  endDate: z.string().optional(),
+  isRecurring: z.string().default("true"),
+  recurrencePattern: z.string().optional(),
+  tags: z.array(z.string()).default([]),
+});
+
 export default function Admin() {
   const { toast } = useToast();
   const queryClient = useQueryClient();
@@ -61,9 +73,14 @@ export default function Admin() {
   const [showCreateLesson, setShowCreateLesson] = useState(false);
   const [showCreateUser, setShowCreateUser] = useState(false);
   const [showBulkEnroll, setShowBulkEnroll] = useState(false);
+  const [showCreateEvent, setShowCreateEvent] = useState(false);
+  const [showEditEvent, setShowEditEvent] = useState(false);
+  const [selectedEvent, setSelectedEvent] = useState<any>(null);
   const [searchTerm, setSearchTerm] = useState("");
   const [filterLevel, setFilterLevel] = useState("all");
   const [filterWing, setFilterWing] = useState("all");
+  const [eventSearchTerm, setEventSearchTerm] = useState("");
+  const [eventFilterCategory, setEventFilterCategory] = useState("all");
 
   const { data: courses = [] } = useQuery<any[]>({
     queryKey: ["/api/courses"],
@@ -79,6 +96,10 @@ export default function Admin() {
 
   const { data: enrollments = [] } = useQuery<any[]>({
     queryKey: ["/api/admin/enrollments"],
+  });
+
+  const { data: sacredEvents = [] } = useQuery<any[]>({
+    queryKey: ["/api/sacred-events"],
   });
 
   const createCourseForm = useForm<z.infer<typeof createCourseSchema>>({
@@ -112,6 +133,36 @@ export default function Admin() {
       lastName: "",
       role: "student",
       elementalPath: "mixed",
+    },
+  });
+
+  const createEventForm = useForm<z.infer<typeof createEventSchema>>({
+    resolver: zodResolver(createEventSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      category: "cosmic",
+      festivalType: "",
+      startDate: "",
+      endDate: "",
+      isRecurring: "true",
+      recurrencePattern: "annual",
+      tags: [],
+    },
+  });
+
+  const editEventForm = useForm<z.infer<typeof createEventSchema>>({
+    resolver: zodResolver(createEventSchema),
+    defaultValues: {
+      title: "",
+      description: "",
+      category: "cosmic",
+      festivalType: "",
+      startDate: "",
+      endDate: "",
+      isRecurring: "true",
+      recurrencePattern: "annual",
+      tags: [],
     },
   });
 
@@ -188,6 +239,50 @@ export default function Admin() {
     },
   });
 
+  const createEventMutation = useMutation({
+    mutationFn: async (data: z.infer<typeof createEventSchema>) => {
+      await apiRequest("POST", "/api/sacred-events", data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/sacred-events"] });
+      toast({ title: "Event Created", description: "New cosmic event added successfully." });
+      setShowCreateEvent(false);
+      createEventForm.reset();
+    },
+    onError: () => {
+      toast({ title: "Error", description: "Failed to create event.", variant: "destructive" });
+    },
+  });
+
+  const updateEventMutation = useMutation({
+    mutationFn: async ({ id, data }: { id: string, data: z.infer<typeof createEventSchema> }) => {
+      await apiRequest("PUT", `/api/sacred-events/${id}`, data);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/sacred-events"] });
+      toast({ title: "Event Updated", description: "Cosmic event updated successfully." });
+      setShowEditEvent(false);
+      setSelectedEvent(null);
+      editEventForm.reset();
+    },
+    onError: () => {
+      toast({ title: "Error", description: "Failed to update event.", variant: "destructive" });
+    },
+  });
+
+  const deleteEventMutation = useMutation({
+    mutationFn: async (id: string) => {
+      await apiRequest("DELETE", `/api/sacred-events/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/sacred-events"] });
+      toast({ title: "Event Deleted", description: "Cosmic event removed successfully." });
+    },
+    onError: () => {
+      toast({ title: "Error", description: "Failed to delete event.", variant: "destructive" });
+    },
+  });
+
   // Filtered data
   const filteredCourses = (courses as any[]).filter((course: any) => {
     const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -203,6 +298,13 @@ export default function Admin() {
     user.email?.toLowerCase().includes(searchTerm.toLowerCase())
   );
 
+  const filteredEvents = (sacredEvents as any[]).filter((event: any) => {
+    const matchesSearch = event.title?.toLowerCase().includes(eventSearchTerm.toLowerCase()) ||
+                         event.description?.toLowerCase().includes(eventSearchTerm.toLowerCase());
+    const matchesCategory = eventFilterCategory === "all" || event.category === eventFilterCategory;
+    return matchesSearch && matchesCategory;
+  });
+
   const onCreateCourse = (data: z.infer<typeof createCourseSchema>) => {
     createCourseMutation.mutate(data);
   };
@@ -213,6 +315,38 @@ export default function Admin() {
 
   const onCreateUser = (data: z.infer<typeof createUserSchema>) => {
     createUserMutation.mutate(data);
+  };
+
+  const onCreateEvent = (data: z.infer<typeof createEventSchema>) => {
+    createEventMutation.mutate(data);
+  };
+
+  const onUpdateEvent = (data: z.infer<typeof createEventSchema>) => {
+    if (selectedEvent) {
+      updateEventMutation.mutate({ id: selectedEvent.id, data });
+    }
+  };
+
+  const handleEditEvent = (event: any) => {
+    setSelectedEvent(event);
+    editEventForm.reset({
+      title: event.title || "",
+      description: event.description || "",
+      category: event.category || "cosmic",
+      festivalType: event.festivalType || "",
+      startDate: event.startDate || "",
+      endDate: event.endDate || "",
+      isRecurring: event.isRecurring || "true",
+      recurrencePattern: event.recurrencePattern || "annual",
+      tags: event.tags || [],
+    });
+    setShowEditEvent(true);
+  };
+
+  const handleDeleteEvent = (eventId: string) => {
+    if (confirm("Are you sure you want to delete this cosmic event?")) {
+      deleteEventMutation.mutate(eventId);
+    }
   };
 
   const handleBulkEnroll = () => {
@@ -308,7 +442,7 @@ export default function Admin() {
 
           {/* Main Admin Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-6 lg:w-fit">
+            <TabsList className="grid w-full grid-cols-7 lg:w-fit">
               <TabsTrigger value="overview" className="flex items-center gap-2">
                 <BarChart3 className="w-4 h-4" />
                 Overview
@@ -320,6 +454,10 @@ export default function Admin() {
               <TabsTrigger value="users" className="flex items-center gap-2">
                 <Users className="w-4 h-4" />
                 Users
+              </TabsTrigger>
+              <TabsTrigger value="calendar" className="flex items-center gap-2">
+                <Calendar className="w-4 h-4" />
+                Calendar
               </TabsTrigger>
               <TabsTrigger value="enrollments" className="flex items-center gap-2">
                 <GraduationCap className="w-4 h-4" />
@@ -516,6 +654,116 @@ export default function Admin() {
                               </Button>
                               <Button size="sm" variant="outline">
                                 <Edit className="w-3 h-3" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Calendar Tab */}
+            <TabsContent value="calendar" className="space-y-6">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-cosmic-400 w-4 h-4" />
+                    <Input
+                      placeholder="Search events..."
+                      value={eventSearchTerm}
+                      onChange={(e) => setEventSearchTerm(e.target.value)}
+                      className="pl-10 w-64"
+                    />
+                  </div>
+                  <Select value={eventFilterCategory} onValueChange={setEventFilterCategory}>
+                    <SelectTrigger className="w-40">
+                      <SelectValue placeholder="Filter by category" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Categories</SelectItem>
+                      <SelectItem value="ritual">Ritual</SelectItem>
+                      <SelectItem value="seasonal">Seasonal</SelectItem>
+                      <SelectItem value="lunar">Lunar</SelectItem>
+                      <SelectItem value="planetary">Planetary</SelectItem>
+                      <SelectItem value="cosmic">Cosmic</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex gap-2">
+                  <Button onClick={() => setShowCreateEvent(true)}>
+                    <Plus className="w-4 h-4 mr-2" />
+                    New Event
+                  </Button>
+                  <Button variant="outline" onClick={() => exportData("events")}>
+                    <Download className="w-4 h-4 mr-2" />
+                    Export
+                  </Button>
+                </div>
+              </div>
+
+              <Card className="crystal-border bg-cosmic-800/50 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-mystical-300 flex items-center gap-2">
+                    <Calendar className="w-5 h-5" />
+                    Cosmic Calendar Management
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Title</TableHead>
+                        <TableHead>Category</TableHead>
+                        <TableHead>Start Date</TableHead>
+                        <TableHead>End Date</TableHead>
+                        <TableHead>Recurring</TableHead>
+                        <TableHead>Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredEvents.map((event: any) => (
+                        <TableRow key={event.id}>
+                          <TableCell className="font-medium">{event.title}</TableCell>
+                          <TableCell>
+                            <Badge 
+                              variant="outline" 
+                              className={
+                                event.category === "ritual" ? "text-mystical-400" :
+                                event.category === "seasonal" ? "text-ethereal-400" :
+                                event.category === "lunar" ? "text-silver-star" :
+                                event.category === "planetary" ? "text-golden-rune" :
+                                "text-cosmic-blue"
+                              }
+                            >
+                              {event.category}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>{event.startDate || "Not set"}</TableCell>
+                          <TableCell>{event.endDate || "Same day"}</TableCell>
+                          <TableCell>
+                            <Badge variant={event.isRecurring === "true" ? "default" : "secondary"}>
+                              {event.isRecurring === "true" ? "Yes" : "No"}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex gap-2">
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => handleEditEvent(event)}
+                              >
+                                <Edit className="w-3 h-3" />
+                              </Button>
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => handleDeleteEvent(event.id)}
+                                className="text-red-400 hover:text-red-300"
+                              >
+                                <Trash2 className="w-3 h-3" />
                               </Button>
                             </div>
                           </TableCell>
@@ -758,6 +1006,362 @@ export default function Admin() {
               </Card>
             </TabsContent>
           </Tabs>
+
+          {/* Create Event Dialog */}
+          <Dialog open={showCreateEvent} onOpenChange={setShowCreateEvent}>
+            <DialogContent className="max-w-2xl bg-cosmic-800 border-golden-400/30">
+              <DialogHeader>
+                <DialogTitle className="text-golden-400 font-gothic text-xl">Create Cosmic Event</DialogTitle>
+              </DialogHeader>
+              <Form {...createEventForm}>
+                <form onSubmit={createEventForm.handleSubmit(onCreateEvent)} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={createEventForm.control}
+                      name="title"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-cosmic-200">Event Title</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Full Moon Ritual" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={createEventForm.control}
+                      name="category"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-cosmic-200">Category</FormLabel>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select category" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="ritual">Ritual</SelectItem>
+                              <SelectItem value="seasonal">Seasonal</SelectItem>
+                              <SelectItem value="lunar">Lunar</SelectItem>
+                              <SelectItem value="planetary">Planetary</SelectItem>
+                              <SelectItem value="cosmic">Cosmic</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <FormField
+                    control={createEventForm.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-cosmic-200">Description</FormLabel>
+                        <FormControl>
+                          <Textarea 
+                            placeholder="A powerful time for manifestation and spiritual awakening..."
+                            className="min-h-[100px]"
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={createEventForm.control}
+                      name="startDate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-cosmic-200">Start Date</FormLabel>
+                          <FormControl>
+                            <Input type="date" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={createEventForm.control}
+                      name="endDate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-cosmic-200">End Date (Optional)</FormLabel>
+                          <FormControl>
+                            <Input type="date" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={createEventForm.control}
+                      name="festivalType"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-cosmic-200">Festival Type (Optional)</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Samhain, Solstice, etc." {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={createEventForm.control}
+                      name="recurrencePattern"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-cosmic-200">Recurrence Pattern</FormLabel>
+                          <Select onValueChange={field.onChange} defaultValue={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select recurrence" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="annual">Annual</SelectItem>
+                              <SelectItem value="lunar_cycle">Lunar Cycle</SelectItem>
+                              <SelectItem value="seasonal">Seasonal</SelectItem>
+                              <SelectItem value="monthly">Monthly</SelectItem>
+                              <SelectItem value="weekly">Weekly</SelectItem>
+                              <SelectItem value="none">One-time Only</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <FormField
+                    control={createEventForm.control}
+                    name="isRecurring"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-center justify-between rounded-lg border border-cosmic-600 p-4">
+                        <div className="space-y-0.5">
+                          <FormLabel className="text-cosmic-200 text-base">Recurring Event</FormLabel>
+                          <div className="text-sm text-cosmic-400">
+                            This event repeats according to the pattern above
+                          </div>
+                        </div>
+                        <FormControl>
+                          <Switch
+                            checked={field.value === "true"}
+                            onCheckedChange={(checked) => field.onChange(checked ? "true" : "false")}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="flex justify-end space-x-2 pt-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setShowCreateEvent(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button 
+                      type="submit" 
+                      disabled={createEventMutation.isPending}
+                      className="bg-mystical-600 hover:bg-mystical-500"
+                    >
+                      {createEventMutation.isPending ? "Creating..." : "Create Event"}
+                    </Button>
+                  </div>
+                </form>
+              </Form>
+            </DialogContent>
+          </Dialog>
+
+          {/* Edit Event Dialog */}
+          <Dialog open={showEditEvent} onOpenChange={setShowEditEvent}>
+            <DialogContent className="max-w-2xl bg-cosmic-800 border-golden-400/30">
+              <DialogHeader>
+                <DialogTitle className="text-golden-400 font-gothic text-xl">Edit Cosmic Event</DialogTitle>
+              </DialogHeader>
+              <Form {...editEventForm}>
+                <form onSubmit={editEventForm.handleSubmit(onUpdateEvent)} className="space-y-6">
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={editEventForm.control}
+                      name="title"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-cosmic-200">Event Title</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Full Moon Ritual" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={editEventForm.control}
+                      name="category"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-cosmic-200">Category</FormLabel>
+                          <Select onValueChange={field.onChange} value={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select category" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="ritual">Ritual</SelectItem>
+                              <SelectItem value="seasonal">Seasonal</SelectItem>
+                              <SelectItem value="lunar">Lunar</SelectItem>
+                              <SelectItem value="planetary">Planetary</SelectItem>
+                              <SelectItem value="cosmic">Cosmic</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <FormField
+                    control={editEventForm.control}
+                    name="description"
+                    render={({ field }) => (
+                      <FormItem>
+                        <FormLabel className="text-cosmic-200">Description</FormLabel>
+                        <FormControl>
+                          <Textarea 
+                            placeholder="A powerful time for manifestation and spiritual awakening..."
+                            className="min-h-[100px]"
+                            {...field} 
+                          />
+                        </FormControl>
+                        <FormMessage />
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={editEventForm.control}
+                      name="startDate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-cosmic-200">Start Date</FormLabel>
+                          <FormControl>
+                            <Input type="date" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={editEventForm.control}
+                      name="endDate"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-cosmic-200">End Date (Optional)</FormLabel>
+                          <FormControl>
+                            <Input type="date" {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                    <FormField
+                      control={editEventForm.control}
+                      name="festivalType"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-cosmic-200">Festival Type (Optional)</FormLabel>
+                          <FormControl>
+                            <Input placeholder="Samhain, Solstice, etc." {...field} />
+                          </FormControl>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                    <FormField
+                      control={editEventForm.control}
+                      name="recurrencePattern"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-cosmic-200">Recurrence Pattern</FormLabel>
+                          <Select onValueChange={field.onChange} value={field.value}>
+                            <FormControl>
+                              <SelectTrigger>
+                                <SelectValue placeholder="Select recurrence" />
+                              </SelectTrigger>
+                            </FormControl>
+                            <SelectContent>
+                              <SelectItem value="annual">Annual</SelectItem>
+                              <SelectItem value="lunar_cycle">Lunar Cycle</SelectItem>
+                              <SelectItem value="seasonal">Seasonal</SelectItem>
+                              <SelectItem value="monthly">Monthly</SelectItem>
+                              <SelectItem value="weekly">Weekly</SelectItem>
+                              <SelectItem value="none">One-time Only</SelectItem>
+                            </SelectContent>
+                          </Select>
+                          <FormMessage />
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+
+                  <FormField
+                    control={editEventForm.control}
+                    name="isRecurring"
+                    render={({ field }) => (
+                      <FormItem className="flex flex-row items-center justify-between rounded-lg border border-cosmic-600 p-4">
+                        <div className="space-y-0.5">
+                          <FormLabel className="text-cosmic-200 text-base">Recurring Event</FormLabel>
+                          <div className="text-sm text-cosmic-400">
+                            This event repeats according to the pattern above
+                          </div>
+                        </div>
+                        <FormControl>
+                          <Switch
+                            checked={field.value === "true"}
+                            onCheckedChange={(checked) => field.onChange(checked ? "true" : "false")}
+                          />
+                        </FormControl>
+                      </FormItem>
+                    )}
+                  />
+
+                  <div className="flex justify-end space-x-2 pt-4">
+                    <Button
+                      type="button"
+                      variant="outline"
+                      onClick={() => setShowEditEvent(false)}
+                    >
+                      Cancel
+                    </Button>
+                    <Button 
+                      type="submit" 
+                      disabled={updateEventMutation.isPending}
+                      className="bg-mystical-600 hover:bg-mystical-500"
+                    >
+                      {updateEventMutation.isPending ? "Updating..." : "Update Event"}
+                    </Button>
+                  </div>
+                </form>
+              </Form>
+            </DialogContent>
+          </Dialog>
 
           {/* Create Course Dialog */}
           <Dialog open={showCreateCourse} onOpenChange={setShowCreateCourse}>
