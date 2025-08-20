@@ -20,7 +20,10 @@ import { insertGrimoireSchema } from "@shared/schema";
 const createGrimoireSchema = insertGrimoireSchema.extend({
   type: z.enum(["shadows", "mirrors", "stars"], {
     required_error: "Please select a grimoire type"
-  })
+  }),
+  customField1: z.string().optional(),
+  customField2: z.string().optional(), 
+  customField3: z.string().optional()
 });
 
 const grimoireTypeConfig = {
@@ -29,18 +32,33 @@ const grimoireTypeConfig = {
     label: "Book of Shadows",
     description: "Spells, rituals, and magical workings",
     color: "from-deep-purple to-shadow-purple",
+    fields: {
+      intention: "What magical intention guides this grimoire?",
+      tradition: "Which magical tradition resonates with you?",
+      elements: "Which elements call to your practice?"
+    }
   },
   mirrors: {
     icon: Circle,
     label: "Book of Mirrors", 
     description: "Self-reflection, dreams, and inner work",
     color: "from-silver-star/20 to-ethereal-white/10",
+    fields: {
+      focus: "What aspect of yourself are you exploring?",
+      dreamwork: "Do you plan to include dream journaling?",
+      healing: "What healing patterns are you addressing?"
+    }
   },
   stars: {
     icon: Star,
     label: "Book of Stars",
     description: "Astrology, divination, and cosmic wisdom",
     color: "from-golden-rune/30 to-cosmic-blue/20",
+    fields: {
+      divination: "Which divination methods interest you?",
+      astrology: "Are you focusing on natal or predictive astrology?",
+      cosmic: "What cosmic phenomena draw your attention?"
+    }
   },
 };
 
@@ -48,7 +66,7 @@ export default function CreateGrimoire() {
   const [, setLocation] = useLocation();
   const { toast } = useToast();
   const queryClient = useQueryClient();
-  const [selectedType, setSelectedType] = useState<string>("");
+  const [selectedType, setSelectedType] = useState<string>("shadows");
   const [coverImageUrl, setCoverImageUrl] = useState<string>("");
 
   const form = useForm<z.infer<typeof createGrimoireSchema>>({
@@ -58,7 +76,10 @@ export default function CreateGrimoire() {
       type: "shadows" as const,
       description: "",
       coverImage: "",
-      isPublic: "false" as const
+      isPublic: "false" as const,
+      customField1: "",
+      customField2: "",
+      customField3: ""
     }
   });
 
@@ -277,6 +298,73 @@ export default function CreateGrimoire() {
                     </div>
                   )}
                 </div>
+
+                {/* Dynamic Fields Based on Grimoire Type */}
+                {selectedType && grimoireTypeConfig[selectedType as keyof typeof grimoireTypeConfig] && (
+                  <div className="space-y-6 p-6 mystical-border rounded-lg bg-gradient-to-br from-golden-rune/5 to-cosmic-blue/5">
+                    <h3 className="text-golden-rune text-lg font-semibold">
+                      {grimoireTypeConfig[selectedType as keyof typeof grimoireTypeConfig].label} Specifics
+                    </h3>
+                    
+                    <FormField
+                      control={form.control}
+                      name="customField1"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-silver-star text-sm font-semibold">
+                            {Object.values(grimoireTypeConfig[selectedType as keyof typeof grimoireTypeConfig].fields)[0]}
+                          </FormLabel>
+                          <FormControl>
+                            <Input 
+                              {...field}
+                              className="bg-black/50 border-silver-star/30 text-ethereal-white placeholder:text-silver-star/60 focus:ring-golden-rune focus:border-golden-rune relative z-30"
+                              style={{ pointerEvents: 'auto' }}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="customField2"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-silver-star text-sm font-semibold">
+                            {Object.values(grimoireTypeConfig[selectedType as keyof typeof grimoireTypeConfig].fields)[1]}
+                          </FormLabel>
+                          <FormControl>
+                            <Input 
+                              {...field}
+                              className="bg-black/50 border-silver-star/30 text-ethereal-white placeholder:text-silver-star/60 focus:ring-golden-rune focus:border-golden-rune relative z-30"
+                              style={{ pointerEvents: 'auto' }}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+
+                    <FormField
+                      control={form.control}
+                      name="customField3"
+                      render={({ field }) => (
+                        <FormItem>
+                          <FormLabel className="text-silver-star text-sm font-semibold">
+                            {Object.values(grimoireTypeConfig[selectedType as keyof typeof grimoireTypeConfig].fields)[2]}
+                          </FormLabel>
+                          <FormControl>
+                            <Textarea 
+                              {...field}
+                              rows={3}
+                              className="bg-black/50 border-silver-star/30 text-ethereal-white placeholder:text-silver-star/60 focus:ring-golden-rune focus:border-golden-rune resize-none relative z-30"
+                              style={{ pointerEvents: 'auto' }}
+                            />
+                          </FormControl>
+                        </FormItem>
+                      )}
+                    />
+                  </div>
+                )}
 
                 {/* Privacy Settings */}
                 <FormField

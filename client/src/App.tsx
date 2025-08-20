@@ -17,6 +17,7 @@ import Aionara from "@/pages/aionara";
 import Alchemy from "@/pages/alchemy";
 import DeityCodex from "@/pages/deity-codex";
 import AthenaeumSimple from "@/pages/athenaeum-simple";
+import AthenaeumLogin from "@/pages/athenaeum-login";
 // Athenaeum course imports temporarily removed for simplicity
 import NotFound from "@/pages/not-found";
 
@@ -36,6 +37,7 @@ function Router() {
       <Route path="/aionara" component={Aionara} />
       <Route path="/alchemy" component={Alchemy} />
       <Route path="/deity-codex" component={DeityCodex} />
+      <Route path="/athenaeum/login" component={AthenaeumLogin} />
       <Route path="/athenaeum" component={AthenaeumSimple} />
       {/* Athenaeum course routes temporarily removed for simplicity */}
       <Route component={NotFound} />

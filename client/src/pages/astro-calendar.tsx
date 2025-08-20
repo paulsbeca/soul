@@ -316,6 +316,34 @@ export default function AstroCalendar() {
                       <Button
                         variant="outline"
                         size="sm"
+                        onClick={() => {
+                          setCurrentDate(new Date());
+                          setSelectedDate(new Date().toISOString().split('T')[0]);
+                        }}
+                        className="border-silver-star/50 text-silver-star hover:bg-silver-star/10 px-3"
+                        title="Go to today"
+                      >
+                        Today
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
+                        onClick={() => {
+                          const year = prompt("Enter year (e.g., 2025):");
+                          const month = prompt("Enter month (1-12):");
+                          if (year && month) {
+                            const newDate = new Date(parseInt(year), parseInt(month) - 1, 1);
+                            setCurrentDate(newDate);
+                          }
+                        }}
+                        className="border-cosmic-blue/50 text-cosmic-blue hover:bg-cosmic-blue/10 px-3"
+                        title="Jump to specific date"
+                      >
+                        Jump
+                      </Button>
+                      <Button
+                        variant="outline"
+                        size="sm"
                         onClick={() => setCurrentDate(new Date(year, month + 1, 1))}
                         className="border-golden-rune/50 text-golden-rune hover:bg-golden-rune/10"
                         data-testid="button-next-month"
