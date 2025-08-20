@@ -47,9 +47,9 @@ export default function Landing() {
           <MysticalSymbol />
           {/* Hidden admin access area - invisible click zone near the logo */}
           <div 
-            className="absolute -top-4 -right-4 w-12 h-12 cursor-pointer opacity-0 hover:opacity-20 hover:bg-golden-rune/30 rounded-full transition-opacity"
+            className="absolute -top-4 -right-4 w-12 h-12 cursor-pointer opacity-30 hover:opacity-60 bg-golden-rune/20 rounded-full transition-opacity z-50 border border-golden-rune/40"
             onClick={() => setLocation("/athenaeum/login")}
-            title="⚡"
+            title="Admin Access"
           />
         </div>
         
