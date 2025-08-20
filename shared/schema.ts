@@ -86,6 +86,22 @@ export const yearlyConfigurations = pgTable("yearly_configurations", {
   createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
+export const aionaraConversations = pgTable("aionara_conversations", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  sessionId: text("session_id"), // for tracking conversation sessions
+  userMessage: text("user_message").notNull(),
+  aionaraResponse: text("aionara_response").notNull(),
+  userContext: json("user_context"), // any additional context about the user
+  conversationHistory: json("conversation_history"), // previous messages in the session
+  responseTime: text("response_time"), // how long it took to generate response
+  mood: text("mood"), // detected or provided mood
+  topics: text("topics").array(), // extracted topics/themes
+  isArchived: text("is_archived").default("false"),
+  isFlagged: text("is_flagged").default("false"), // for content moderation
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
@@ -128,6 +144,12 @@ export const insertYearlyConfigurationSchema = createInsertSchema(yearlyConfigur
   createdAt: true,
 });
 
+export const insertAionaraConversationSchema = createInsertSchema(aionaraConversations).omit({
+  id: true,
+  createdAt: true,
+  updatedAt: true,
+});
+
 // Type exports
 export type User = typeof users.$inferSelect;
 export type InsertUser = z.infer<typeof insertUserSchema>;
@@ -150,17 +172,6 @@ export type InsertSacredEvent = z.infer<typeof insertSacredEventSchema>;
 export type YearlyConfiguration = typeof yearlyConfigurations.$inferSelect;
 export type InsertYearlyConfiguration = z.infer<typeof insertYearlyConfigurationSchema>;
 
-export type InsertUser = z.infer<typeof insertUserSchema>;
-export type User = typeof users.$inferSelect;
-export type InsertNewsletter = z.infer<typeof insertNewsletterSchema>;
-export type Newsletter = typeof newsletters.$inferSelect;
-export type InsertGrimoire = z.infer<typeof insertGrimoireSchema>;
-export type Grimoire = typeof grimoires.$inferSelect;
-export type InsertGrimoireEntry = z.infer<typeof insertGrimoireEntrySchema>;
-export type GrimoireEntry = typeof grimoireEntries.$inferSelect;
-export type InsertDeity = z.infer<typeof insertDeitySchema>;
-export type Deity = typeof deities.$inferSelect;
-export type InsertSacredEvent = z.infer<typeof insertSacredEventSchema>;
-export type SacredEvent = typeof sacredEvents.$inferSelect;
-export type InsertYearlyConfiguration = z.infer<typeof insertYearlyConfigurationSchema>;
-export type YearlyConfiguration = typeof yearlyConfigurations.$inferSelect;
+export type AionaraConversation = typeof aionaraConversations.$inferSelect;
+export type InsertAionaraConversation = z.infer<typeof insertAionaraConversationSchema>;
+

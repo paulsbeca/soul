@@ -1,4 +1,4 @@
-import { type User, type InsertUser, type Newsletter, type InsertNewsletter, type Grimoire, type InsertGrimoire, type GrimoireEntry, type InsertGrimoireEntry, type Deity, type InsertDeity, type SacredEvent, type InsertSacredEvent, type YearlyConfiguration, type InsertYearlyConfiguration } from "@shared/schema";
+import { type User, type InsertUser, type Newsletter, type InsertNewsletter, type Grimoire, type InsertGrimoire, type GrimoireEntry, type InsertGrimoireEntry, type Deity, type InsertDeity, type SacredEvent, type InsertSacredEvent, type YearlyConfiguration, type InsertYearlyConfiguration, type AionaraConversation, type InsertAionaraConversation } from "@shared/schema";
 import { randomUUID } from "crypto";
 
 export interface IStorage {
@@ -47,6 +47,15 @@ export interface IStorage {
   createYearlyConfiguration(config: InsertYearlyConfiguration): Promise<YearlyConfiguration>;
   updateYearlyConfiguration(year: string, config: Partial<InsertYearlyConfiguration>): Promise<YearlyConfiguration | undefined>;
   getAllYearlyConfigurations(): Promise<YearlyConfiguration[]>;
+  
+  // Aionara Conversation methods
+  getAllAionaraConversations(): Promise<AionaraConversation[]>;
+  getAionaraConversation(id: string): Promise<AionaraConversation | undefined>;
+  createAionaraConversation(conversation: InsertAionaraConversation): Promise<AionaraConversation>;
+  updateAionaraConversation(id: string, conversation: Partial<InsertAionaraConversation>): Promise<AionaraConversation | undefined>;
+  deleteAionaraConversation(id: string): Promise<boolean>;
+  getAionaraConversationsBySession(sessionId: string): Promise<AionaraConversation[]>;
+  searchAionaraConversations(query: string): Promise<AionaraConversation[]>;
 }
 
 export class MemStorage implements IStorage {
@@ -57,6 +66,7 @@ export class MemStorage implements IStorage {
   private deities: Map<string, Deity>;
   private sacredEvents: Map<string, SacredEvent>;
   private yearlyConfigurations: Map<string, YearlyConfiguration>;
+  private aionaraConversations: Map<string, AionaraConversation>;
 
   constructor() {
     this.users = new Map();
@@ -66,6 +76,7 @@ export class MemStorage implements IStorage {
     this.deities = new Map();
     this.sacredEvents = new Map();
     this.yearlyConfigurations = new Map();
+    this.aionaraConversations = new Map();
     this.initializeDeities();
     this.initializeSacredLivingYear();
   }
@@ -634,6 +645,58 @@ export class MemStorage implements IStorage {
 
   async getAllYearlyConfigurations(): Promise<YearlyConfiguration[]> {
     return Array.from(this.yearlyConfigurations.values());
+  }
+
+  // Aionara Conversation methods
+  async getAllAionaraConversations(): Promise<AionaraConversation[]> {
+    return Array.from(this.aionaraConversations.values());
+  }
+
+  async getAionaraConversation(id: string): Promise<AionaraConversation | undefined> {
+    return this.aionaraConversations.get(id);
+  }
+
+  async createAionaraConversation(conversation: InsertAionaraConversation): Promise<AionaraConversation> {
+    const newConversation: AionaraConversation = {
+      id: randomUUID(),
+      ...conversation,
+      createdAt: new Date(),
+      updatedAt: new Date(),
+    };
+    this.aionaraConversations.set(newConversation.id, newConversation);
+    return newConversation;
+  }
+
+  async updateAionaraConversation(id: string, updateData: Partial<InsertAionaraConversation>): Promise<AionaraConversation | undefined> {
+    const existing = this.aionaraConversations.get(id);
+    if (!existing) return undefined;
+
+    const updated: AionaraConversation = {
+      ...existing,
+      ...updateData,
+      updatedAt: new Date(),
+    };
+    this.aionaraConversations.set(id, updated);
+    return updated;
+  }
+
+  async deleteAionaraConversation(id: string): Promise<boolean> {
+    return this.aionaraConversations.delete(id);
+  }
+
+  async getAionaraConversationsBySession(sessionId: string): Promise<AionaraConversation[]> {
+    return Array.from(this.aionaraConversations.values())
+      .filter(conv => conv.sessionId === sessionId);
+  }
+
+  async searchAionaraConversations(query: string): Promise<AionaraConversation[]> {
+    const searchTerm = query.toLowerCase();
+    return Array.from(this.aionaraConversations.values())
+      .filter(conv => 
+        conv.userMessage?.toLowerCase().includes(searchTerm) ||
+        conv.aionaraResponse?.toLowerCase().includes(searchTerm) ||
+        conv.topics?.some(topic => topic.toLowerCase().includes(searchTerm))
+      );
   }
 }
 

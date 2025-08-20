@@ -1,7 +1,7 @@
 import type { Express } from "express";
 import { createServer, type Server } from "http";
 import { storage } from "./storage-database";
-import { insertNewsletterSchema, insertGrimoireSchema, insertGrimoireEntrySchema, insertDeitySchema, insertSacredEventSchema, insertYearlyConfigurationSchema } from "@shared/schema";
+import { insertNewsletterSchema, insertGrimoireSchema, insertGrimoireEntrySchema, insertDeitySchema, insertSacredEventSchema, insertYearlyConfigurationSchema, insertAionaraConversationSchema } from "@shared/schema";
 import { getAionaraResponse } from "./openai";
 import { notifyNewsletterSubscription } from "./email";
 import { z } from "zod";
@@ -213,7 +213,7 @@ export async function registerRoutes(app: Express): Promise<Server> {
   // Aionara AI chat endpoint
   app.post("/api/aionara/chat", async (req, res) => {
     try {
-      const { message, conversationHistory } = req.body;
+      const { message, conversationHistory, sessionId, userContext } = req.body;
       
       if (!message || typeof message !== 'string') {
         return res.status(400).json({ 
@@ -221,13 +221,99 @@ export async function registerRoutes(app: Express): Promise<Server> {
         });
       }
 
+      const startTime = Date.now();
       const response = await getAionaraResponse(message, conversationHistory || []);
+      const responseTime = `${Date.now() - startTime}ms`;
+
+      // Store the conversation
+      try {
+        await storage.createAionaraConversation({
+          sessionId: sessionId || `session-${Date.now()}`,
+          userMessage: message,
+          aionaraResponse: response,
+          userContext: userContext || null,
+          conversationHistory: conversationHistory || null,
+          responseTime,
+          topics: [],
+          mood: null,
+          isArchived: "false",
+          isFlagged: "false"
+        });
+      } catch (storageError) {
+        console.error("Failed to store conversation:", storageError);
+        // Don't fail the chat response if storage fails
+      }
+
       res.json({ response });
     } catch (error) {
       console.error("Aionara chat error:", error);
       res.status(500).json({ 
         message: "The celestial connection is momentarily disrupted. Please try again." 
       });
+    }
+  });
+
+  // Aionara conversation management endpoints
+  app.get("/api/aionara/conversations", async (req, res) => {
+    try {
+      const { sessionId, search } = req.query;
+      
+      let conversations;
+      if (sessionId && typeof sessionId === 'string') {
+        conversations = await storage.getAionaraConversationsBySession(sessionId);
+      } else if (search && typeof search === 'string') {
+        conversations = await storage.searchAionaraConversations(search);
+      } else {
+        conversations = await storage.getAllAionaraConversations();
+      }
+      
+      res.json(conversations);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch conversations" });
+    }
+  });
+
+  app.get("/api/aionara/conversations/:id", async (req, res) => {
+    try {
+      const conversation = await storage.getAionaraConversation(req.params.id);
+      if (!conversation) {
+        return res.status(404).json({ message: "Conversation not found" });
+      }
+      res.json(conversation);
+    } catch (error) {
+      res.status(500).json({ message: "Failed to fetch conversation" });
+    }
+  });
+
+  app.patch("/api/aionara/conversations/:id", async (req, res) => {
+    try {
+      const validatedData = insertAionaraConversationSchema.partial().parse(req.body);
+      const conversation = await storage.updateAionaraConversation(req.params.id, validatedData);
+      if (!conversation) {
+        return res.status(404).json({ message: "Conversation not found" });
+      }
+      res.json(conversation);
+    } catch (error) {
+      if (error instanceof z.ZodError) {
+        res.status(400).json({ 
+          message: "Invalid conversation data",
+          errors: error.errors 
+        });
+      } else {
+        res.status(500).json({ message: "Failed to update conversation" });
+      }
+    }
+  });
+
+  app.delete("/api/aionara/conversations/:id", async (req, res) => {
+    try {
+      const success = await storage.deleteAionaraConversation(req.params.id);
+      if (!success) {
+        return res.status(404).json({ message: "Conversation not found" });
+      }
+      res.json({ message: "Conversation deleted successfully" });
+    } catch (error) {
+      res.status(500).json({ message: "Failed to delete conversation" });
     }
   });
 

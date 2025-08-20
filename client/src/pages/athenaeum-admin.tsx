@@ -21,7 +21,7 @@ import { apiRequest } from "@/lib/queryClient";
 import { 
   Crown, BookOpen, Users, TrendingUp, Plus, Edit, Tag, BarChart3, 
   Upload, Download, UserPlus, Search, Filter, Trash2, Copy,
-  Settings, GraduationCap, Award, Calendar, RefreshCw
+  Settings, GraduationCap, Award, Calendar, RefreshCw, MessageSquare, Archive
 } from "lucide-react";
 import { z } from "zod";
 
@@ -81,6 +81,8 @@ export default function Admin() {
   const [filterWing, setFilterWing] = useState("all");
   const [eventSearchTerm, setEventSearchTerm] = useState("");
   const [eventFilterCategory, setEventFilterCategory] = useState("all");
+  const [conversationSearchTerm, setConversationSearchTerm] = useState("");
+  const [conversationFilterMood, setConversationFilterMood] = useState("all");
 
   const { data: courses = [] } = useQuery<any[]>({
     queryKey: ["/api/courses"],
@@ -100,6 +102,10 @@ export default function Admin() {
 
   const { data: sacredEvents = [] } = useQuery<any[]>({
     queryKey: ["/api/sacred-events"],
+  });
+
+  const { data: aionaraConversations = [] } = useQuery<any[]>({
+    queryKey: ["/api/aionara/conversations"],
   });
 
   const createCourseForm = useForm<z.infer<typeof createCourseSchema>>({
@@ -283,6 +289,32 @@ export default function Admin() {
     },
   });
 
+  const deleteConversationMutation = useMutation({
+    mutationFn: async (id: string) => {
+      await apiRequest("DELETE", `/api/aionara/conversations/${id}`);
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/aionara/conversations"] });
+      toast({ title: "Conversation Deleted", description: "Aionara conversation removed successfully." });
+    },
+    onError: () => {
+      toast({ title: "Error", description: "Failed to delete conversation.", variant: "destructive" });
+    },
+  });
+
+  const archiveConversationMutation = useMutation({
+    mutationFn: async (id: string) => {
+      await apiRequest("PATCH", `/api/aionara/conversations/${id}`, { isArchived: "true" });
+    },
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["/api/aionara/conversations"] });
+      toast({ title: "Conversation Archived", description: "Conversation archived successfully." });
+    },
+    onError: () => {
+      toast({ title: "Error", description: "Failed to archive conversation.", variant: "destructive" });
+    },
+  });
+
   // Filtered data
   const filteredCourses = (courses as any[]).filter((course: any) => {
     const matchesSearch = course.title.toLowerCase().includes(searchTerm.toLowerCase()) ||
@@ -303,6 +335,13 @@ export default function Admin() {
                          event.description?.toLowerCase().includes(eventSearchTerm.toLowerCase());
     const matchesCategory = eventFilterCategory === "all" || event.category === eventFilterCategory;
     return matchesSearch && matchesCategory;
+  });
+
+  const filteredConversations = (aionaraConversations as any[]).filter((conv: any) => {
+    const matchesSearch = conv.userMessage?.toLowerCase().includes(conversationSearchTerm.toLowerCase()) ||
+                         conv.aionaraResponse?.toLowerCase().includes(conversationSearchTerm.toLowerCase());
+    const matchesMood = conversationFilterMood === "all" || conv.mood === conversationFilterMood;
+    return matchesSearch && matchesMood;
   });
 
   const onCreateCourse = (data: z.infer<typeof createCourseSchema>) => {
@@ -347,6 +386,16 @@ export default function Admin() {
     if (confirm("Are you sure you want to delete this cosmic event?")) {
       deleteEventMutation.mutate(eventId);
     }
+  };
+
+  const handleDeleteConversation = (conversationId: string) => {
+    if (confirm("Are you sure you want to delete this Aionara conversation?")) {
+      deleteConversationMutation.mutate(conversationId);
+    }
+  };
+
+  const handleArchiveConversation = (conversationId: string) => {
+    archiveConversationMutation.mutate(conversationId);
   };
 
   const handleBulkEnroll = () => {
@@ -442,7 +491,7 @@ export default function Admin() {
 
           {/* Main Admin Tabs */}
           <Tabs value={activeTab} onValueChange={setActiveTab} className="space-y-6">
-            <TabsList className="grid w-full grid-cols-7 lg:w-fit">
+            <TabsList className="grid w-full grid-cols-8 lg:w-fit">
               <TabsTrigger value="overview" className="flex items-center gap-2">
                 <BarChart3 className="w-4 h-4" />
                 Overview
@@ -458,6 +507,10 @@ export default function Admin() {
               <TabsTrigger value="calendar" className="flex items-center gap-2">
                 <Calendar className="w-4 h-4" />
                 Calendar
+              </TabsTrigger>
+              <TabsTrigger value="aionara" className="flex items-center gap-2">
+                <MessageSquare className="w-4 h-4" />
+                Aionara
               </TabsTrigger>
               <TabsTrigger value="enrollments" className="flex items-center gap-2">
                 <GraduationCap className="w-4 h-4" />
@@ -761,6 +814,122 @@ export default function Admin() {
                                 size="sm" 
                                 variant="outline"
                                 onClick={() => handleDeleteEvent(event.id)}
+                                className="text-red-400 hover:text-red-300"
+                              >
+                                <Trash2 className="w-3 h-3" />
+                              </Button>
+                            </div>
+                          </TableCell>
+                        </TableRow>
+                      ))}
+                    </TableBody>
+                  </Table>
+                </CardContent>
+              </Card>
+            </TabsContent>
+
+            {/* Aionara Tab */}
+            <TabsContent value="aionara" className="space-y-6">
+              <div className="flex flex-wrap items-center justify-between gap-4">
+                <div className="flex items-center gap-4">
+                  <div className="relative">
+                    <Search className="absolute left-3 top-1/2 transform -translate-y-1/2 text-cosmic-400 w-4 h-4" />
+                    <Input
+                      placeholder="Search conversations..."
+                      value={conversationSearchTerm}
+                      onChange={(e) => setConversationSearchTerm(e.target.value)}
+                      className="pl-10 w-64"
+                    />
+                  </div>
+                  <Select value={conversationFilterMood} onValueChange={setConversationFilterMood}>
+                    <SelectTrigger className="w-40">
+                      <SelectValue placeholder="Filter by mood" />
+                    </SelectTrigger>
+                    <SelectContent>
+                      <SelectItem value="all">All Moods</SelectItem>
+                      <SelectItem value="curious">Curious</SelectItem>
+                      <SelectItem value="seeking">Seeking</SelectItem>
+                      <SelectItem value="troubled">Troubled</SelectItem>
+                      <SelectItem value="peaceful">Peaceful</SelectItem>
+                      <SelectItem value="excited">Excited</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                <div className="flex gap-2">
+                  <Button variant="outline" onClick={() => exportData("conversations")}>
+                    <Download className="w-4 h-4 mr-2" />
+                    Export
+                  </Button>
+                </div>
+              </div>
+
+              <Card className="crystal-border bg-cosmic-800/50 backdrop-blur-sm">
+                <CardHeader>
+                  <CardTitle className="text-mystical-300 flex items-center gap-2">
+                    <MessageSquare className="w-5 h-5" />
+                    Aionara Conversation Management
+                  </CardTitle>
+                </CardHeader>
+                <CardContent>
+                  <Table>
+                    <TableHeader>
+                      <TableRow>
+                        <TableHead>Session</TableHead>
+                        <TableHead>User Message</TableHead>
+                        <TableHead>Response Preview</TableHead>
+                        <TableHead>Response Time</TableHead>
+                        <TableHead>Created</TableHead>
+                        <TableHead>Status</TableHead>
+                        <TableHead>Actions</TableHead>
+                      </TableRow>
+                    </TableHeader>
+                    <TableBody>
+                      {filteredConversations.map((conversation: any) => (
+                        <TableRow key={conversation.id}>
+                          <TableCell className="font-medium">
+                            {conversation.sessionId?.slice(-8) || "Unknown"}
+                          </TableCell>
+                          <TableCell className="max-w-[200px] truncate">
+                            {conversation.userMessage}
+                          </TableCell>
+                          <TableCell className="max-w-[200px] truncate">
+                            {conversation.aionaraResponse}
+                          </TableCell>
+                          <TableCell>
+                            <Badge variant="outline" className="text-xs">
+                              {conversation.responseTime || "N/A"}
+                            </Badge>
+                          </TableCell>
+                          <TableCell>
+                            {new Date(conversation.createdAt).toLocaleDateString()}
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex gap-1">
+                              {conversation.isArchived === "true" && (
+                                <Badge variant="secondary">Archived</Badge>
+                              )}
+                              {conversation.isFlagged === "true" && (
+                                <Badge variant="destructive">Flagged</Badge>
+                              )}
+                              {conversation.isArchived !== "true" && conversation.isFlagged !== "true" && (
+                                <Badge variant="default">Active</Badge>
+                              )}
+                            </div>
+                          </TableCell>
+                          <TableCell>
+                            <div className="flex gap-2">
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => handleArchiveConversation(conversation.id)}
+                                disabled={conversation.isArchived === "true"}
+                              >
+                                <Archive className="w-3 h-3" />
+                              </Button>
+                              <Button 
+                                size="sm" 
+                                variant="outline"
+                                onClick={() => handleDeleteConversation(conversation.id)}
                                 className="text-red-400 hover:text-red-300"
                               >
                                 <Trash2 className="w-3 h-3" />

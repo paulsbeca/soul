@@ -1,6 +1,6 @@
-import { type User, type InsertUser, type Newsletter, type InsertNewsletter, type Grimoire, type InsertGrimoire, type GrimoireEntry, type InsertGrimoireEntry, type Deity, type InsertDeity, type SacredEvent, type InsertSacredEvent, type YearlyConfiguration, type InsertYearlyConfiguration } from "@shared/schema";
+import { type User, type InsertUser, type Newsletter, type InsertNewsletter, type Grimoire, type InsertGrimoire, type GrimoireEntry, type InsertGrimoireEntry, type Deity, type InsertDeity, type SacredEvent, type InsertSacredEvent, type YearlyConfiguration, type InsertYearlyConfiguration, type AionaraConversation, type InsertAionaraConversation } from "@shared/schema";
 import { db } from "./db";
-import { users, newsletters, grimoires, grimoireEntries, deities, sacredEvents, yearlyConfigurations } from "@shared/schema";
+import { users, newsletters, grimoires, grimoireEntries, deities, sacredEvents, yearlyConfigurations, aionaraConversations } from "@shared/schema";
 import { eq, and, ilike, or } from "drizzle-orm";
 import type { IStorage } from "./storage";
 
@@ -223,6 +223,51 @@ export class DatabaseStorage implements IStorage {
 
   async getAllYearlyConfigurations(): Promise<YearlyConfiguration[]> {
     return await db.select().from(yearlyConfigurations);
+  }
+
+  // Aionara Conversation methods
+  async getAllAionaraConversations(): Promise<AionaraConversation[]> {
+    return await db.select().from(aionaraConversations);
+  }
+
+  async getAionaraConversation(id: string): Promise<AionaraConversation | undefined> {
+    const [conversation] = await db.select().from(aionaraConversations).where(eq(aionaraConversations.id, id));
+    return conversation || undefined;
+  }
+
+  async createAionaraConversation(insertConversation: InsertAionaraConversation): Promise<AionaraConversation> {
+    const [conversation] = await db.insert(aionaraConversations).values({
+      ...insertConversation,
+      createdAt: new Date(),
+      updatedAt: new Date()
+    }).returning();
+    return conversation;
+  }
+
+  async updateAionaraConversation(id: string, updateData: Partial<InsertAionaraConversation>): Promise<AionaraConversation | undefined> {
+    const [updated] = await db.update(aionaraConversations)
+      .set({ ...updateData, updatedAt: new Date() })
+      .where(eq(aionaraConversations.id, id))
+      .returning();
+    return updated || undefined;
+  }
+
+  async deleteAionaraConversation(id: string): Promise<boolean> {
+    const result = await db.delete(aionaraConversations).where(eq(aionaraConversations.id, id));
+    return result.rowCount !== undefined && result.rowCount > 0;
+  }
+
+  async getAionaraConversationsBySession(sessionId: string): Promise<AionaraConversation[]> {
+    return await db.select().from(aionaraConversations).where(eq(aionaraConversations.sessionId, sessionId));
+  }
+
+  async searchAionaraConversations(query: string): Promise<AionaraConversation[]> {
+    return await db.select().from(aionaraConversations).where(
+      or(
+        ilike(aionaraConversations.userMessage, `%${query}%`),
+        ilike(aionaraConversations.aionaraResponse, `%${query}%`)
+      )
+    );
   }
 }
 
