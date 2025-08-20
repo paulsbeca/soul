@@ -88,13 +88,13 @@ export default function MainContent() {
                 The Sacred Names
               </h3>
               <div className="grid grid-cols-1 sm:grid-cols-2 gap-6">
-                <div className="mystical-border p-6 rounded-lg grimoire-texture" data-testid="card-jakintza">
+                <div className="mystical-border p-6 rounded-lg grimoire-texture h-full flex flex-col" data-testid="card-jakintza">
                   <h4 className="font-gothic text-2xl text-silver-star mb-3">Jakintza</h4>
-                  <p className="text-ethereal-white/80">"Wisdom" in Basque — the ancient knowing that flows through bloodlines and whispers in the wind. It carries the weight of ancestral memory and the understanding that transcends books and institutions.</p>
+                  <p className="text-ethereal-white/80 flex-grow">"Wisdom" in Basque — the ancient knowing that flows through bloodlines and whispers in the wind. It carries the weight of ancestral memory and understanding that transcends books and institutions.</p>
                 </div>
-                <div className="mystical-border p-6 rounded-lg grimoire-texture" data-testid="card-ruha">
+                <div className="mystical-border p-6 rounded-lg grimoire-texture h-full flex flex-col" data-testid="card-ruha">
                   <h4 className="font-gothic text-2xl text-silver-star mb-3">Ruha</h4>
-                  <p className="text-ethereal-white/80">"Spirit" or "breath" — the sacred life force that was nearly stolen, now reclaimed and shared. The divine essence that animates all living things and connects us to the cosmic breath of the universe.</p>
+                  <p className="text-ethereal-white/80 flex-grow">"Spirit" or "breath" — the sacred life force that was nearly stolen, now reclaimed and shared. The divine essence that animates all living things and connects us to the cosmic breath of the universe.</p>
                 </div>
               </div>
             </motion.div>
