@@ -19,6 +19,7 @@ import DeityCodex from "@/pages/deity-codex";
 import AthenaeumSimple from "@/pages/athenaeum-simple";
 import AthenaeumLogin from "@/pages/athenaeum-login";
 import AthenaeumAdmin from "@/pages/athenaeum-admin";
+import AthenaeumStudentLogin from "@/pages/athenaeum-student-login";
 // Athenaeum course imports temporarily removed for simplicity
 import NotFound from "@/pages/not-found";
 
@@ -39,6 +40,7 @@ function Router() {
       <Route path="/alchemy" component={Alchemy} />
       <Route path="/deity-codex" component={DeityCodex} />
       <Route path="/athenaeum/login" component={AthenaeumLogin} />
+      <Route path="/athenaeum/login-portal" component={AthenaeumStudentLogin} />
       <Route path="/admin" component={AthenaeumAdmin} />
       <Route path="/athenaeum" component={AthenaeumSimple} />
       {/* Athenaeum course routes temporarily removed for simplicity */}

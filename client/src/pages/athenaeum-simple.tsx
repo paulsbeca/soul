@@ -1,6 +1,6 @@
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowLeft, Book, Star, Scroll, Globe, Crown, Sparkles } from "lucide-react";
+import { ArrowLeft, Book, Star, Scroll, Globe, Crown, Sparkles, BookOpen } from "lucide-react";
 import backgroundImage from "@assets/background_1755498699765.webp";
 
 export default function AthenaeumSimple() {
@@ -148,11 +148,18 @@ export default function AthenaeumSimple() {
             <p className="text-xl text-silver-star/90 leading-relaxed mb-6">
               The full Athenaeum experience with course management, progress tracking, and certificates is currently being infused with deeper cosmic energies.
             </p>
-            <div className="flex justify-center items-center space-x-2 text-ethereal-white/70">
+            <div className="flex justify-center items-center space-x-2 text-ethereal-white/70 mb-6">
               <Sparkles className="w-5 h-5 animate-pulse" />
               <span>Mystical renovation in progress</span>
               <Sparkles className="w-5 h-5 animate-pulse" />
             </div>
+            
+            <Link href="/athenaeum/login-portal">
+              <button className="inline-flex items-center bg-gradient-to-r from-mystical-500 to-ethereal-500 hover:from-mystical-400 hover:to-ethereal-400 text-void-black font-semibold px-8 py-4 rounded-lg hover:scale-105 transition-transform">
+                <BookOpen className="mr-3 w-6 h-6" />
+                Enter Full Athenaeum
+              </button>
+            </Link>
           </motion.div>
         </div>
       </div>
