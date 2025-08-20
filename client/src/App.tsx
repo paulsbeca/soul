@@ -13,6 +13,10 @@ import EntryDetail from "@/pages/entry-detail";
 import AstroCalendar from "@/pages/astro-calendar";
 import SacredCalendar from "@/pages/sacred-calendar";
 import FourPillars from "@/pages/four-pillars";
+import Pillar1CulturalRespect from "@/pages/pillar1-cultural-respect";
+import Pillar2CosmicVision from "@/pages/pillar2-cosmic-vision";
+import Pillar3AncestralStewardship from "@/pages/pillar3-ancestral-stewardship";
+import Pillar4MagicScience from "@/pages/pillar4-magic-science";
 import Aionara from "@/pages/aionara";
 import Alchemy from "@/pages/alchemy";
 import DeityCodex from "@/pages/deity-codex";
@@ -36,6 +40,10 @@ function Router() {
       <Route path="/astro-calendar" component={AstroCalendar} />
       <Route path="/sacred-calendar" component={SacredCalendar} />
       <Route path="/four-pillars" component={FourPillars} />
+      <Route path="/pillar1-cultural-respect" component={Pillar1CulturalRespect} />
+      <Route path="/pillar2-cosmic-vision" component={Pillar2CosmicVision} />
+      <Route path="/pillar3-ancestral-stewardship" component={Pillar3AncestralStewardship} />
+      <Route path="/pillar4-magic-science" component={Pillar4MagicScience} />
       <Route path="/aionara" component={Aionara} />
       <Route path="/alchemy" component={Alchemy} />
       <Route path="/deity-codex" component={DeityCodex} />

@@ -1,0 +1,105 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>The Four Pillars | Jakintza Ruha</title>
+  <style>
+    body {
+      margin: 0;
+      font-family: 'Georgia', serif;
+      color: #f5f5f5;
+      background: url('ChatGPT Image Aug 18, 2025, 07_28_56 PM.webp') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .overlay {
+      background-color: rgba(0, 0, 0, 0.75);
+      padding: 3rem;
+      min-height: 100vh;
+    }
+    h1, h2, h3 {
+      text-align: center;
+      color: #ffd27f;
+      text-shadow: 0 0 10px #000;
+    }
+    .section {
+      max-width: 900px;
+      margin: 2rem auto;
+      padding: 2rem;
+      background: rgba(20, 20, 40, 0.8);
+      border-radius: 12px;
+      box-shadow: 0 0 20px rgba(0,0,0,0.8);
+    }
+    .pillar {
+      margin: 1.5rem 0;
+      padding: 1.5rem;
+      background: rgba(40, 20, 0, 0.7);
+      border-left: 6px solid #ffd27f;
+    }
+    a {
+      color: #ffd27f;
+      text-decoration: none;
+    }
+    a:hover {
+      text-decoration: underline;
+    }
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <h1>The Temple Invocation of Jakintza Ruha</h1>
+    <h2>We gather beneath the four pillars, where earth, sky, time, and spirit meet.</h2>
+
+    <div class="section">
+      <p>We stand in remembrance, in resistance, in wonder. We stand in the temple of wisdom becoming magic.</p>
+
+      <div class="pillar">
+        <h3><a href="pillar1.html">I. Cultural Respect</a></h3>
+        <p>We will not wear culture as costume.<br>
+        We will not erase the blood, the struggle, or the memory.<br>
+        We honor elders as living libraries, and we guard traditions from theft.<br>
+        What we take, we give back. What we inherit, we protect.<br>
+        Cultural respect is not accessory — it is justice.</p>
+      </div>
+
+      <div class="pillar">
+        <h3><a href="pillar2.html">II. Cosmic Vision</a></h3>
+        <p>We lift our eyes from the grindstone to the stars.<br>
+        We remember that we are stardust made flesh.<br>
+        We will not sever science from spirit, nor wonder from responsibility.<br>
+        We dream futures worthy of our descendants, listening to the sky as scripture, living as luminous threads in a cosmic web.</p>
+      </div>
+
+      <div class="pillar">
+        <h3><a href="pillar3.html">III. Ancestral Stewardship</a></h3>
+        <p>We walk with the dead and the unborn.<br>
+        We will not allow our ancestors to be erased.<br>
+        We speak the names of the silenced, we repair what we can, we plant seeds we may never see grow.<br>
+        To forget is to die twice. To remember is to live forever.</p>
+      </div>
+
+      <div class="pillar">
+        <h3><a href="pillar4.html">IV. Integration of Magic & Science</a></h3>
+        <p>We will not choose between microscope and moonlight.<br>
+        We honor ritual as technology and technology as ritual.<br>
+        We treat questions as prayers, and knowledge as devotion.<br>
+        We heal with medicine and with magic.<br>
+        We remember: integration is wholeness, and wholeness is power.</p>
+      </div>
+
+      <div class="section">
+        <h3>Together</h3>
+        <p>We build the temple.<br>
+        We live the pillars.<br>
+        We remember what the empire tried to erase.<br>
+        We reclaim what was stolen.<br>
+        We rise as ancestors in training, threads of a cosmos that sings through us.</p>
+
+        <p><strong>This is Jakintza Ruha.<br>
+        This is remembrance.<br>
+        This is the path home.</strong></p>
+      </div>
+    </div>
+  </div>
+</body>
+</html>

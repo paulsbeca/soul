@@ -278,10 +278,16 @@ export default function FourPillars() {
                     <pillar.icon className="w-16 h-16 text-golden-rune" />
                   </div>
                   
-                  {/* Title */}
-                  <h3 className="font-gothic text-2xl text-golden-rune mb-2 text-center">
-                    {pillar.title}
-                  </h3>
+                  {/* Title - Clickable Link */}
+                  <Link 
+                    href={`/pillar${index + 1}-${pillar.id.replace('_', '-')}`}
+                    className="block"
+                    data-testid={`link-pillar-${pillar.id}`}
+                  >
+                    <h3 className="font-gothic text-2xl text-golden-rune mb-2 text-center hover:text-silver-star transition-colors">
+                      {pillar.title}
+                    </h3>
+                  </Link>
                   
                   {/* Subtitle */}
                   <p className="text-silver-star/80 text-center font-medium">

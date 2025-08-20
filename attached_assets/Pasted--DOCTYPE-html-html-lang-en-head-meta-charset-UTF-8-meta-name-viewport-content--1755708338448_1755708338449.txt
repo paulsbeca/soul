@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Pillar III: Ancestral Stewardship | Jakintza Ruha</title>
+  <style>
+    :root{
+      --accent:#e9b873; /* warm amber */
+      --panel: rgba(34,24,12,0.82); /* earthy panel */
+      --panel-soft: rgba(20,14,8,0.75);
+      --text:#f5efe6;
+    }
+    html,body{height:100%;}
+    body{
+      margin:0; font-family: Georgia, serif; color:var(--text);
+      background: url('ChatGPT Image Aug 18, 2025, 07_28_56 PM.webp') no-repeat center center fixed;
+      background-size: cover;
+    }
+    .overlay{min-height:100%; padding:3rem 1.25rem; background: radial-gradient(ellipse at center, rgba(0,0,0,0.35) 0%, rgba(0,0,0,0.78) 65%);}
+    .wrap{max-width: 980px; margin: 0 auto;}
+    h1,h2,h3{ text-align:center; margin:0.25rem 0 1rem; text-shadow:0 0 14px #000;}
+    h1{color:var(--accent);} 
+    h2{color:#c8e1ff; font-weight:400;}
+    .section{background:var(--panel); padding:1.75rem; border-radius:14px; box-shadow:0 12px 32px rgba(0,0,0,0.45); margin:1.5rem 0;}
+    .muted{background:var(--panel-soft);} 
+    ul{margin:0.75rem 0 0 1.5rem;}
+    li{margin:0.55rem 0;}
+    .manifesto{border-left:6px solid var(--accent);}
+    a.nav{display:inline-block; padding:0.6rem 1rem; border:1px solid rgba(255,255,255,0.25); border-radius:10px; text-decoration:none; color:var(--text); margin:0.5rem;}
+    a.nav:hover{border-color:var(--accent); box-shadow:0 0 0 2px rgba(233,184,115,0.2) inset;}
+    .navrow{display:flex; justify-content:center; gap:0.5rem; margin-top:1.25rem;}
+  </style>
+</head>
+<body>
+  <div class="overlay">
+    <div class="wrap">
+      <h1>Pillar III: Ancestral Stewardship</h1>
+      <h2>The Relationship With Time</h2>
+
+      <div class="section">
+        <h3>Core Principle</h3>
+        <p>Ancestral Stewardship is the act of walking through time with reverence. It is remembering that we are not the beginning and we are not the end. We are the bridge: between the blood that carried us here and the descendants who will inherit the soil we leave behind. To honor this pillar is to reclaim memory, to repair the severed threads of lineage, and to ensure that erasure does not win.</p>
+      </div>
+
+      <div class="section">
+        <h3>Key Commitments</h3>
+        <h4>Memory as Resistance</h4>
+        <ul>
+          <li>We commit to remembering what colonizers, empires, and oppressors tried to erase.</li>
+          <li>We tell the stories of genocide, slavery, forced assimilation — not as tragedy porn, but as truth-telling that heals.</li>
+          <li>We hold memory as a weapon against erasure, and as medicine for those yet to come.</li>
+        </ul>
+
+        <h4>Lineage &amp; Continuity</h4>
+        <ul>
+          <li>We honor our direct bloodlines and the wider human ancestry that binds us all.</li>
+          <li>We recognize that every ritual, language, and story is a chain-link holding generations together.</li>
+          <li>We do not abandon our dead to silence — we invite them to walk with us.</li>
+        </ul>
+
+        <h4>Repair &amp; Responsibility</h4>
+        <ul>
+          <li>We recognize inherited wounds and inherited privileges.</li>
+          <li>We do not carry guilt as weight, but responsibility as fuel.</li>
+          <li>We seek to repair what can be repaired, to return what was stolen, to name what was buried.</li>
+        </ul>
+
+        <h4>Living Legacy</h4>
+        <ul>
+          <li>We commit to being good ancestors — planting trees whose shade we will never sit in.</li>
+          <li>We measure success not by immediate gain, but by generational thriving.</li>
+          <li>We keep time not in hours or dollars, but in centuries and legacies.</li>
+        </ul>
+      </div>
+
+      <div class="section">
+        <h3>Practical Actions</h3>
+        <ul>
+          <li><strong>Ancestral Mapping:</strong> Members are encouraged to research, reclaim, and document their lineages — both blood and chosen.</li>
+          <li><strong>Story Archives:</strong> The Athenaeum builds a living repository of oral histories, rituals, and testimonies to preserve against erasure.</li>
+          <li><strong>Remembrance Rites:</strong> Seasonal rituals invite ancestors into the circle, not as ghosts to fear but as kin to consult.</li>
+          <li><strong>Generational Oaths:</strong> Members write commitments to future descendants, ritually sealed and stored within the movement.</li>
+        </ul>
+      </div>
+
+      <div class="section manifesto muted">
+        <h3>Manifesto Declarations</h3>
+        <p>We will not allow our ancestors to be erased.<br>
+        We will not cut ourselves from the bloodlines that carried us here.<br>
+        We will not abandon the languages, rituals, and songs that empire tried to kill.<br>
+        We will speak the names of the silenced.<br>
+        We will repair what can be repaired, and grieve what cannot.<br>
+        We will plant seeds for those who come after us.<br>
+        We will remember: to forget is to die twice. To remember is to live forever.</p>
+      </div>
+
+      <div class="section">
+        <h3>Framework Beneath the Manifesto</h3>
+        <ul>
+          <li><strong>Memory:</strong> Truth-telling as act of resistance against erasure.</li>
+          <li><strong>Lineage:</strong> Every member reconnects with their heritage, blood or chosen, to strengthen continuity.</li>
+          <li><strong>Repair:</strong> Responsibility, not guilt, drives restitution and healing.</li>
+          <li><strong>Legacy:</strong> We act not just for ourselves, but for the seventh generation to come.</li>
+        </ul>
+      </div>
+
+      <div class="navrow">
+        <a class="nav" href="pillar2.html">&laquo; Previous Pillar</a>
+        <a class="nav" href="index.html">Home</a>
+        <a class="nav" href="pillar4.html">Next Pillar &raquo;</a>
+      </div>
+
+    </div>
+  </div>
+</body>
+</html>
