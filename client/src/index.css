@@ -49,6 +49,45 @@
   --ethereal-white: hsl(210, 40%, 98%);
   --void-black: hsl(240, 100%, 2%);
   --midnight-purple: hsl(264, 89%, 6%);
+  
+  /* Additional Athenaeum colors */
+  --cosmic-50: hsl(210, 40%, 98%);
+  --cosmic-100: hsl(210, 40%, 96%);
+  --cosmic-200: hsl(214, 32%, 91%);
+  --cosmic-300: hsl(213, 27%, 84%);
+  --cosmic-400: hsl(215, 20%, 65%);
+  --cosmic-500: hsl(215, 16%, 47%);
+  --cosmic-600: hsl(215, 19%, 35%);
+  --cosmic-700: hsl(215, 25%, 27%);
+  --cosmic-800: hsl(217, 33%, 17%);
+  --cosmic-900: hsl(222, 84%, 5%);
+  --cosmic-950: hsl(229, 84%, 5%);
+  
+  --mystical-50: hsl(270, 100%, 98%);
+  --mystical-100: hsl(269, 100%, 95%);
+  --mystical-200: hsl(269, 100%, 92%);
+  --mystical-300: hsl(268, 100%, 86%);
+  --mystical-400: hsl(268, 100%, 76%);
+  --mystical-500: hsl(262, 83%, 58%);
+  --mystical-600: hsl(258, 90%, 66%);
+  --mystical-700: hsl(253, 91%, 60%);
+  --mystical-800: hsl(253, 91%, 50%);
+  --mystical-900: hsl(253, 91%, 42%);
+  
+  --ethereal-50: hsl(166, 76%, 97%);
+  --ethereal-100: hsl(167, 85%, 89%);
+  --ethereal-200: hsl(168, 84%, 78%);
+  --ethereal-300: hsl(171, 77%, 64%);
+  --ethereal-400: hsl(172, 66%, 50%);
+  --ethereal-500: hsl(173, 80%, 40%);
+  --ethereal-600: hsl(175, 84%, 32%);
+  --ethereal-700: hsl(175, 77%, 26%);
+  --ethereal-800: hsl(176, 69%, 22%);
+  --ethereal-900: hsl(176, 61%, 19%);
+  
+  --golden-400: hsl(43, 96%, 56%);
+  --golden-500: hsl(38, 92%, 50%);
+  --golden-600: hsl(32, 95%, 44%);
   --radius: 1rem;
 }
 
@@ -160,5 +199,29 @@
     background-repeat: repeat;
     background-size: 200px 100px;
     animation: float 20s ease-in-out 9999;
+  }
+
+  /* Additional Athenaeum utilities */
+  .animate-float {
+    animation: float 6s ease-in-out infinite;
+  }
+  
+  .animate-pulse-glow {
+    animation: pulse-glow 2s ease-in-out infinite alternate;
+  }
+  
+  .crystal-border {
+    background: linear-gradient(45deg, transparent 30%, rgba(45, 212, 191, 0.2) 50%, transparent 70%);
+    border: 1px solid rgba(45, 212, 191, 0.3);
+  }
+
+  @keyframes float {
+    0%, 100% { transform: translateY(0px); }
+    50% { transform: translateY(-10px); }
+  }
+  
+  @keyframes pulse-glow {
+    0% { box-shadow: 0 0 5px rgba(45, 212, 191, 0.5); }
+    100% { box-shadow: 0 0 20px rgba(45, 212, 191, 0.8); }
   }
 }

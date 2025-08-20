@@ -407,9 +407,14 @@ export default function MainContent() {
               <Star className="inline mr-3" />
               Full Athenaeum
             </h4>
-            <p className="text-xl text-silver-star/90">
-              The complete library of sacred wisdom is coming soon...
+            <p className="text-xl text-silver-star/90 mb-6">
+              The complete spiritual academy - your cosmic library-school awaits. Two sacred wings of learning: the Sanctum of Hidden Echoes and the Orrery of Obscured Realms.
             </p>
+            <Link href="/athenaeum">
+              <button className="inline-flex items-center bg-gradient-to-r from-mystical-600 to-ethereal-600 hover:from-mystical-500 hover:to-ethereal-500 px-6 py-3 rounded-lg hover:scale-105 transition-transform text-lg text-ethereal-white hover:text-golden-rune cursor-pointer relative z-50 mystical-glow">
+                Enter the Athenaeum
+              </button>
+            </Link>
           </motion.div>
         </div>
       </div>
