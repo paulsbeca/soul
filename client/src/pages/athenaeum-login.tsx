@@ -128,7 +128,8 @@ export default function AthenaeumLogin() {
             <Button
               type="submit"
               disabled={isLoading}
-              className="w-full bg-gradient-to-r from-golden-rune to-cosmic-blue hover:from-golden-rune/90 hover:to-cosmic-blue/90 text-void-black font-semibold py-3 transition-all duration-500 hover:scale-105"
+              className="w-full bg-gradient-to-r from-golden-rune to-cosmic-blue hover:from-golden-rune/90 hover:to-cosmic-blue/90 text-void-black font-semibold py-3 transition-all duration-500 hover:scale-105 relative z-50"
+              style={{ pointerEvents: 'auto' }}
             >
               {isLoading ? "Seeking Permission..." : "Enter the Athenaeum"}
             </Button>
