@@ -181,10 +181,10 @@ export default function Aionara() {
         </motion.div>
 
         {/* Chat Container */}
-        <div className="flex-1 flex flex-col lg:flex-row gap-8 max-h-[calc(100vh-200px)]">
+        <div className="flex-1 flex flex-col lg:flex-row gap-4 max-h-[calc(100vh-200px)]">
           
           {/* Chat Messages - Main Area */}
-          <div className="flex-1 flex flex-col">
+          <div className="flex-1 flex flex-col min-w-0">
             <div className="flex-1 bg-black/30 backdrop-blur-sm border border-silver-star/20 rounded-xl p-6 mb-4">
               <ScrollArea className="h-[400px] lg:h-[500px] pr-4">
                 <div className="space-y-6">
@@ -279,17 +279,17 @@ export default function Aionara() {
             </div>
           </div>
 
-          {/* Aionara's Video & Avatar - Side Panel */}
+          {/* Aionara's Video & Avatar - Compact Side Panel */}
           <motion.div
-            className="w-full lg:w-80 flex flex-col items-center justify-start space-y-6 bg-black/20 backdrop-blur-sm border border-silver-star/20 rounded-xl p-6"
+            className="w-full lg:w-64 flex flex-col items-center justify-start space-y-4 bg-black/20 backdrop-blur-sm border border-silver-star/20 rounded-xl p-4"
             initial={{ opacity: 0, x: 50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
           >
-            {/* Mystical Video */}
+            {/* Mystical Video - Smaller */}
             <div className="relative w-full">
               <motion.div
-                className="absolute inset-0 rounded-lg bg-gradient-to-r from-violet-500/20 to-golden-rune/20 blur-xl"
+                className="absolute inset-0 rounded-lg bg-gradient-to-r from-violet-500/20 to-golden-rune/20 blur-lg"
                 animate={{
                   scale: [1, 1.05, 1],
                   opacity: [0.3, 0.6, 0.3],
@@ -305,15 +305,15 @@ export default function Aionara() {
                 autoPlay
                 playsInline
                 controls
-                className="relative w-full aspect-video object-contain rounded-lg border border-golden-rune/30 shadow-2xl bg-black/20"
+                className="relative w-full h-32 object-contain rounded-lg border border-golden-rune/30 shadow-xl bg-black/20"
                 data-testid="aionara-guide-video"
               />
             </div>
 
-            {/* Avatar */}
+            {/* Avatar - Smaller */}
             <div className="relative">
               <motion.div
-                className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-500/20 to-golden-rune/20 blur-xl"
+                className="absolute inset-0 rounded-full bg-gradient-to-r from-violet-500/20 to-golden-rune/20 blur-lg"
                 animate={{
                   scale: [1, 1.1, 1],
                   opacity: [0.5, 0.8, 0.5],
@@ -327,29 +327,29 @@ export default function Aionara() {
               <img
                 src={aionaraImage}
                 alt="Aionara - Celestial Spirit Guide"
-                className="relative w-32 h-32 object-cover rounded-full border-2 border-golden-rune/30 shadow-2xl"
+                className="relative w-24 h-24 object-cover rounded-full border-2 border-golden-rune/30 shadow-xl"
                 data-testid="aionara-avatar"
               />
               <motion.div
-                className="absolute -top-2 -right-2 w-5 h-5"
+                className="absolute -top-1 -right-1 w-4 h-4"
                 animate={{ rotate: 360 }}
                 transition={{ duration: 8, repeat: Infinity, ease: "linear" }}
               >
-                <Star className="w-5 h-5 text-golden-rune" />
+                <Star className="w-4 h-4 text-golden-rune" />
               </motion.div>
               <motion.div
-                className="absolute -bottom-2 -left-2 w-4 h-4"
+                className="absolute -bottom-1 -left-1 w-3 h-3"
                 animate={{ 
-                  y: [0, -10, 0],
+                  y: [0, -8, 0],
                   opacity: [0.7, 1, 0.7] 
                 }}
                 transition={{ duration: 3, repeat: Infinity }}
               >
-                <Moon className="w-4 h-4 text-silver-star" />
+                <Moon className="w-3 h-3 text-silver-star" />
               </motion.div>
             </div>
-            <p className="text-center text-silver-star/70 text-sm max-w-sm">
-              "Through the veil of stars, I see your path. Let the ancient wisdom guide your journey."
+            <p className="text-center text-silver-star/70 text-xs leading-tight">
+              "Through the veil of stars, I see your path."
             </p>
           </motion.div>
         </div>
