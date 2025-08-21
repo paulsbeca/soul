@@ -209,10 +209,9 @@ export default function Aionara() {
                 autoPlay
                 playsInline
                 controls
-                className="relative w-72 h-48 object-contain rounded-lg border border-golden-rune/30 shadow-2xl bg-black/20"
+                className="relative w-80 h-60 object-contain rounded-lg border border-golden-rune/30 shadow-2xl bg-black/20"
                 data-testid="aionara-guide-video"
               />
-              <div className="absolute inset-0 bg-gradient-to-t from-black/40 to-transparent rounded-lg pointer-events-none" />
             </div>
 
             {/* Avatar */}
