@@ -72,7 +72,6 @@ export default function Admin() {
   const [showCreateCourse, setShowCreateCourse] = useState(false);
   const [showCreateLesson, setShowCreateLesson] = useState(false);
   const [showCreateUser, setShowCreateUser] = useState(false);
-  const [showBulkEnroll, setShowBulkEnroll] = useState(false);
   const [showCreateEvent, setShowCreateEvent] = useState(false);
   const [showEditEvent, setShowEditEvent] = useState(false);
   const [selectedEvent, setSelectedEvent] = useState<any>(null);
@@ -218,19 +217,6 @@ export default function Admin() {
     },
   });
 
-  const bulkEnrollMutation = useMutation({
-    mutationFn: async (data: { userIds: string[], courseId: string }) => {
-      await apiRequest("POST", "/api/admin/bulk-enroll", data);
-    },
-    onSuccess: () => {
-      queryClient.invalidateQueries({ queryKey: ["/api/admin/enrollments"] });
-      toast({ title: "Bulk Enrollment Complete", description: "Students enrolled successfully." });
-      setShowBulkEnroll(false);
-    },
-    onError: () => {
-      toast({ title: "Error", description: "Failed to enroll students.", variant: "destructive" });
-    },
-  });
 
   const cloneCourseMutation = useMutation({
     mutationFn: async (courseId: string) => {
@@ -398,16 +384,6 @@ export default function Admin() {
     archiveConversationMutation.mutate(conversationId);
   };
 
-  const handleBulkEnroll = () => {
-    // Implementation for bulk enrollment
-    const selectedUsers = filteredUsers.filter((user: any) => user.selected);
-    if (selectedUsers.length > 0 && selectedCourse) {
-      bulkEnrollMutation.mutate({
-        userIds: selectedUsers.map((user: any) => user.id),
-        courseId: selectedCourse
-      });
-    }
-  };
 
   const exportData = (type: string) => {
     // Implementation for data export
@@ -1026,10 +1002,6 @@ export default function Admin() {
             <TabsContent value="enrollments" className="space-y-6">
               <div className="flex justify-between items-center">
                 <h3 className="text-2xl font-serif font-bold text-golden-400">Enrollment Management</h3>
-                <Button onClick={() => setShowBulkEnroll(true)}>
-                  <GraduationCap className="w-4 h-4 mr-2" />
-                  Bulk Enroll
-                </Button>
               </div>
 
               <Card className="crystal-border bg-cosmic-800/50 backdrop-blur-sm">
