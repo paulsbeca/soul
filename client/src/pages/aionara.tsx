@@ -181,11 +181,11 @@ export default function Aionara() {
         </motion.div>
 
         {/* Chat Container */}
-        <div className="flex-1 grid grid-cols-1 lg:grid-cols-3 gap-8 max-h-[calc(100vh-200px)]">
+        <div className="flex-1 grid grid-cols-1 lg:grid-cols-2 gap-8 max-h-[calc(100vh-200px)]">
           
           {/* Aionara's Avatar & Video */}
           <motion.div
-            className="hidden lg:flex flex-col items-center justify-center space-y-6"
+            className="flex flex-col items-center justify-center space-y-6"
             initial={{ opacity: 0, x: -50 }}
             animate={{ opacity: 1, x: 0 }}
             transition={{ duration: 1, delay: 0.3 }}
@@ -207,8 +207,8 @@ export default function Aionara() {
               <video
                 src={aionaraVideo}
                 autoPlay
-                muted
                 playsInline
+                controls
                 className="relative w-72 h-48 object-cover rounded-lg border border-golden-rune/30 shadow-2xl"
                 data-testid="aionara-guide-video"
               />
@@ -259,7 +259,7 @@ export default function Aionara() {
           </motion.div>
 
           {/* Chat Messages */}
-          <div className="lg:col-span-2 flex flex-col">
+          <div className="flex flex-col">
             <div className="flex-1 bg-black/30 backdrop-blur-sm border border-silver-star/20 rounded-xl p-6 mb-4">
               <ScrollArea className="h-[400px] lg:h-[500px] pr-4">
                 <div className="space-y-6">
