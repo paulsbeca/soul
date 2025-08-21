@@ -59,9 +59,15 @@ export default function FourPillars() {
   const [visitedPillars, setVisitedPillars] = useState<Set<string>>(new Set());
   const [, setLocation] = useLocation();
 
-  const handlePillarClick = (pillarId: string) => {
-    setActivePillar(pillarId === activePillar ? null : pillarId);
-    setVisitedPillars(prev => new Set([...Array.from(prev), pillarId]));
+  const handlePillarClick = (pillarId: string, index: number) => {
+    // Navigate directly to the pillar page
+    const routes = [
+      '/pillar1-cultural-respect',
+      '/pillar2-cosmic-vision', 
+      '/pillar3-ancestral-stewardship',
+      '/pillar4-magic-science'
+    ];
+    setLocation(routes[index]);
   };
 
   return (
@@ -252,7 +258,7 @@ export default function FourPillars() {
                     ${activePillar === pillar.id ? 'scale-105' : ''}
                     ${visitedPillars.has(pillar.id) ? 'border-golden-rune/30' : ''}
                   `}
-                  onClick={() => handlePillarClick(pillar.id)}
+                  onClick={() => handlePillarClick(pillar.id, index)}
                   whileHover={{ 
                     y: -10,
                     boxShadow: `0 20px 40px ${pillar.glowColor}`
@@ -260,34 +266,15 @@ export default function FourPillars() {
                   whileTap={{ scale: 0.98 }}
                   data-testid={`pillar-${pillar.id}`}
                 >
-                  {/* Glow effect */}
-                  {activePillar === pillar.id && (
-                    <motion.div
-                      className="absolute inset-0 rounded-lg"
-                      style={{
-                        boxShadow: `inset 0 0 30px ${pillar.glowColor}, 0 0 50px ${pillar.glowColor}`
-                      }}
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                    />
-                  )}
-                  
                   {/* Icon */}
                   <div className="flex justify-center mb-4">
                     <pillar.icon className="w-16 h-16 text-golden-rune" />
                   </div>
                   
-                  {/* Title - Clickable Link */}
-                  <Link 
-                    href={`/pillar${index + 1}-${pillar.id.replace('_', '-')}`}
-                    className="block"
-                    data-testid={`link-pillar-${pillar.id}`}
-                  >
-                    <h3 className="font-gothic text-2xl text-golden-rune mb-2 text-center hover:text-silver-star transition-colors">
-                      {pillar.title}
-                    </h3>
-                  </Link>
+                  {/* Title */}
+                  <h3 className="font-gothic text-2xl text-golden-rune mb-2 text-center hover:text-silver-star transition-colors">
+                    {pillar.title}
+                  </h3>
                   
                   {/* Subtitle */}
                   <p className="text-silver-star/80 text-center font-medium">
@@ -297,36 +284,11 @@ export default function FourPillars() {
                   {/* Click indicator */}
                   <div className="text-center mt-4">
                     <span className="text-silver-star/60 text-sm">
-                      {activePillar === pillar.id ? "Tap to close" : "Tap to reveal"}
+                      Tap to reveal
                     </span>
                   </div>
                 </motion.div>
 
-                {/* Description Overlay */}
-                <AnimatePresence>
-                  {activePillar === pillar.id && (
-                    <motion.div
-                      className="absolute inset-0 z-20 bg-gradient-to-b from-black/95 to-black/90 rounded-lg p-6 flex items-center justify-center"
-                      initial={{ opacity: 0 }}
-                      animate={{ opacity: 1 }}
-                      exit={{ opacity: 0 }}
-                      transition={{ duration: 0.3 }}
-                      data-testid={`pillar-description-${pillar.id}`}
-                    >
-                      <div className="text-center">
-                        <div className="flex justify-center mb-4">
-                          <pillar.icon className="w-12 h-12 text-golden-rune" />
-                        </div>
-                        <h4 className="font-gothic text-xl text-golden-rune mb-4">
-                          {pillar.title}
-                        </h4>
-                        <p className="text-silver-star leading-relaxed">
-                          {pillar.description}
-                        </p>
-                      </div>
-                    </motion.div>
-                  )}
-                </AnimatePresence>
               </motion.div>
             ))}
           </div>

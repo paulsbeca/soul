@@ -102,6 +102,23 @@ export const aionaraConversations = pgTable("aionara_conversations", {
   updatedAt: timestamp("updated_at").defaultNow().notNull(),
 });
 
+// Aionara Facts - Core knowledge base about Aionara herself
+export const aionaraFacts = pgTable("aionara_facts", {
+  id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
+  category: text("category").notNull(), // e.g., "personality", "powers", "history", "relationships"
+  subcategory: text("subcategory"), // e.g., "wisdom_style", "elemental_affinity"
+  title: text("title").notNull(),
+  content: text("content").notNull(),
+  isCanonical: text("is_canonical").default("true"), // whether this is official lore
+  sourceType: text("source_type"), // e.g., "channeled", "revealed", "documented"
+  contextTags: text("context_tags").array(), // when to use this fact
+  emotionalTone: text("emotional_tone"), // "mystical", "nurturing", "powerful", etc.
+  priority: text("priority").default("medium"), // how important this fact is
+  isArchived: text("is_archived").default("false"),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
+  updatedAt: timestamp("updated_at").defaultNow().notNull(),
+});
+
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
