@@ -207,7 +207,6 @@ export default function Aionara() {
               <video
                 src={aionaraVideo}
                 autoPlay
-                loop
                 muted
                 playsInline
                 className="relative w-72 h-48 object-cover rounded-lg border border-golden-rune/30 shadow-2xl"
