@@ -556,13 +556,6 @@ export default function Admin() {
                       Add New User
                     </Button>
                     <Button 
-                      onClick={() => setShowBulkEnroll(true)}
-                      className="w-full bg-golden-600 hover:bg-golden-500"
-                    >
-                      <GraduationCap className="w-4 h-4 mr-2" />
-                      Bulk Enrollment
-                    </Button>
-                    <Button 
                       onClick={() => exportData("all")}
                       variant="outline"
                       className="w-full"

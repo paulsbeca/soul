@@ -134,7 +134,7 @@ export default function AthenaeumSimple() {
             </motion.div>
           </div>
 
-          {/* Center Message */}
+          {/* Login Portal Section */}
           <motion.div
             className="text-center mystical-border p-8 rounded-lg grimoire-texture"
             initial={{ opacity: 0, y: 30 }}
@@ -143,23 +143,57 @@ export default function AthenaeumSimple() {
           >
             <Crown className="w-16 h-16 mx-auto mb-6 text-golden-rune" />
             <h3 className="font-gothic text-3xl text-golden-rune mb-4">
-              The Sacred Academy Awaits
+              Enter the Sacred Academy
             </h3>
-            <p className="text-xl text-silver-star/90 leading-relaxed mb-6">
-              The full Athenaeum experience with course management, progress tracking, and certificates is currently being infused with deeper cosmic energies.
+            <p className="text-xl text-silver-star/90 leading-relaxed mb-8">
+              Access your mystical learning journey. Choose your portal to begin exploring the cosmic wisdom within.
             </p>
-            <div className="flex justify-center items-center space-x-2 text-ethereal-white/70 mb-6">
-              <Sparkles className="w-5 h-5 animate-pulse" />
-              <span>Mystical renovation in progress</span>
-              <Sparkles className="w-5 h-5 animate-pulse" />
+            
+            <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
+              {/* Student & Teacher Portal */}
+              <Link href="/athenaeum/login-portal">
+                <motion.div 
+                  className="mystical-border p-6 rounded-lg grimoire-texture bg-gradient-to-br from-mystical-600/20 to-ethereal-600/20 hover:scale-105 transition-transform cursor-pointer"
+                  whileHover={{ y: -5 }}
+                >
+                  <BookOpen className="w-12 h-12 mx-auto mb-4 text-mystical-400" />
+                  <h4 className="font-gothic text-xl text-golden-rune mb-2">
+                    Students & Teachers
+                  </h4>
+                  <p className="text-silver-star/90 text-sm mb-4">
+                    Access courses, progress tracking, and mystical learning materials
+                  </p>
+                  <button className="bg-gradient-to-r from-mystical-500 to-ethereal-500 hover:from-mystical-400 hover:to-ethereal-400 text-void-black font-semibold px-4 py-2 rounded-lg transition-all">
+                    Enter Portal
+                  </button>
+                </motion.div>
+              </Link>
+              
+              {/* Admin Portal */}
+              <Link href="/athenaeum/login">
+                <motion.div 
+                  className="mystical-border p-6 rounded-lg grimoire-texture bg-gradient-to-br from-golden-rune/20 to-cosmic-blue/20 hover:scale-105 transition-transform cursor-pointer"
+                  whileHover={{ y: -5 }}
+                >
+                  <Crown className="w-12 h-12 mx-auto mb-4 text-golden-rune" />
+                  <h4 className="font-gothic text-xl text-golden-rune mb-2">
+                    Sacred Administrator
+                  </h4>
+                  <p className="text-silver-star/90 text-sm mb-4">
+                    Manage courses, users, and oversee the cosmic library-school
+                  </p>
+                  <button className="bg-gradient-to-r from-golden-rune to-cosmic-blue hover:from-golden-rune/90 hover:to-cosmic-blue/90 text-void-black font-semibold px-4 py-2 rounded-lg transition-all">
+                    Admin Access
+                  </button>
+                </motion.div>
+              </Link>
             </div>
             
-            <Link href="/athenaeum/login-portal">
-              <button className="inline-flex items-center bg-gradient-to-r from-mystical-500 to-ethereal-500 hover:from-mystical-400 hover:to-ethereal-400 text-void-black font-semibold px-8 py-4 rounded-lg hover:scale-105 transition-transform">
-                <BookOpen className="mr-3 w-6 h-6" />
-                Enter Full Athenaeum
-              </button>
-            </Link>
+            <div className="mt-8 flex justify-center items-center space-x-2 text-ethereal-white/70">
+              <Sparkles className="w-4 h-4 animate-pulse" />
+              <span className="text-sm">Sacred portals ready for access</span>
+              <Sparkles className="w-4 h-4 animate-pulse" />
+            </div>
           </motion.div>
         </div>
       </div>
