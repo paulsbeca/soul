@@ -149,41 +149,22 @@ export default function AthenaeumSimple() {
               Access your mystical learning journey. Choose your portal to begin exploring the cosmic wisdom within.
             </p>
             
-            <div className="grid md:grid-cols-2 gap-6 max-w-2xl mx-auto">
-              {/* Student & Teacher Portal */}
+            <div className="flex justify-center max-w-md mx-auto">
+              {/* Keepers & Seekers Portal */}
               <Link href="/athenaeum/login-portal">
                 <motion.div 
-                  className="mystical-border p-6 rounded-lg grimoire-texture bg-gradient-to-br from-mystical-600/20 to-ethereal-600/20 hover:scale-105 transition-transform cursor-pointer"
+                  className="mystical-border p-8 rounded-lg grimoire-texture bg-gradient-to-br from-mystical-600/20 to-ethereal-600/20 hover:scale-105 transition-transform cursor-pointer"
                   whileHover={{ y: -5 }}
                 >
-                  <BookOpen className="w-12 h-12 mx-auto mb-4 text-mystical-400" />
-                  <h4 className="font-gothic text-xl text-golden-rune mb-2">
-                    Students & Teachers
+                  <BookOpen className="w-16 h-16 mx-auto mb-6 text-mystical-400" />
+                  <h4 className="font-gothic text-2xl text-golden-rune mb-3">
+                    Keepers & Seekers
                   </h4>
-                  <p className="text-silver-star/90 text-sm mb-4">
-                    Access courses, progress tracking, and mystical learning materials
+                  <p className="text-silver-star/90 text-sm mb-6 leading-relaxed">
+                    Access sacred wisdom, progress tracking, and mystical learning materials for all teachers and students
                   </p>
-                  <button className="bg-gradient-to-r from-mystical-500 to-ethereal-500 hover:from-mystical-400 hover:to-ethereal-400 text-void-black font-semibold px-4 py-2 rounded-lg transition-all">
-                    Enter Portal
-                  </button>
-                </motion.div>
-              </Link>
-              
-              {/* Admin Portal */}
-              <Link href="/athenaeum/login">
-                <motion.div 
-                  className="mystical-border p-6 rounded-lg grimoire-texture bg-gradient-to-br from-golden-rune/20 to-cosmic-blue/20 hover:scale-105 transition-transform cursor-pointer"
-                  whileHover={{ y: -5 }}
-                >
-                  <Crown className="w-12 h-12 mx-auto mb-4 text-golden-rune" />
-                  <h4 className="font-gothic text-xl text-golden-rune mb-2">
-                    Sacred Administrator
-                  </h4>
-                  <p className="text-silver-star/90 text-sm mb-4">
-                    Manage courses, users, and oversee the cosmic library-school
-                  </p>
-                  <button className="bg-gradient-to-r from-golden-rune to-cosmic-blue hover:from-golden-rune/90 hover:to-cosmic-blue/90 text-void-black font-semibold px-4 py-2 rounded-lg transition-all">
-                    Admin Access
+                  <button className="bg-gradient-to-r from-mystical-500 to-ethereal-500 hover:from-mystical-400 hover:to-ethereal-400 text-void-black font-semibold px-6 py-3 rounded-lg transition-all">
+                    Enter Sacred Portal
                   </button>
                 </motion.div>
               </Link>
