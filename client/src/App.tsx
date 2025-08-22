@@ -20,6 +20,7 @@ import Pillar4MagicScience from "@/pages/pillar4-magic-science";
 import Aionara from "@/pages/aionara";
 import Alchemy from "@/pages/alchemy";
 import DeityCodex from "@/pages/deity-codex";
+import EnrollmentForm from "@/pages/enrollment-form";
 import AthenaeumEnrollmentGate from "@/pages/athenaeum-enrollment-gate";
 import AthenaeumSimple from "@/pages/athenaeum-simple";
 import AthenaeumLogin from "@/pages/athenaeum-login";
@@ -50,6 +51,7 @@ function Router() {
       <Route path="/aionara" component={Aionara} />
       <Route path="/alchemy" component={Alchemy} />
       <Route path="/deity-codex" component={DeityCodex} />
+      <Route path="/enrollment-form" component={EnrollmentForm} />
       <Route path="/athenaeum/enrollment" component={AthenaeumEnrollmentGate} />
       <Route path="/athenaeum/login" component={AthenaeumLogin} />
       <Route path="/athenaeum/login-portal" component={AthenaeumStudentLogin} />
