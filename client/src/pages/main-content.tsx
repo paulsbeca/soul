@@ -321,7 +321,7 @@ export default function MainContent() {
               </p>
               <button
                 onClick={(e) => {
-                  console.log("Grimoire button clicked!");
+                  console.log("Enter Sacred Space button clicked!");
                   e.preventDefault();
                   e.stopPropagation();
                   window.location.href = "/athenaeum/enrollment";
