@@ -7,6 +7,10 @@ export const users = pgTable("users", {
   id: varchar("id").primaryKey().default(sql`gen_random_uuid()`),
   username: text("username").notNull().unique(),
   password: text("password").notNull(),
+  role: text("role").notNull().default("student"), // student, teacher, admin
+  email: text("email").notNull().unique(),
+  fullName: text("full_name").notNull(),
+  createdAt: timestamp("created_at").defaultNow().notNull(),
 });
 
 export const newsletters = pgTable("newsletters", {
@@ -122,6 +126,9 @@ export const aionaraFacts = pgTable("aionara_facts", {
 export const insertUserSchema = createInsertSchema(users).pick({
   username: true,
   password: true,
+  role: true,
+  email: true,
+  fullName: true,
 });
 
 export const insertNewsletterSchema = createInsertSchema(newsletters).pick({

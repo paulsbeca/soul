@@ -6,6 +6,7 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { useToast } from "@/hooks/use-toast";
 import backgroundImage from "@assets/background_1755498699765.webp";
+import athenaeumCrest from "@assets/athenaeum_crest_transparent_1755842285928.webp";
 
 export default function AthenaeumLogin() {
   const [email, setEmail] = useState("");
@@ -25,26 +26,59 @@ export default function AthenaeumLogin() {
     e.preventDefault();
     setIsLoading(true);
 
-    // Simple admin credential check
-    if (email === "beca@jakintzaruha.com" && password === "Raquel8388$$") {
-      // Store admin session
-      localStorage.setItem("athenaeum_admin", "true");
-      localStorage.setItem("admin_email", email);
-      
-      toast({
-        title: "Sacred Access Granted",
-        description: "Welcome to the Athenaeum, Sacred Administrator.",
-        duration: 5000,
+    try {
+      const response = await fetch('/api/auth/login', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify({ email, password }),
       });
-      
-      // Redirect to Admin Dashboard
-      setTimeout(() => {
-        setLocation("/admin");
-      }, 1000);
-    } else {
+
+      if (response.ok) {
+        const user = await response.json();
+        
+        // Store user session
+        localStorage.setItem("athenaeum_user", JSON.stringify(user));
+        
+        let redirectPath = "/athenaeum";
+        let welcomeMessage = "Welcome to the Athenaeum";
+        
+        if (user.role === "admin") {
+          redirectPath = "/admin";
+          welcomeMessage = "Welcome to the Athenaeum, Sacred Administrator";
+        } else if (user.role === "teacher") {
+          redirectPath = "/athenaeum/teacher";
+          welcomeMessage = `Welcome, Professor ${user.fullName}`;
+        } else if (user.role === "student") {
+          redirectPath = "/athenaeum/student";
+          welcomeMessage = `Welcome, seeker ${user.fullName}`;
+        }
+        
+        toast({
+          title: "Sacred Access Granted",
+          description: welcomeMessage,
+          duration: 5000,
+        });
+        
+        // Redirect based on role
+        setTimeout(() => {
+          setLocation(redirectPath);
+        }, 1000);
+      } else {
+        const error = await response.text();
+        toast({
+          title: "Access Denied",
+          description: "The cosmic guardians do not recognize these credentials.",
+          variant: "destructive",
+          duration: 5000,
+        });
+      }
+    } catch (error) {
+      console.error('Login error:', error);
       toast({
-        title: "Access Denied",
-        description: "The cosmic guardians do not recognize these credentials.",
+        title: "Mystical Interference",
+        description: "The cosmic connection was interrupted. Please try again.",
         variant: "destructive",
         duration: 5000,
       });
@@ -81,8 +115,12 @@ export default function AthenaeumLogin() {
           {...fadeInUp}
           className="mystical-border p-8 rounded-lg grimoire-texture text-center"
         >
-          <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-golden-rune to-cosmic-blue rounded-full flex items-center justify-center">
-            <Lock className="w-10 h-10 text-void-black" />
+          <div className="w-32 h-32 mx-auto mb-6 relative">
+            <img 
+              src={athenaeumCrest} 
+              alt="Athenaeum Sacred Crest"
+              className="w-full h-full object-contain"
+            />
           </div>
           
           <h1 className="font-gothic text-3xl text-golden-rune mb-4">
@@ -137,11 +175,13 @@ export default function AthenaeumLogin() {
 
           <div className="mt-6 p-4 bg-golden-rune/10 border border-golden-rune/30 rounded-lg">
             <p className="text-golden-rune text-sm font-semibold">
-              🔮 Admin Access Only
+              🌟 Test Accounts Available
             </p>
-            <p className="text-silver-star/70 text-xs mt-1">
-              This portal is reserved for the sacred administrator to oversee the cosmic library-school.
-            </p>
+            <div className="text-silver-star/70 text-xs mt-1 space-y-1">
+              <div><strong>Student:</strong> luna@mysticalstudent.com / StarSeeker2024</div>
+              <div><strong>Teacher:</strong> sage@athenaeumteacher.com / WisdomKeeper2024</div>
+              <div><strong>Admin:</strong> beca@jakintzaruha.com / Raquel8388$$</div>
+            </div>
           </div>
         </motion.div>
       </div>

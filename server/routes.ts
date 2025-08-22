@@ -9,6 +9,49 @@ import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
   
+  // Authentication routes
+  app.post("/api/auth/login", async (req, res) => {
+    try {
+      const { email, password } = req.body;
+      
+      if (!email || !password) {
+        return res.status(400).json({ 
+          message: "Email and password are required" 
+        });
+      }
+
+      // Find user by email
+      const user = await storage.getUserByEmail(email);
+      if (!user) {
+        return res.status(401).json({ 
+          message: "Invalid credentials" 
+        });
+      }
+
+      // Simple password check (in production, use hashed passwords)
+      if (user.password !== password) {
+        return res.status(401).json({ 
+          message: "Invalid credentials" 
+        });
+      }
+
+      // Return user info without password
+      const { password: _, ...userWithoutPassword } = user;
+      res.json(userWithoutPassword);
+    } catch (error) {
+      console.error("Login error:", error);
+      res.status(500).json({ 
+        message: "Internal server error" 
+      });
+    }
+  });
+
+  // Get current user info (if we add session management later)
+  app.get("/api/auth/me", async (req, res) => {
+    // This would check session/token in a real app
+    res.status(401).json({ message: "Not authenticated" });
+  });
+
   // Newsletter subscription endpoint
   app.post("/api/newsletter/subscribe", async (req, res) => {
     try {

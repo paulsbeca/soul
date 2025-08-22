@@ -4,6 +4,7 @@ import { randomUUID } from "crypto";
 export interface IStorage {
   getUser(id: string): Promise<User | undefined>;
   getUserByUsername(username: string): Promise<User | undefined>;
+  getUserByEmail(email: string): Promise<User | undefined>;
   createUser(user: InsertUser): Promise<User>;
   createNewsletterSubscription(newsletter: InsertNewsletter): Promise<Newsletter>;
   getNewsletterByEmail(email: string): Promise<Newsletter | undefined>;
@@ -79,6 +80,50 @@ export class MemStorage implements IStorage {
     this.aionaraConversations = new Map();
     this.initializeDeities();
     this.initializeSacredLivingYear();
+    this.initializeTestUsers();
+  }
+
+  private initializeTestUsers() {
+    // Create test student account
+    const studentId = randomUUID();
+    const testStudent: User = {
+      id: studentId,
+      username: "luna_mystic",
+      password: "StarSeeker2024",
+      email: "luna@mysticalstudent.com",
+      fullName: "Luna Stardust", 
+      role: "student",
+      createdAt: new Date()
+    };
+    this.users.set(studentId, testStudent);
+
+    // Create test teacher account
+    const teacherId = randomUUID();
+    const testTeacher: User = {
+      id: teacherId,
+      username: "professor_sage",
+      password: "WisdomKeeper2024",
+      email: "sage@athenaeumteacher.com",
+      fullName: "Professor Sage Moonweaver",
+      role: "teacher", 
+      createdAt: new Date()
+    };
+    this.users.set(teacherId, testTeacher);
+
+    // Create admin account (Beca)
+    const adminId = randomUUID();
+    const adminUser: User = {
+      id: adminId,
+      username: "beca_admin",
+      password: "Raquel8388$$",
+      email: "beca@jakintzaruha.com",
+      fullName: "Beca Davila",
+      role: "admin",
+      createdAt: new Date()
+    };
+    this.users.set(adminId, adminUser);
+
+    console.log("Initialized test users: student (luna_mystic), teacher (professor_sage), admin (beca_admin)");
   }
 
   private initializeSacredLivingYear() {
@@ -338,9 +383,19 @@ export class MemStorage implements IStorage {
     );
   }
 
+  async getUserByEmail(email: string): Promise<User | undefined> {
+    return Array.from(this.users.values()).find(
+      (user) => user.email === email,
+    );
+  }
+
   async createUser(insertUser: InsertUser): Promise<User> {
     const id = randomUUID();
-    const user: User = { ...insertUser, id };
+    const user: User = { 
+      ...insertUser, 
+      id, 
+      createdAt: new Date() 
+    };
     this.users.set(id, user);
     return user;
   }

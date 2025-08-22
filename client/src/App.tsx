@@ -25,6 +25,8 @@ import AthenaeumSimple from "@/pages/athenaeum-simple";
 import AthenaeumLogin from "@/pages/athenaeum-login";
 import AthenaeumAdmin from "@/pages/athenaeum-admin";
 import AthenaeumStudentLogin from "@/pages/athenaeum-student-login";
+import AthenaeumStudent from "@/pages/athenaeum-student";
+import AthenaeumTeacher from "@/pages/athenaeum-teacher";
 // Athenaeum course imports temporarily removed for simplicity
 import NotFound from "@/pages/not-found";
 
@@ -51,6 +53,8 @@ function Router() {
       <Route path="/athenaeum/enrollment" component={AthenaeumEnrollmentGate} />
       <Route path="/athenaeum/login" component={AthenaeumLogin} />
       <Route path="/athenaeum/login-portal" component={AthenaeumStudentLogin} />
+      <Route path="/athenaeum/student" component={AthenaeumStudent} />
+      <Route path="/athenaeum/teacher" component={AthenaeumTeacher} />
       <Route path="/admin" component={AthenaeumAdmin} />
       <Route path="/athenaeum" component={AthenaeumSimple} />
       {/* Athenaeum course routes temporarily removed for simplicity */}
