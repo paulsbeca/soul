@@ -65,7 +65,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteGrimoire(id: string): Promise<boolean> {
     const result = await db.delete(grimoires).where(eq(grimoires.id, id));
-    return result.rowCount !== undefined && result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   // Grimoire entry methods
@@ -97,7 +97,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteGrimoireEntry(id: string): Promise<boolean> {
     const result = await db.delete(grimoireEntries).where(eq(grimoireEntries.id, id));
-    return result.rowCount !== undefined && result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   // Deity methods
@@ -111,13 +111,31 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createDeity(insertDeity: InsertDeity): Promise<Deity> {
-    const [deity] = await db.insert(deities).values(insertDeity).returning();
+    const [deity] = await db.insert(deities).values({
+      ...insertDeity,
+      domains: insertDeity.domains as string[],
+      elements: insertDeity.elements as string[],
+      symbols: insertDeity.symbols as string[],
+      epithets: insertDeity.epithets as string[],
+      offerings: insertDeity.offerings as string[],
+      cautions: insertDeity.cautions as string[],
+      stories: insertDeity.stories as string[]
+    }).returning();
     return deity;
   }
 
   async updateDeity(id: string, updateData: Partial<InsertDeity>): Promise<Deity | undefined> {
+    const updatePayload: any = { ...updateData };
+    if (updateData.domains) updatePayload.domains = updateData.domains as string[];
+    if (updateData.elements) updatePayload.elements = updateData.elements as string[];
+    if (updateData.symbols) updatePayload.symbols = updateData.symbols as string[];
+    if (updateData.epithets) updatePayload.epithets = updateData.epithets as string[];
+    if (updateData.offerings) updatePayload.offerings = updateData.offerings as string[];
+    if (updateData.cautions) updatePayload.cautions = updateData.cautions as string[];
+    if (updateData.stories) updatePayload.stories = updateData.stories as string[];
+    
     const [updated] = await db.update(deities)
-      .set(updateData)
+      .set(updatePayload)
       .where(eq(deities.id, id))
       .returning();
     return updated || undefined;
@@ -125,7 +143,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteDeity(id: string): Promise<boolean> {
     const result = await db.delete(deities).where(eq(deities.id, id));
-    return result.rowCount !== undefined && result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   async searchDeities(query: string): Promise<Deity[]> {
@@ -140,18 +158,34 @@ export class DatabaseStorage implements IStorage {
   }
 
   async filterDeities(filters: { culture?: string; domain?: string; element?: string; }): Promise<Deity[]> {
-    let query = db.select().from(deities);
+    const conditions: any[] = [];
     
     if (filters.culture) {
-      query = query.where(eq(deities.culture, filters.culture));
+      conditions.push(eq(deities.culture, filters.culture));
     }
     
-    return await query;
+    if (conditions.length > 0) {
+      return await db.select().from(deities).where(conditions[0]);
+    }
+    
+    return await db.select().from(deities);
   }
 
   async importDeities(insertDeities: InsertDeity[]): Promise<Deity[]> {
     if (insertDeities.length === 0) return [];
-    const imported = await db.insert(deities).values(insertDeities).returning();
+    
+    const formattedDeities = insertDeities.map(deity => ({
+      ...deity,
+      domains: deity.domains as string[],
+      elements: deity.elements as string[],
+      symbols: deity.symbols as string[],
+      epithets: deity.epithets as string[],
+      offerings: deity.offerings as string[],
+      cautions: deity.cautions as string[],
+      stories: deity.stories as string[]
+    }));
+    
+    const imported = await db.insert(deities).values(formattedDeities).returning();
     return imported;
   }
 
@@ -166,16 +200,23 @@ export class DatabaseStorage implements IStorage {
   }
 
   async createSacredEvent(insertEvent: InsertSacredEvent): Promise<SacredEvent> {
-    const [event] = await db.insert(sacredEvents).values({
-      ...insertEvent,
-      createdAt: new Date()
-    }).returning();
+    const eventData: any = { ...insertEvent };
+    if (insertEvent.tags) {
+      eventData.tags = insertEvent.tags as string[];
+    }
+    
+    const [event] = await db.insert(sacredEvents).values(eventData).returning();
     return event;
   }
 
   async updateSacredEvent(id: string, updateData: Partial<InsertSacredEvent>): Promise<SacredEvent | undefined> {
+    const updatePayload: any = { ...updateData };
+    if (updateData.tags) {
+      updatePayload.tags = updateData.tags as string[];
+    }
+    
     const [updated] = await db.update(sacredEvents)
-      .set(updateData)
+      .set(updatePayload)
       .where(eq(sacredEvents.id, id))
       .returning();
     return updated || undefined;
@@ -183,7 +224,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteSacredEvent(id: string): Promise<boolean> {
     const result = await db.delete(sacredEvents).where(eq(sacredEvents.id, id));
-    return result.rowCount !== undefined && result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   async getSacredEventsByCategory(category: string): Promise<SacredEvent[]> {
@@ -254,7 +295,7 @@ export class DatabaseStorage implements IStorage {
 
   async deleteAionaraConversation(id: string): Promise<boolean> {
     const result = await db.delete(aionaraConversations).where(eq(aionaraConversations.id, id));
-    return result.rowCount !== undefined && result.rowCount > 0;
+    return (result.rowCount ?? 0) > 0;
   }
 
   async getAionaraConversationsBySession(sessionId: string): Promise<AionaraConversation[]> {
