@@ -410,11 +410,15 @@ export default function MainContent() {
             <p className="text-xl text-silver-star/90 mb-6">
               The complete spiritual academy - your cosmic library-school awaits. Two sacred wings of learning: the Sanctum of Hidden Echoes and the Orrery of Obscured Realms.
             </p>
-            <Link href="/athenaeum/enrollment">
-              <button className="inline-flex items-center bg-gradient-to-r from-mystical-600 to-ethereal-600 hover:from-mystical-500 hover:to-ethereal-500 px-6 py-3 rounded-lg hover:scale-105 transition-transform text-lg text-ethereal-white hover:text-golden-rune cursor-pointer relative z-50 mystical-glow">
-                Enter the Athenaeum
-              </button>
-            </Link>
+            <button 
+              onClick={() => {
+                console.log("🏛️ ATHENAEUM button clicked!");
+                window.location.href = "/athenaeum";
+              }}
+              className="inline-flex items-center bg-gradient-to-r from-mystical-600 to-ethereal-600 hover:from-mystical-500 hover:to-ethereal-500 px-6 py-3 rounded-lg hover:scale-105 transition-transform text-lg text-ethereal-white hover:text-golden-rune cursor-pointer relative z-50 mystical-glow"
+            >
+              🏛️ ATHENAEUM (Click This!)
+            </button>
           </motion.div>
         </div>
       </div>
