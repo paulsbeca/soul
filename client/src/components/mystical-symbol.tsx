@@ -1,4 +1,4 @@
-import logoImage from "@assets/ChatGPT Image Aug 18, 2025, 12_50_00 AM_1755500285103.webp";
+import logoImage from "@assets/ChatGPT Image Aug 21, 2025, 10_15_07 PM_1755838794823.webp";
 
 export default function MysticalSymbol() {
   return (

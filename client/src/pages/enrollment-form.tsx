@@ -1,23 +1,31 @@
 import { useState } from "react";
 import { motion } from "framer-motion";
 import { Link } from "wouter";
-import { ArrowLeft, User, Mail, Phone, BookOpen, Sparkles, Send } from "lucide-react";
+import { ArrowLeft, User, Mail, Phone, BookOpen, Sparkles, Send, Calendar, MapPin, Globe, Heart } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Textarea } from "@/components/ui/textarea";
+import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
-import backgroundImage from "@assets/background_1755498699765.webp";
+import backgroundImage from "@assets/ChatGPT Image Aug 18, 2025, 12_54_24 AM_1755531868254.webp";
+import newLogo from "@assets/ChatGPT Image Aug 21, 2025, 10_15_07 PM_1755838794823.webp";
 
 export default function EnrollmentForm() {
   const [formData, setFormData] = useState({
     fullName: "",
+    dateOfBirth: "",
+    pronouns: "",
     email: "",
     phone: "",
-    experience: "",
-    interests: "",
-    motivation: "",
-    availability: ""
+    location: "",
+    pathOfStudy: [] as string[],
+    enrollmentTimeline: "",
+    realmOfEntry: "",
+    languages: "",
+    accommodations: "",
+    howHeard: "",
+    seekToReclaim: ""
   });
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
@@ -36,12 +44,21 @@ export default function EnrollmentForm() {
     }));
   };
 
+  const handlePathOfStudyChange = (path: string, checked: boolean) => {
+    setFormData(prev => ({
+      ...prev,
+      pathOfStudy: checked 
+        ? [...prev.pathOfStudy, path]
+        : prev.pathOfStudy.filter(p => p !== path)
+    }));
+  };
+
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     setIsSubmitting(true);
 
     try {
-      await apiRequest("/api/enrollment", {
+      const response = await fetch("/api/enrollment", {
         method: "POST",
         body: JSON.stringify(formData),
         headers: {
@@ -49,27 +66,37 @@ export default function EnrollmentForm() {
         },
       });
 
+      if (!response.ok) {
+        throw new Error("Failed to submit enrollment");
+      }
+
       toast({
-        title: "Enrollment Request Submitted",
-        description: "Your sacred journey application has been sent to Beca. You will hear back soon.",
+        title: "Sacred Enrollment Complete",
+        description: "Your scroll of remembrance has been sent to The Athenaeum. Welcome, seeker.",
         duration: 7000,
       });
 
       // Reset form
       setFormData({
         fullName: "",
+        dateOfBirth: "",
+        pronouns: "",
         email: "",
         phone: "",
-        experience: "",
-        interests: "",
-        motivation: "",
-        availability: ""
+        location: "",
+        pathOfStudy: [],
+        enrollmentTimeline: "",
+        realmOfEntry: "",
+        languages: "",
+        accommodations: "",
+        howHeard: "",
+        seekToReclaim: ""
       });
 
     } catch (error) {
       toast({
-        title: "Submission Error",
-        description: "There was an issue sending your enrollment request. Please try again.",
+        title: "Mystical Interference",
+        description: "The cosmic energies are disrupted. Please try sending your scroll again.",
         variant: "destructive",
         duration: 5000,
       });
@@ -107,18 +134,27 @@ export default function EnrollmentForm() {
             {...fadeInUp}
             className="text-center mb-12"
           >
-            <div className="w-20 h-20 mx-auto mb-6 bg-gradient-to-br from-golden-rune to-cosmic-blue rounded-full flex items-center justify-center">
-              <BookOpen className="w-10 h-10 text-void-black" />
-            </div>
+            <img 
+              src={newLogo} 
+              alt="Jakintza Ruha Logo" 
+              className="w-32 h-32 mx-auto mb-6"
+            />
             
-            <h1 className="font-gothic text-4xl md:text-5xl text-golden-rune mb-4">
-              Sacred Enrollment
+            <h1 className="font-gothic text-4xl md:text-5xl text-golden-rune mb-6">
+              The Athenæum: Enrollment Scroll of Remembrance
             </h1>
             
-            <p className="text-xl text-silver-star/90 leading-relaxed">
-              Begin your mystical learning journey at Jakintza Ruha. 
-              Share your story and we'll guide you to your perfect path.
-            </p>
+            <div className="text-center space-y-2 mb-8">
+              <p className="text-golden-rune italic text-lg">
+                "To enroll is not only to study, but to remember.
+              </p>
+              <p className="text-golden-rune italic text-lg">
+                Every name written here is a vow to the Pillars of Ruha,
+              </p>
+              <p className="text-golden-rune italic text-lg">
+                a promise to awaken what was forgotten."
+              </p>
+            </div>
           </motion.div>
 
           <motion.div
@@ -127,124 +163,242 @@ export default function EnrollmentForm() {
             transition={{ duration: 1, delay: 0.3 }}
             className="mystical-border p-8 rounded-lg grimoire-texture"
           >
-            <form onSubmit={handleSubmit} className="space-y-6">
-              {/* Personal Information */}
-              <div className="grid md:grid-cols-2 gap-6">
+            <form onSubmit={handleSubmit} className="space-y-8">
+              {/* Seeker's Identity */}
+              <div className="space-y-6">
+                <h3 className="font-gothic text-2xl text-golden-rune border-b border-golden-rune/30 pb-2">
+                  Seeker's Identity
+                </h3>
+                
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="relative">
+                    <User className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
+                    <Input
+                      type="text"
+                      name="fullName"
+                      placeholder="Name remembered in this life"
+                      value={formData.fullName}
+                      onChange={handleInputChange}
+                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
+                      required
+                      data-testid="input-fullname"
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
+                    <Input
+                      type="date"
+                      name="dateOfBirth"
+                      placeholder="Date of Birth (marking your arrival)"
+                      value={formData.dateOfBirth}
+                      onChange={handleInputChange}
+                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
+                      data-testid="input-dateofbirth"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-3 gap-6">
+                  <div className="relative">
+                    <Heart className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
+                    <Input
+                      type="text"
+                      name="pronouns"
+                      placeholder="Pronouns carried in truth"
+                      value={formData.pronouns}
+                      onChange={handleInputChange}
+                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
+                      data-testid="input-pronouns"
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <Mail className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
+                    <Input
+                      type="email"
+                      name="email"
+                      placeholder="Email"
+                      value={formData.email}
+                      onChange={handleInputChange}
+                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
+                      required
+                      data-testid="input-email"
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <Phone className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
+                    <Input
+                      type="tel"
+                      name="phone"
+                      placeholder="Phone"
+                      value={formData.phone}
+                      onChange={handleInputChange}
+                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
+                      data-testid="input-phone"
+                    />
+                  </div>
+                </div>
+
                 <div className="relative">
-                  <User className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
+                  <MapPin className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
                   <Input
                     type="text"
-                    name="fullName"
-                    placeholder="Full Name"
-                    value={formData.fullName}
+                    name="location"
+                    placeholder="Dwelling place in this world"
+                    value={formData.location}
                     onChange={handleInputChange}
                     className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                    required
-                    data-testid="input-fullname"
+                    data-testid="input-location"
                   />
+                </div>
+              </div>
+
+              {/* Path of Study */}
+              <div className="space-y-6">
+                <h3 className="font-gothic text-2xl text-golden-rune border-b border-golden-rune/30 pb-2">
+                  Path of Study
+                </h3>
+                
+                <div className="text-golden-rune mb-4">
+                  <label className="flex items-center space-x-3 mb-4">
+                    <Checkbox 
+                      checked={true}
+                      className="border-golden-rune data-[state=checked]:bg-golden-rune" 
+                    />
+                    <span className="text-lg">Adult Seeker</span>
+                  </label>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-4">
+                  {[
+                    "Cultural Respect & Ancestral Memory",
+                    "Cosmic Vision & Celestial Mysteries", 
+                    "Elemental Teachings (Earth, Air, Fire, Water, Aether)",
+                    "Languages of the Living & the Forgotten",
+                    "Sacred Arts (Alchemy, Ritual, Divination)"
+                  ].map((path) => (
+                    <label key={path} className="flex items-start space-x-3 text-silver-star cursor-pointer">
+                      <Checkbox 
+                        checked={formData.pathOfStudy.includes(path)}
+                        onCheckedChange={(checked) => handlePathOfStudyChange(path, !!checked)}
+                        className="border-golden-rune data-[state=checked]:bg-golden-rune mt-1" 
+                      />
+                      <span>{path}</span>
+                    </label>
+                  ))}
                 </div>
 
                 <div className="relative">
-                  <Mail className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
                   <Input
-                    type="email"
-                    name="email"
-                    placeholder="Email Address"
-                    value={formData.email}
-                    onChange={handleInputChange}
-                    className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                    required
-                    data-testid="input-email"
+                    type="text"
+                    name="customPath"
+                    placeholder="Other: ___________________________________"
+                    className="bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
+                    data-testid="input-custompath"
                   />
                 </div>
               </div>
 
-              <div className="relative">
-                <Phone className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
-                <Input
-                  type="tel"
-                  name="phone"
-                  placeholder="Phone Number (Optional)"
-                  value={formData.phone}
-                  onChange={handleInputChange}
-                  className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                  data-testid="input-phone"
-                />
-              </div>
-
-              {/* Background & Experience */}
-              <div className="space-y-4">
-                <h3 className="font-gothic text-xl text-golden-rune flex items-center gap-2">
-                  <Sparkles className="w-5 h-5" />
-                  Your Sacred Background
+              {/* Additional Threads of Your Story */}
+              <div className="space-y-6">
+                <h3 className="font-gothic text-2xl text-golden-rune border-b border-golden-rune/30 pb-2">
+                  Additional Threads of Your Story
                 </h3>
                 
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="relative">
+                    <Calendar className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
+                    <Input
+                      type="text"
+                      name="enrollmentTimeline"
+                      placeholder="When do you wish to begin your remembrance?"
+                      value={formData.enrollmentTimeline}
+                      onChange={handleInputChange}
+                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
+                      data-testid="input-timeline"
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <Sparkles className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
+                    <Input
+                      type="text"
+                      name="realmOfEntry"
+                      placeholder="Realm of Entry (if known)"
+                      value={formData.realmOfEntry}
+                      onChange={handleInputChange}
+                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
+                      data-testid="input-realm"
+                    />
+                  </div>
+                </div>
+
+                <div className="grid md:grid-cols-2 gap-6">
+                  <div className="relative">
+                    <Globe className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
+                    <Input
+                      type="text"
+                      name="languages"
+                      placeholder="Languages spoken or calling to you"
+                      value={formData.languages}
+                      onChange={handleInputChange}
+                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
+                      data-testid="input-languages"
+                    />
+                  </div>
+
+                  <div className="relative">
+                    <Heart className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
+                    <Input
+                      type="text"
+                      name="accommodations"
+                      placeholder="Accommodations or sacred needs"
+                      value={formData.accommodations}
+                      onChange={handleInputChange}
+                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
+                      data-testid="input-accommodations"
+                    />
+                  </div>
+                </div>
+
                 <Textarea
-                  name="experience"
-                  placeholder="Tell us about your spiritual or mystical background and experience..."
-                  value={formData.experience}
+                  name="howHeard"
+                  placeholder="How did you hear the Call of The Athenæum?"
+                  value={formData.howHeard}
+                  onChange={handleInputChange}
+                  rows={3}
+                  className="bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors resize-none"
+                  data-testid="textarea-howheard"
+                />
+
+                <Textarea
+                  name="seekToReclaim"
+                  placeholder="What do you seek to reclaim or remember?"
+                  value={formData.seekToReclaim}
                   onChange={handleInputChange}
                   rows={4}
                   className="bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors resize-none"
                   required
-                  data-testid="textarea-experience"
+                  data-testid="textarea-seekreclaim"
                 />
               </div>
 
-              {/* Interests */}
-              <div className="space-y-4">
-                <h3 className="font-gothic text-xl text-golden-rune flex items-center gap-2">
-                  <Sparkles className="w-5 h-5" />
-                  Areas of Interest
+              {/* Sacred Commitment */}
+              <div className="space-y-6 bg-golden-rune/10 border border-golden-rune/30 rounded-lg p-6">
+                <h3 className="font-gothic text-2xl text-golden-rune text-center">
+                  Sacred Commitment
                 </h3>
                 
-                <Textarea
-                  name="interests"
-                  placeholder="What mystical subjects or practices interest you most? (e.g., ancestral wisdom, cosmic mechanics, shadow work, dimensional travel...)"
-                  value={formData.interests}
-                  onChange={handleInputChange}
-                  rows={3}
-                  className="bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors resize-none"
-                  required
-                  data-testid="textarea-interests"
-                />
-              </div>
-
-              {/* Motivation */}
-              <div className="space-y-4">
-                <h3 className="font-gothic text-xl text-golden-rune flex items-center gap-2">
-                  <Sparkles className="w-5 h-5" />
-                  Your Sacred Calling
-                </h3>
-                
-                <Textarea
-                  name="motivation"
-                  placeholder="What draws you to Jakintza Ruha? What do you hope to achieve or learn through your studies?"
-                  value={formData.motivation}
-                  onChange={handleInputChange}
-                  rows={4}
-                  className="bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors resize-none"
-                  required
-                  data-testid="textarea-motivation"
-                />
-              </div>
-
-              {/* Availability */}
-              <div className="space-y-4">
-                <h3 className="font-gothic text-xl text-golden-rune flex items-center gap-2">
-                  <Sparkles className="w-5 h-5" />
-                  Time Commitment
-                </h3>
-                
-                <Textarea
-                  name="availability"
-                  placeholder="What is your availability for classes and study? Any time preferences or constraints we should know about?"
-                  value={formData.availability}
-                  onChange={handleInputChange}
-                  rows={3}
-                  className="bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors resize-none"
-                  data-testid="textarea-availability"
-                />
+                <div className="text-silver-star space-y-3">
+                  <p>By placing my name upon this scroll, I vow to:</p>
+                  <ul className="space-y-2 pl-4">
+                    <li>• Honor the Four Pillars of Jakintza Ruha.</li>
+                    <li>• Enter with integrity, respect, and remembrance.</li>
+                    <li>• Treat knowledge as sacred inheritance, never commodity.</li>
+                  </ul>
+                </div>
               </div>
 
               <Button

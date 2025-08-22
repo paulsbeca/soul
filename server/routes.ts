@@ -4,6 +4,7 @@ import { storage } from "./storage-database";
 import { insertNewsletterSchema, insertGrimoireSchema, insertGrimoireEntrySchema, insertDeitySchema, insertSacredEventSchema, insertYearlyConfigurationSchema, insertAionaraConversationSchema } from "@shared/schema";
 import { getAionaraResponse } from "./openai";
 import { notifyNewsletterSubscription } from "./email";
+import { notifyEnrollmentSubmission } from "./emailoctopus";
 import { z } from "zod";
 
 export async function registerRoutes(app: Express): Promise<Server> {
@@ -41,6 +42,33 @@ export async function registerRoutes(app: Express): Promise<Server> {
           message: "Internal server error" 
         });
       }
+    }
+  });
+
+  // Enrollment submission endpoint
+  app.post("/api/enrollment", async (req, res) => {
+    try {
+      const enrollmentData = req.body;
+      
+      // Basic validation
+      if (!enrollmentData.fullName || !enrollmentData.email) {
+        return res.status(400).json({ 
+          message: "Name and email are required for enrollment" 
+        });
+      }
+
+      // Send enrollment notification to athenaeum@jakintzaruha.com
+      await notifyEnrollmentSubmission(enrollmentData);
+      
+      res.status(201).json({ 
+        message: "Enrollment submission received. The Athenaeum will be in touch soon.",
+        status: "success"
+      });
+    } catch (error) {
+      console.error("Enrollment submission error:", error);
+      res.status(500).json({ 
+        message: "There was an issue processing your enrollment. Please try again." 
+      });
     }
   });
 
