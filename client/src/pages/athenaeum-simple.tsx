@@ -151,7 +151,7 @@ export default function AthenaeumSimple() {
             
             <div className="flex justify-center max-w-md mx-auto">
               {/* Keepers & Seekers Portal */}
-              <Link href="/athenaeum/login-portal">
+              <Link href="/athenaeum/login">
                 <motion.div 
                   className="mystical-border p-8 rounded-lg grimoire-texture bg-gradient-to-br from-mystical-600/20 to-ethereal-600/20 hover:scale-105 transition-transform cursor-pointer"
                   whileHover={{ y: -5 }}
