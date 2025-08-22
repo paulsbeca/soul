@@ -51,6 +51,14 @@ export default function Landing() {
             onClick={() => setLocation("/athenaeum/login")}
             title="⚡"
           />
+          {/* Quick athenaeum access for testing - visible link */}
+          <div 
+            className="absolute -top-4 -left-4 w-12 h-12 cursor-pointer opacity-50 hover:opacity-100 hover:bg-golden-rune/30 rounded-full transition-opacity z-50 flex items-center justify-center text-golden-rune text-xs"
+            onClick={() => setLocation("/athenaeum")}
+            title="Quick Athenaeum Access"
+          >
+            🏛️
+          </div>
         </div>
         
         {/* Breathing Taglines */}
