@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ExternalLink, Calendar, BookOpen, Star, Sprout, Infinity, Gem, Flame, Crown } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import NewsletterForm from "@/components/newsletter-form";
-import logoImage from "@assets/ChatGPT Image Aug 21, 2025, 09_55_22 PM_1755838981471.png";
+import logoImage from "@assets/ChatGPT Image Aug 21, 2025, 11_07_23 PM_1755839288776.webp";
 import mysticalChamberBg from "@assets/ChatGPT Image Aug 18, 2025, 12_54_24 AM_1755531868254.webp";
 import athenaeumBackground from "@assets/ChatGPT Image Aug 18, 2025, 06_11_32 PM_1755562381522.webp";
 
@@ -324,7 +324,7 @@ export default function MainContent() {
                   console.log("Grimoire button clicked!");
                   e.preventDefault();
                   e.stopPropagation();
-                  window.location.href = "/grimoires";
+                  window.location.href = "/athenaeum/enrollment";
                 }}
                 className="inline-flex items-center bg-gradient-to-r from-shadow-purple to-deep-purple px-4 py-2 rounded-lg hover:scale-105 transition-transform text-sm text-ethereal-white hover:text-golden-rune cursor-pointer relative z-50"
                 data-testid="button-grimoire"
@@ -410,7 +410,7 @@ export default function MainContent() {
             <p className="text-xl text-silver-star/90 mb-6">
               The complete spiritual academy - your cosmic library-school awaits. Two sacred wings of learning: the Sanctum of Hidden Echoes and the Orrery of Obscured Realms.
             </p>
-            <Link href="/athenaeum">
+            <Link href="/athenaeum/enrollment">
               <button className="inline-flex items-center bg-gradient-to-r from-mystical-600 to-ethereal-600 hover:from-mystical-500 hover:to-ethereal-500 px-6 py-3 rounded-lg hover:scale-105 transition-transform text-lg text-ethereal-white hover:text-golden-rune cursor-pointer relative z-50 mystical-glow">
                 Enter the Athenaeum
               </button>

@@ -1,56 +1,58 @@
-import { useState } from "react";
+import React, { useState, ChangeEvent, FormEvent } from "react";
 import { motion } from "framer-motion";
-import { Link } from "wouter";
-import { ArrowLeft, User, Mail, Phone, BookOpen, Sparkles, Send, Calendar, MapPin, Globe, Heart } from "lucide-react";
+import { Scroll, Feather, Star, Flame, Heart, Moon } from "lucide-react";
 import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
+import { Label } from "@/components/ui/label";
 import { Textarea } from "@/components/ui/textarea";
+import { Select, SelectContent, SelectItem, SelectTrigger, SelectValue } from "@/components/ui/select";
+import { RadioGroup, RadioGroupItem } from "@/components/ui/radio-group";
 import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import backgroundImage from "@assets/ChatGPT Image Aug 18, 2025, 12_54_24 AM_1755531868254.webp";
-import newLogo from "@assets/ChatGPT Image Aug 21, 2025, 09_55_22 PM_1755838981471.png";
+import newLogo from "@assets/ChatGPT Image Aug 21, 2025, 11_07_23 PM_1755839288776.webp";
 
 export default function EnrollmentForm() {
   const [formData, setFormData] = useState({
     fullName: "",
-    dateOfBirth: "",
-    pronouns: "",
     email: "",
     phone: "",
-    location: "",
-    pathOfStudy: [] as string[],
-    enrollmentTimeline: "",
-    realmOfEntry: "",
-    languages: "",
-    accommodations: "",
-    howHeard: "",
-    seekToReclaim: ""
+    dateOfBirth: "",
+    previousExperience: "",
+    spiritualPath: "",
+    motivation: "",
+    commitment: "",
+    preferredStartDate: "",
+    timeZone: "",
+    accessibility: "",
+    emergencyContact: "",
+    emergencyPhone: "",
+    sacredIntent: "",
+    healingFocus: "",
+    elementalAffinity: "",
+    moonPhasePreference: "",
+    investmentLevel: "",
+    termsAccepted: false,
+    privacyAccepted: false,
+    sacredOath: false,
   });
+
   const [isSubmitting, setIsSubmitting] = useState(false);
   const { toast } = useToast();
 
-  const fadeInUp = {
-    initial: { opacity: 0, y: 30 },
-    animate: { opacity: 1, y: 0 },
-    transition: { duration: 1, ease: "easeOut" }
+  const handleInputChange = (e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
+    const { name, value, type } = e.target;
+    if (type === "checkbox") {
+      const checked = (e.target as HTMLInputElement).checked;
+      setFormData(prev => ({ ...prev, [name]: checked }));
+    } else {
+      setFormData(prev => ({ ...prev, [name]: value }));
+    }
   };
 
-  const handleInputChange = (e: React.ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-    const { name, value } = e.target;
-    setFormData(prev => ({
-      ...prev,
-      [name]: value
-    }));
-  };
-
-  const handlePathOfStudyChange = (path: string, checked: boolean) => {
-    setFormData(prev => ({
-      ...prev,
-      pathOfStudy: checked 
-        ? [...prev.pathOfStudy, path]
-        : prev.pathOfStudy.filter(p => p !== path)
-    }));
+  const handleSelectChange = (field: string, value: string) => {
+    setFormData(prev => ({ ...prev, [field]: value }));
   };
 
   const handleSubmit = async (e: React.FormEvent) => {
@@ -73,362 +75,505 @@ export default function EnrollmentForm() {
       toast({
         title: "Sacred Enrollment Complete",
         description: "Your scroll of remembrance has been sent to The Athenaeum. Welcome, seeker.",
-        duration: 7000,
+        variant: "default",
       });
 
       // Reset form
       setFormData({
         fullName: "",
-        dateOfBirth: "",
-        pronouns: "",
         email: "",
         phone: "",
-        location: "",
-        pathOfStudy: [],
-        enrollmentTimeline: "",
-        realmOfEntry: "",
-        languages: "",
-        accommodations: "",
-        howHeard: "",
-        seekToReclaim: ""
+        dateOfBirth: "",
+        previousExperience: "",
+        spiritualPath: "",
+        motivation: "",
+        commitment: "",
+        preferredStartDate: "",
+        timeZone: "",
+        accessibility: "",
+        emergencyContact: "",
+        emergencyPhone: "",
+        sacredIntent: "",
+        healingFocus: "",
+        elementalAffinity: "",
+        moonPhasePreference: "",
+        investmentLevel: "",
+        termsAccepted: false,
+        privacyAccepted: false,
+        sacredOath: false,
       });
 
     } catch (error) {
+      console.error("Enrollment error:", error);
       toast({
-        title: "Mystical Interference",
-        description: "The cosmic energies are disrupted. Please try sending your scroll again.",
+        title: "Sacred Communication Error",
+        description: "The cosmic forces encountered interference. Please try again, seeker.",
         variant: "destructive",
-        duration: 5000,
       });
     } finally {
       setIsSubmitting(false);
     }
   };
 
+  const fadeInUp = {
+    initial: { opacity: 0, y: 30 },
+    animate: { opacity: 1, y: 0 },
+    transition: { duration: 1, ease: "easeOut" }
+  };
+
   return (
     <section 
-      className="min-h-screen text-ethereal-white" 
+      className="min-h-screen text-ethereal-white py-12"
       style={{
         backgroundImage: `url(${backgroundImage})`,
         backgroundSize: 'cover',
         backgroundPosition: 'center',
         backgroundAttachment: 'fixed'
       }}
+      data-testid="enrollment-form-section"
     >
-      <div className="absolute inset-0 bg-black/75"></div>
+      <div className="absolute inset-0 bg-black/50"></div>
       
-      {/* Navigation */}
-      <nav className="absolute top-0 left-0 right-0 z-50 p-6">
-        <Link 
-          href="/athenaeum"
-          className="inline-flex items-center text-golden-rune hover:text-silver-star transition-colors group"
+      <div className="relative z-10 max-w-4xl mx-auto px-6">
+        {/* Header */}
+        <motion.div 
+          className="text-center mb-12"
+          {...fadeInUp}
         >
-          <ArrowLeft className="w-5 h-5 mr-2 group-hover:translate-x-[-2px] transition-transform" />
-          ← Back to Athenaeum
-        </Link>
-      </nav>
+          <img 
+            src={newLogo} 
+            alt="Jakintza Ruha Logo" 
+            className="h-20 w-auto mx-auto mb-8 object-contain drop-shadow-[0_0_30px_rgba(184,134,11,0.5)]"
+          />
+          <h1 className="font-gothic text-4xl md:text-5xl font-bold mb-4 text-golden-rune">
+            Enrollment Scroll of Remembrance
+          </h1>
+          <p className="text-xl text-silver-star/90 leading-relaxed max-w-3xl mx-auto">
+            Sacred seeker, as you prepare to enter The Athenaeum's hallowed halls, 
+            we must first understand your soul's calling and spiritual readiness.
+          </p>
+        </motion.div>
 
-      <div className="relative z-10 py-20">
-        <div className="max-w-2xl mx-auto px-6">
-          <motion.div
-            {...fadeInUp}
-            className="text-center mb-12"
-          >
-            <img 
-              src={newLogo} 
-              alt="Jakintza Ruha Logo" 
-              className="w-32 h-32 mx-auto mb-6"
-            />
-            
-            <h1 className="font-gothic text-4xl md:text-5xl text-golden-rune mb-6">
-              The Athenæum: Enrollment Scroll of Remembrance
-            </h1>
-            
-            <div className="text-center space-y-2 mb-8">
-              <p className="text-golden-rune italic text-lg">
-                "To enroll is not only to study, but to remember.
-              </p>
-              <p className="text-golden-rune italic text-lg">
-                Every name written here is a vow to the Pillars of Ruha,
-              </p>
-              <p className="text-golden-rune italic text-lg">
-                a promise to awaken what was forgotten."
-              </p>
-            </div>
-          </motion.div>
-
-          <motion.div
-            initial={{ opacity: 0, y: 30 }}
-            animate={{ opacity: 1, y: 0 }}
-            transition={{ duration: 1, delay: 0.3 }}
-            className="mystical-border p-8 rounded-lg grimoire-texture"
-          >
-            <form onSubmit={handleSubmit} className="space-y-8">
-              {/* Seeker's Identity */}
-              <div className="space-y-6">
-                <h3 className="font-gothic text-2xl text-golden-rune border-b border-golden-rune/30 pb-2">
-                  Seeker's Identity
-                </h3>
-                
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="relative">
-                    <User className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
-                    <Input
-                      type="text"
-                      name="fullName"
-                      placeholder="Name remembered in this life"
-                      value={formData.fullName}
-                      onChange={handleInputChange}
-                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                      required
-                      data-testid="input-fullname"
-                    />
-                  </div>
-
-                  <div className="relative">
-                    <Calendar className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
-                    <Input
-                      type="date"
-                      name="dateOfBirth"
-                      placeholder="Date of Birth (marking your arrival)"
-                      value={formData.dateOfBirth}
-                      onChange={handleInputChange}
-                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                      data-testid="input-dateofbirth"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-3 gap-6">
-                  <div className="relative">
-                    <Heart className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
-                    <Input
-                      type="text"
-                      name="pronouns"
-                      placeholder="Pronouns carried in truth"
-                      value={formData.pronouns}
-                      onChange={handleInputChange}
-                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                      data-testid="input-pronouns"
-                    />
-                  </div>
-
-                  <div className="relative">
-                    <Mail className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
-                    <Input
-                      type="email"
-                      name="email"
-                      placeholder="Email"
-                      value={formData.email}
-                      onChange={handleInputChange}
-                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                      required
-                      data-testid="input-email"
-                    />
-                  </div>
-
-                  <div className="relative">
-                    <Phone className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
-                    <Input
-                      type="tel"
-                      name="phone"
-                      placeholder="Phone"
-                      value={formData.phone}
-                      onChange={handleInputChange}
-                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                      data-testid="input-phone"
-                    />
-                  </div>
-                </div>
-
-                <div className="relative">
-                  <MapPin className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
+        {/* Form */}
+        <motion.div
+          className="mystical-border bg-gradient-to-br from-shadow-purple/20 to-deep-purple/20 backdrop-blur-sm rounded-lg p-8"
+          {...fadeInUp}
+          style={{ animationDelay: "0.3s" }}
+        >
+          <form onSubmit={handleSubmit} className="space-y-8" data-testid="enrollment-form">
+            {/* Personal Information */}
+            <div className="space-y-6">
+              <div className="flex items-center space-x-3 mb-6">
+                <Star className="text-golden-rune text-2xl" />
+                <h2 className="font-gothic text-2xl font-bold text-golden-rune">Personal Sacred Details</h2>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <Label htmlFor="fullName" className="text-silver-star font-medium">Full Name *</Label>
                   <Input
+                    id="fullName"
+                    name="fullName"
                     type="text"
-                    name="location"
-                    placeholder="Dwelling place in this world"
-                    value={formData.location}
+                    value={formData.fullName}
                     onChange={handleInputChange}
-                    className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                    data-testid="input-location"
+                    className="mystical-input"
+                    placeholder="Your earthly name"
+                    required
+                    data-testid="input-full-name"
                   />
                 </div>
-              </div>
-
-              {/* Path of Study */}
-              <div className="space-y-6">
-                <h3 className="font-gothic text-2xl text-golden-rune border-b border-golden-rune/30 pb-2">
-                  Path of Study
-                </h3>
                 
-                <div className="text-golden-rune mb-4">
-                  <label className="flex items-center space-x-3 mb-4">
-                    <Checkbox 
-                      checked={true}
-                      className="border-golden-rune data-[state=checked]:bg-golden-rune" 
-                    />
-                    <span className="text-lg">Adult Seeker</span>
-                  </label>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-4">
-                  {[
-                    "Cultural Respect & Ancestral Memory",
-                    "Cosmic Vision & Celestial Mysteries", 
-                    "Elemental Teachings (Earth, Air, Fire, Water, Aether)",
-                    "Languages of the Living & the Forgotten",
-                    "Sacred Arts (Alchemy, Ritual, Divination)"
-                  ].map((path) => (
-                    <label key={path} className="flex items-start space-x-3 text-silver-star cursor-pointer">
-                      <Checkbox 
-                        checked={formData.pathOfStudy.includes(path)}
-                        onCheckedChange={(checked) => handlePathOfStudyChange(path, !!checked)}
-                        className="border-golden-rune data-[state=checked]:bg-golden-rune mt-1" 
-                      />
-                      <span>{path}</span>
-                    </label>
-                  ))}
-                </div>
-
-                <div className="relative">
+                <div>
+                  <Label htmlFor="email" className="text-silver-star font-medium">Sacred Email *</Label>
                   <Input
-                    type="text"
-                    name="customPath"
-                    placeholder="Other: ___________________________________"
-                    className="bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                    data-testid="input-custompath"
+                    id="email"
+                    name="email"
+                    type="email"
+                    value={formData.email}
+                    onChange={handleInputChange}
+                    className="mystical-input"
+                    placeholder="your.name@domain.com"
+                    required
+                    data-testid="input-email"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="phone" className="text-silver-star font-medium">Contact Number</Label>
+                  <Input
+                    id="phone"
+                    name="phone"
+                    type="tel"
+                    value={formData.phone}
+                    onChange={handleInputChange}
+                    className="mystical-input"
+                    placeholder="Your telephone"
+                    data-testid="input-phone"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="dateOfBirth" className="text-silver-star font-medium">Date of Birth</Label>
+                  <Input
+                    id="dateOfBirth"
+                    name="dateOfBirth"
+                    type="date"
+                    value={formData.dateOfBirth}
+                    onChange={handleInputChange}
+                    className="mystical-input"
+                    data-testid="input-date-of-birth"
                   />
                 </div>
               </div>
-
-              {/* Additional Threads of Your Story */}
-              <div className="space-y-6">
-                <h3 className="font-gothic text-2xl text-golden-rune border-b border-golden-rune/30 pb-2">
-                  Additional Threads of Your Story
-                </h3>
-                
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="relative">
-                    <Calendar className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
-                    <Input
-                      type="text"
-                      name="enrollmentTimeline"
-                      placeholder="When do you wish to begin your remembrance?"
-                      value={formData.enrollmentTimeline}
-                      onChange={handleInputChange}
-                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                      data-testid="input-timeline"
-                    />
-                  </div>
-
-                  <div className="relative">
-                    <Sparkles className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
-                    <Input
-                      type="text"
-                      name="realmOfEntry"
-                      placeholder="Realm of Entry (if known)"
-                      value={formData.realmOfEntry}
-                      onChange={handleInputChange}
-                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                      data-testid="input-realm"
-                    />
-                  </div>
-                </div>
-
-                <div className="grid md:grid-cols-2 gap-6">
-                  <div className="relative">
-                    <Globe className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
-                    <Input
-                      type="text"
-                      name="languages"
-                      placeholder="Languages spoken or calling to you"
-                      value={formData.languages}
-                      onChange={handleInputChange}
-                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                      data-testid="input-languages"
-                    />
-                  </div>
-
-                  <div className="relative">
-                    <Heart className="absolute left-3 top-3 w-5 h-5 text-silver-star/60" />
-                    <Input
-                      type="text"
-                      name="accommodations"
-                      placeholder="Accommodations or sacred needs"
-                      value={formData.accommodations}
-                      onChange={handleInputChange}
-                      className="pl-10 bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors"
-                      data-testid="input-accommodations"
-                    />
-                  </div>
-                </div>
-
-                <Textarea
-                  name="howHeard"
-                  placeholder="How did you hear the Call of The Athenæum?"
-                  value={formData.howHeard}
-                  onChange={handleInputChange}
-                  rows={3}
-                  className="bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors resize-none"
-                  data-testid="textarea-howheard"
-                />
-
-                <Textarea
-                  name="seekToReclaim"
-                  placeholder="What do you seek to reclaim or remember?"
-                  value={formData.seekToReclaim}
-                  onChange={handleInputChange}
-                  rows={4}
-                  className="bg-cosmic-blue/30 border border-golden-rune/50 rounded-lg px-6 py-4 text-ethereal-white placeholder:text-silver-star/70 focus:border-golden-rune focus:outline-none transition-colors resize-none"
-                  required
-                  data-testid="textarea-seekreclaim"
-                />
-              </div>
-
-              {/* Sacred Commitment */}
-              <div className="space-y-6 bg-golden-rune/10 border border-golden-rune/30 rounded-lg p-6">
-                <h3 className="font-gothic text-2xl text-golden-rune text-center">
-                  Sacred Commitment
-                </h3>
-                
-                <div className="text-silver-star space-y-3">
-                  <p>By placing my name upon this scroll, I vow to:</p>
-                  <ul className="space-y-2 pl-4">
-                    <li>• Honor the Four Pillars of Jakintza Ruha.</li>
-                    <li>• Enter with integrity, respect, and remembrance.</li>
-                    <li>• Treat knowledge as sacred inheritance, never commodity.</li>
-                  </ul>
-                </div>
-              </div>
-
-              <Button
-                type="submit"
-                disabled={isSubmitting}
-                className="w-full bg-gradient-to-r from-golden-rune to-cosmic-blue hover:from-golden-rune/90 hover:to-cosmic-blue/90 text-void-black font-semibold py-4 transition-all duration-500 hover:scale-105 flex items-center justify-center gap-2"
-                data-testid="button-submit"
-              >
-                {isSubmitting ? (
-                  "Sending Sacred Application..."
-                ) : (
-                  <>
-                    <Send className="w-5 h-5" />
-                    Submit Enrollment Request
-                  </>
-                )}
-              </Button>
-            </form>
-
-            <div className="mt-8 p-4 bg-golden-rune/10 border border-golden-rune/30 rounded-lg text-center">
-              <p className="text-golden-rune text-sm font-semibold mb-2">
-                ✨ What Happens Next?
-              </p>
-              <p className="text-silver-star/70 text-sm leading-relaxed">
-                Your application will be sent directly to Beca, who will review your sacred journey 
-                and respond with guidance on your path forward. This usually takes 1-3 days.
-              </p>
             </div>
-          </motion.div>
-        </div>
+
+            {/* Spiritual Background */}
+            <div className="space-y-6">
+              <div className="flex items-center space-x-3 mb-6">
+                <Moon className="text-golden-rune text-2xl" />
+                <h2 className="font-gothic text-2xl font-bold text-golden-rune">Spiritual Background</h2>
+              </div>
+              
+              <div className="space-y-6">
+                <div>
+                  <Label htmlFor="spiritualPath" className="text-silver-star font-medium">Current Spiritual Path</Label>
+                  <Select onValueChange={(value) => handleSelectChange("spiritualPath", value)}>
+                    <SelectTrigger className="mystical-input" data-testid="select-spiritual-path">
+                      <SelectValue placeholder="Choose your path..." />
+                    </SelectTrigger>
+                    <SelectContent className="mystical-dropdown">
+                      <SelectItem value="beginner">Beginner - New to spiritual practices</SelectItem>
+                      <SelectItem value="eclectic">Eclectic - Drawing from multiple traditions</SelectItem>
+                      <SelectItem value="wiccan">Wiccan/Pagan</SelectItem>
+                      <SelectItem value="shamanic">Shamanic Practices</SelectItem>
+                      <SelectItem value="ceremonial">Ceremonial Magic</SelectItem>
+                      <SelectItem value="intuitive">Intuitive/Self-Taught</SelectItem>
+                      <SelectItem value="other">Other Path</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div>
+                  <Label htmlFor="previousExperience" className="text-silver-star font-medium">Previous Mystical Experience</Label>
+                  <Textarea
+                    id="previousExperience"
+                    name="previousExperience"
+                    value={formData.previousExperience}
+                    onChange={handleInputChange}
+                    className="mystical-input min-h-[100px]"
+                    placeholder="Share your journey with the sacred arts..."
+                    data-testid="textarea-previous-experience"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="elementalAffinity" className="text-silver-star font-medium">Elemental Affinity</Label>
+                  <Select onValueChange={(value) => handleSelectChange("elementalAffinity", value)}>
+                    <SelectTrigger className="mystical-input" data-testid="select-elemental-affinity">
+                      <SelectValue placeholder="Which element calls to you?" />
+                    </SelectTrigger>
+                    <SelectContent className="mystical-dropdown">
+                      <SelectItem value="earth">Earth - Grounding, Nature, Stability</SelectItem>
+                      <SelectItem value="water">Water - Emotions, Intuition, Flow</SelectItem>
+                      <SelectItem value="fire">Fire - Passion, Transformation, Energy</SelectItem>
+                      <SelectItem value="air">Air - Wisdom, Communication, Clarity</SelectItem>
+                      <SelectItem value="spirit">Spirit - Divine Connection, Unity</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+
+            {/* Sacred Intent */}
+            <div className="space-y-6">
+              <div className="flex items-center space-x-3 mb-6">
+                <Flame className="text-golden-rune text-2xl" />
+                <h2 className="font-gothic text-2xl font-bold text-golden-rune">Sacred Intent</h2>
+              </div>
+              
+              <div className="space-y-6">
+                <div>
+                  <Label htmlFor="motivation" className="text-silver-star font-medium">What draws you to The Athenaeum? *</Label>
+                  <Textarea
+                    id="motivation"
+                    name="motivation"
+                    value={formData.motivation}
+                    onChange={handleInputChange}
+                    className="mystical-input min-h-[120px]"
+                    placeholder="Speak from your heart about your calling..."
+                    required
+                    data-testid="textarea-motivation"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="sacredIntent" className="text-silver-star font-medium">Sacred Intent for Learning</Label>
+                  <Select onValueChange={(value) => handleSelectChange("sacredIntent", value)}>
+                    <SelectTrigger className="mystical-input" data-testid="select-sacred-intent">
+                      <SelectValue placeholder="What do you seek?" />
+                    </SelectTrigger>
+                    <SelectContent className="mystical-dropdown">
+                      <SelectItem value="personal-growth">Personal Spiritual Growth</SelectItem>
+                      <SelectItem value="healing">Healing & Wellness Practice</SelectItem>
+                      <SelectItem value="divination">Divination & Oracle Work</SelectItem>
+                      <SelectItem value="energy-work">Energy Work & Chakras</SelectItem>
+                      <SelectItem value="ritual-magic">Ritual & Ceremonial Magic</SelectItem>
+                      <SelectItem value="ancestral">Ancestral Connection</SelectItem>
+                      <SelectItem value="teaching">Teaching & Sharing Wisdom</SelectItem>
+                      <SelectItem value="all">All Aspects of the Sacred Path</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div>
+                  <Label htmlFor="healingFocus" className="text-silver-star font-medium">Areas of Healing Interest</Label>
+                  <Select onValueChange={(value) => handleSelectChange("healingFocus", value)}>
+                    <SelectTrigger className="mystical-input" data-testid="select-healing-focus">
+                      <SelectValue placeholder="What healing calls to you?" />
+                    </SelectTrigger>
+                    <SelectContent className="mystical-dropdown">
+                      <SelectItem value="self-healing">Self-Healing & Inner Work</SelectItem>
+                      <SelectItem value="energy-healing">Energy Healing for Others</SelectItem>
+                      <SelectItem value="plant-medicine">Plant Medicine & Herbalism</SelectItem>
+                      <SelectItem value="crystal-healing">Crystal & Stone Healing</SelectItem>
+                      <SelectItem value="sound-healing">Sound & Vibrational Healing</SelectItem>
+                      <SelectItem value="ancestral-healing">Ancestral & Generational Healing</SelectItem>
+                      <SelectItem value="trauma-healing">Sacred Trauma Healing</SelectItem>
+                      <SelectItem value="not-interested">Not Currently Interested</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+
+            {/* Practical Details */}
+            <div className="space-y-6">
+              <div className="flex items-center space-x-3 mb-6">
+                <Heart className="text-golden-rune text-2xl" />
+                <h2 className="font-gothic text-2xl font-bold text-golden-rune">Sacred Commitment</h2>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <Label htmlFor="commitment" className="text-silver-star font-medium">Time Commitment Available *</Label>
+                  <Select onValueChange={(value) => handleSelectChange("commitment", value)}>
+                    <SelectTrigger className="mystical-input" data-testid="select-commitment">
+                      <SelectValue placeholder="How much time can you dedicate?" />
+                    </SelectTrigger>
+                    <SelectContent className="mystical-dropdown">
+                      <SelectItem value="1-2-hours">1-2 hours per week</SelectItem>
+                      <SelectItem value="3-5-hours">3-5 hours per week</SelectItem>
+                      <SelectItem value="6-10-hours">6-10 hours per week</SelectItem>
+                      <SelectItem value="11-plus-hours">11+ hours per week</SelectItem>
+                      <SelectItem value="intensive">Intensive Study (15+ hours)</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+                
+                <div>
+                  <Label htmlFor="preferredStartDate" className="text-silver-star font-medium">Preferred Start Date</Label>
+                  <Input
+                    id="preferredStartDate"
+                    name="preferredStartDate"
+                    type="date"
+                    value={formData.preferredStartDate}
+                    onChange={handleInputChange}
+                    className="mystical-input"
+                    data-testid="input-start-date"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="timeZone" className="text-silver-star font-medium">Time Zone</Label>
+                  <Input
+                    id="timeZone"
+                    name="timeZone"
+                    type="text"
+                    value={formData.timeZone}
+                    onChange={handleInputChange}
+                    className="mystical-input"
+                    placeholder="e.g., EST, PST, GMT+1"
+                    data-testid="input-time-zone"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="moonPhasePreference" className="text-silver-star font-medium">Preferred Moon Phase for Learning</Label>
+                  <Select onValueChange={(value) => handleSelectChange("moonPhasePreference", value)}>
+                    <SelectTrigger className="mystical-input" data-testid="select-moon-phase">
+                      <SelectValue placeholder="When do you feel most receptive?" />
+                    </SelectTrigger>
+                    <SelectContent className="mystical-dropdown">
+                      <SelectItem value="new-moon">New Moon - New Beginnings</SelectItem>
+                      <SelectItem value="waxing-moon">Waxing Moon - Growth & Learning</SelectItem>
+                      <SelectItem value="full-moon">Full Moon - Peak Energy & Insight</SelectItem>
+                      <SelectItem value="waning-moon">Waning Moon - Release & Reflection</SelectItem>
+                      <SelectItem value="no-preference">No Preference</SelectItem>
+                    </SelectContent>
+                  </Select>
+                </div>
+              </div>
+            </div>
+
+            {/* Investment Level */}
+            <div className="space-y-6">
+              <div className="flex items-center space-x-3 mb-6">
+                <Feather className="text-golden-rune text-2xl" />
+                <h2 className="font-gothic text-2xl font-bold text-golden-rune">Sacred Exchange</h2>
+              </div>
+              
+              <div>
+                <Label htmlFor="investmentLevel" className="text-silver-star font-medium">Investment Level Interest *</Label>
+                <Select onValueChange={(value) => handleSelectChange("investmentLevel", value)}>
+                  <SelectTrigger className="mystical-input" data-testid="select-investment-level">
+                    <SelectValue placeholder="What investment feels aligned?" />
+                  </SelectTrigger>
+                  <SelectContent className="mystical-dropdown">
+                    <SelectItem value="seeker">Seeker Level - $97/month</SelectItem>
+                    <SelectItem value="adept">Adept Level - $197/month</SelectItem>
+                    <SelectItem value="mystic">Mystic Level - $297/month</SelectItem>
+                    <SelectItem value="sage">Sage Level - $497/month</SelectItem>
+                    <SelectItem value="consultation">Need Guidance on Best Fit</SelectItem>
+                  </SelectContent>
+                </Select>
+              </div>
+            </div>
+
+            {/* Emergency Contact */}
+            <div className="space-y-6">
+              <div className="flex items-center space-x-3 mb-6">
+                <Scroll className="text-golden-rune text-2xl" />
+                <h2 className="font-gothic text-2xl font-bold text-golden-rune">Safety & Accessibility</h2>
+              </div>
+              
+              <div className="grid md:grid-cols-2 gap-6">
+                <div>
+                  <Label htmlFor="emergencyContact" className="text-silver-star font-medium">Emergency Contact Name</Label>
+                  <Input
+                    id="emergencyContact"
+                    name="emergencyContact"
+                    type="text"
+                    value={formData.emergencyContact}
+                    onChange={handleInputChange}
+                    className="mystical-input"
+                    placeholder="Name of trusted person"
+                    data-testid="input-emergency-contact"
+                  />
+                </div>
+                
+                <div>
+                  <Label htmlFor="emergencyPhone" className="text-silver-star font-medium">Emergency Contact Phone</Label>
+                  <Input
+                    id="emergencyPhone"
+                    name="emergencyPhone"
+                    type="tel"
+                    value={formData.emergencyPhone}
+                    onChange={handleInputChange}
+                    className="mystical-input"
+                    placeholder="Emergency phone number"
+                    data-testid="input-emergency-phone"
+                  />
+                </div>
+              </div>
+              
+              <div>
+                <Label htmlFor="accessibility" className="text-silver-star font-medium">Accessibility Needs</Label>
+                <Textarea
+                  id="accessibility"
+                  name="accessibility"
+                  value={formData.accessibility}
+                  onChange={handleInputChange}
+                  className="mystical-input min-h-[80px]"
+                  placeholder="Any accommodations needed for your learning journey..."
+                  data-testid="textarea-accessibility"
+                />
+              </div>
+            </div>
+
+            {/* Sacred Agreements */}
+            <div className="space-y-6">
+              <div className="flex items-center space-x-3 mb-6">
+                <Star className="text-golden-rune text-2xl" />
+                <h2 className="font-gothic text-2xl font-bold text-golden-rune">Sacred Agreements</h2>
+              </div>
+              
+              <div className="space-y-4">
+                <div className="flex items-start space-x-3">
+                  <Checkbox
+                    id="termsAccepted"
+                    checked={formData.termsAccepted}
+                    onCheckedChange={(checked) => 
+                      setFormData(prev => ({ ...prev, termsAccepted: checked as boolean }))
+                    }
+                    className="mystical-checkbox mt-1"
+                    data-testid="checkbox-terms"
+                  />
+                  <Label htmlFor="termsAccepted" className="text-silver-star leading-relaxed">
+                    I agree to the Terms of Sacred Study and understand this is a spiritual education program
+                  </Label>
+                </div>
+                
+                <div className="flex items-start space-x-3">
+                  <Checkbox
+                    id="privacyAccepted"
+                    checked={formData.privacyAccepted}
+                    onCheckedChange={(checked) => 
+                      setFormData(prev => ({ ...prev, privacyAccepted: checked as boolean }))
+                    }
+                    className="mystical-checkbox mt-1"
+                    data-testid="checkbox-privacy"
+                  />
+                  <Label htmlFor="privacyAccepted" className="text-silver-star leading-relaxed">
+                    I consent to my information being used for program enrollment and communication
+                  </Label>
+                </div>
+                
+                <div className="flex items-start space-x-3">
+                  <Checkbox
+                    id="sacredOath"
+                    checked={formData.sacredOath}
+                    onCheckedChange={(checked) => 
+                      setFormData(prev => ({ ...prev, sacredOath: checked as boolean }))
+                    }
+                    className="mystical-checkbox mt-1"
+                    data-testid="checkbox-sacred-oath"
+                  />
+                  <Label htmlFor="sacredOath" className="text-silver-star leading-relaxed">
+                    I take a sacred oath to approach this learning with respect, openness, and integrity
+                  </Label>
+                </div>
+              </div>
+            </div>
+
+            {/* Submit Button */}
+            <div className="text-center pt-8">
+              <motion.div
+                whileHover={{ scale: 1.05 }}
+                whileTap={{ scale: 0.95 }}
+              >
+                <Button
+                  type="submit"
+                  disabled={isSubmitting || !formData.termsAccepted || !formData.privacyAccepted || !formData.sacredOath}
+                  className="mystical-border bg-gradient-to-r from-golden-rune to-mystical-500 hover:from-mystical-500 hover:to-golden-rune px-12 py-4 rounded-lg font-gothic text-lg font-bold text-black transition-all duration-500 disabled:opacity-50 disabled:cursor-not-allowed"
+                  data-testid="button-submit-enrollment"
+                >
+                  {isSubmitting ? (
+                    <>
+                      <Scroll className="animate-spin mr-2" size={20} />
+                      Sending Sacred Scroll...
+                    </>
+                  ) : (
+                    <>
+                      <Scroll className="mr-2" size={20} />
+                      Submit Sacred Enrollment
+                    </>
+                  )}
+                </Button>
+              </motion.div>
+            </div>
+          </form>
+        </motion.div>
       </div>
     </section>
   );
