@@ -7,15 +7,14 @@ export interface EnrollmentNotification {
 
 export async function sendEnrollmentNotification(notification: EnrollmentNotification): Promise<boolean> {
   try {
-    const apiKey = process.env.EMAIL_OCTOPUS_API_KEY;
+    const apiKey = process.env.EMAILOCTOPUS_API_KEY;
     
     if (!apiKey) {
-      console.error('EMAIL_OCTOPUS_API_KEY not found');
+      console.error('EMAILOCTOPUS_API_KEY not found');
       return false;
     }
 
-    // For now, log the enrollment beautifully to console
-    // EmailOctopus API integration can be added here later
+    // Log the enrollment beautifully to console for debugging
     console.log(`
 ┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
 ┃                        🌟 ENROLLMENT SUBMISSION 🌟                              ┃
@@ -45,9 +44,60 @@ export async function sendEnrollmentNotification(notification: EnrollmentNotific
 ┃ ${(notification.enrollmentData.seekToReclaim || '').substring(0, 76).padEnd(76)} ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
     `);
-    
-    // Return true to indicate "success" for UI purposes
-    return true;
+
+    // Send actual email through EmailOctopus API
+    const emailBody = `
+Sacred Enrollment Submission
+
+SEEKER'S DETAILS:
+Name: ${notification.enrollmentData.fullName || ''}
+Date of Birth: ${notification.enrollmentData.dateOfBirth || ''}
+Pronouns: ${notification.enrollmentData.pronouns || ''}
+Email: ${notification.enrollmentData.email || ''}
+Phone: ${notification.enrollmentData.phone || ''}
+Location: ${notification.enrollmentData.location || ''}
+
+PATH OF STUDY: ${(notification.enrollmentData.pathOfStudy || []).join(', ')}
+
+ENROLLMENT TIMELINE: ${notification.enrollmentData.enrollmentTimeline || ''}
+REALM OF ENTRY: ${notification.enrollmentData.realmOfEntry || ''}
+LANGUAGES: ${notification.enrollmentData.languages || ''}
+ACCOMMODATIONS: ${notification.enrollmentData.accommodations || ''}
+HOW THEY HEARD: ${notification.enrollmentData.howHeard || ''}
+
+WHAT THEY SEEK TO RECLAIM:
+${notification.enrollmentData.seekToReclaim || ''}
+    `;
+
+    // EmailOctopus API call
+    const response = await fetch('https://emailoctopus.com/api/1.6/campaigns/send', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+      },
+      body: JSON.stringify({
+        api_key: apiKey,
+        to: [notification.to],
+        subject: notification.subject,
+        content: {
+          html: emailBody.replace(/\n/g, '<br>'),
+          text: emailBody
+        },
+        from: {
+          name: 'Athenaeum Registration',
+          email_address: 'noreply@jakintzaruha.com'
+        }
+      })
+    });
+
+    if (response.ok) {
+      console.log('✨ Enrollment notification sent successfully through EmailOctopus');
+      return true;
+    } else {
+      const error = await response.text();
+      console.error('EmailOctopus API error:', error);
+      return false;
+    }
   } catch (error) {
     console.error('EmailOctopus enrollment notification error:', error);
     return false;
