@@ -9,7 +9,7 @@ import { Checkbox } from "@/components/ui/checkbox";
 import { useToast } from "@/hooks/use-toast";
 import { apiRequest } from "@/lib/queryClient";
 import backgroundImage from "@assets/ChatGPT Image Aug 18, 2025, 12_54_24 AM_1755531868254.webp";
-import newLogo from "@assets/ChatGPT Image Aug 21, 2025, 10_15_07 PM_1755838794823.webp";
+import newLogo from "@assets/ChatGPT Image Aug 21, 2025, 09_55_22 PM_1755838981471.png";
 
 export default function EnrollmentForm() {
   const [formData, setFormData] = useState({

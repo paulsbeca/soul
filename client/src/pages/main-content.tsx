@@ -2,7 +2,7 @@ import { motion } from "framer-motion";
 import { ExternalLink, Calendar, BookOpen, Star, Sprout, Infinity, Gem, Flame, Crown } from "lucide-react";
 import { Link, useLocation } from "wouter";
 import NewsletterForm from "@/components/newsletter-form";
-import logoImage from "@assets/ChatGPT Image Aug 21, 2025, 10_15_07 PM_1755838794823.webp";
+import logoImage from "@assets/ChatGPT Image Aug 21, 2025, 09_55_22 PM_1755838981471.png";
 import mysticalChamberBg from "@assets/ChatGPT Image Aug 18, 2025, 12_54_24 AM_1755531868254.webp";
 import athenaeumBackground from "@assets/ChatGPT Image Aug 18, 2025, 06_11_32 PM_1755562381522.webp";
 
